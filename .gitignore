@@ -1,0 +1,102 @@
+####################
+# Eclipse
+####################
+*.pydevproject
+.project
+.metadata
+tmp/
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~nib
+local.properties
+.classpath
+.settings/
+.loadpath
+src/main/resources/rebel.xml
+.clover/
+
+# External tool builders
+.externalToolBuilders/**
+
+# Locally stored "Eclipse launch configuration"
+*.launch
+
+# CDI-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+####################
+# Intellij
+####################
+.idea/
+*.iws
+*.ipr
+*.ids
+*.orig
+*.iml
+
+####################
+# Visual Studio Code
+####################
+.vscode/
+
+####################
+# Maven
+####################
+log/
+target/
+
+####################
+Package Files
+####################
+*.jar
+*.war
+*.ear
+*.db
+
+####################
+Windows
+####################
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+####################
+Directories
+####################
+/build/
+/bin/
+/deploy/
+
+####################
+# Others
+####################
+*.class
+*.*~
+*~
+.merge_file*
+
+####################
+# Angular
+####################
+workday-front/npmrc
+workday-front/npm-debug.*
+workday-front/node/npm
+workday-front/node/npm.cmd
+workday-front/tests/units.html
+workday-front/node/node.exe
+workday-front/node-modules
+workday-front/package-lock.json
+.nprmc
+
+####################
+# Test
+####################
+test.txt
+
