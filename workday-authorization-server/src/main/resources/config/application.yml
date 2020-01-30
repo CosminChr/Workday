@@ -1,0 +1,20 @@
+server:
+  port: 8082
+
+##### security ####
+spring:
+  security:
+    user:
+      name: cosmin
+      password: 123456
+
+####### authorization server properties ##########
+security:
+  oauth2:
+    client:
+      client-id: lssClient
+      client-secret: lssSecret
+      authorized-grant-types: authorization_code
+      scope: read,write
+      registered-redirect-uri: http://www.example.com/
+      auto-approve-scopes: true
