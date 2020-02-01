@@ -12,7 +12,6 @@
         <module>workday-back</module>
         <module>workday-front</module>
         <module>workday-authorization-server</module>
-        <module>workday-resource-server</module>
     </modules>
 
 

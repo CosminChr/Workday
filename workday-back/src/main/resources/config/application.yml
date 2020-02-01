@@ -1,5 +1,11 @@
 server:
   port: 8080
+  #context path
+  server:
+    servlet:
+      context-path: /workday-resource-server
+
+
 spring:
   devtools:
     restart:
@@ -12,3 +18,9 @@ spring:
     username: postgres
     password: 123456
 
+  ####### resource server configuration properties
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8081/workday-auth-server/endpoint/jwks.json
