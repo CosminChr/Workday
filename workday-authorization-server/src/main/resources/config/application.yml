@@ -1,5 +1,8 @@
 server:
-  port: 8082
+  port: 8081
+ #context path
+  servlet:
+    context-path: /workday-auth-server
 
 ##### security ####
 spring:
@@ -18,3 +21,8 @@ security:
       scope: read,write
       registered-redirect-uri: http://www.example.com/
       auto-approve-scopes: true
+
+
+
+
+
