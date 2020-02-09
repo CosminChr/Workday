@@ -1,0 +1,21 @@
+.workday-link {
+
+  a:not([href]) {
+    cursor: pointer;
+    text-decoration: underline;
+    color: $blue;
+  }
+
+  a:not([href]):hover {
+    text-decoration: none;
+    color: $blue;
+  }
+
+  span {
+    &.after {
+      content: ' : ';
+    }
+    color: $grey-dark-3;
+    word-wrap: break-word;
+  }
+}

@@ -1,0 +1,108 @@
+.workday-group, .workday-col, .row, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10,
+.col-11, .col-12, .col, .col-auto > .workday-input-bloc:first-child {
+  margin: 0;
+}
+
+.workday-input-bloc {
+  margin: 10px 0 0 0;
+
+  label {
+    color: $grey-dark-3;
+
+    &.label-textarea {
+      vertical-align: top;
+      margin-top: 5px;
+    }
+  }
+
+  input {
+    display: inline-block;
+    width: 230px;
+    height: 40px;
+    border: 1px solid $blue-dark-1-10;
+    padding-left: 10px;
+  }
+
+  textarea {
+    display: inline-block;
+    width: 230px;
+    border: 1px solid $blue-dark-1-10;
+    padding-left: 5px;
+  }
+
+  mat-select {
+    border: 1px solid $blue-dark-1-10;
+    width: 230px;
+    background-color: $white;
+    padding-left: 10px;
+    height: 40px;
+  }
+
+  .mat-select-placeholder {
+    color: $grey-dark-1;
+  }
+
+  .workday-select {
+    background-color: $white;
+
+    .workday-label {
+      color: $grey-dark-3;
+      margin-right: 200px;
+    }
+
+    .select {
+      height: 30px;
+      border: 1px solid $blue-dark-1-10;
+      width: 230px;
+      padding-left: 5px;
+    }
+  }
+
+  .error-message {
+    display: none;
+    color: $red;
+    text-align: justify;
+  }
+
+  &.warn {
+    input {
+      color: $orange;
+    }
+
+    .mat-select, .mat-option {
+      .mat-select-value-text, .mat-option-text {
+        color: $orange;
+      }
+    }
+  }
+
+  &.error {
+    .error-message {
+      display: block;
+    }
+
+    input {
+      border-color: $red;
+    }
+  }
+
+  &.info {
+    label {
+      color: $blue;
+    }
+
+    .mat-radio-label-content {
+      color: $grey-dark-3;
+    }
+  }
+}
+
+::placeholder {
+  color: $grey-dark-1;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

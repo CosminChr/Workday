@@ -1,0 +1,91 @@
+button[mat-flat-button] {
+  border-radius: 3px;
+  text-transform: uppercase;
+  min-width: 120px;
+
+  &:not(:first-child) {
+  margin-left: 20px;
+  }
+
+  &.primary {
+    color: $white;
+    background: $red;
+    border: 1px solid $red;
+
+    &:hover {
+      color: $white;
+      background: $red-dark;
+    }
+    &[disabled] {
+      color: $white;
+      background-color: $grey-dark-2;
+      border: 1px solid $grey-dark-2;
+    }
+  }
+  &.secondary {
+    color: $blue-dark-1;
+    background: $white;
+    border: 1px solid $blue-dark-1-10;
+
+    &:hover {
+      color: $blue-dark-1;
+      background: $grey-light-2;
+      border: 1px solid $blue-dark-1-10;
+    }
+
+    &.alternative {
+      color: $red;
+      &:hover {
+        color: $red;
+      }
+    }
+    &[disabled] {
+      color: $grey-dark-2;
+      background: $white;
+      border: 1px solid $grey-dark-2;
+    }
+  }
+
+  &.refresh {
+    background-color: $white;
+    color: $green;
+    font-size: 14px;
+    border: 1px solid $blue-dark-1-10;
+
+    &.hover {
+      background-color: $grey-light-1;
+      color: $green;
+    }
+
+    &.md-focused {
+      background-color: $white;
+    }
+  }
+
+  &.reset {
+    background-color: $white;
+    margin-bottom: 10px;
+    color: $red;
+    font-size: 14px;
+    border: 1px solid $blue-dark-1-10;
+
+    &:hover {
+      background-color: $grey-light-1;
+    }
+
+    &.md-focused {
+      background-color: $white;
+    }
+  }
+
+  &.with-icon {
+    mat-icon {
+      margin-right: 5px;
+    }
+  }
+}
+
+.workday-action-bar {
+  float: right;
+  margin-top: 20px;
+}

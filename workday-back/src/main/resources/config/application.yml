@@ -1,9 +1,9 @@
-server:
-  port: 8080
-  #context path
-  server:
-    servlet:
-      context-path: /workday-resource-server
+#server:
+#  port: 8080
+#  #context path
+#  server:
+#    servlet:
+#      context-path: /workday-resource-server
 
 
 spring:

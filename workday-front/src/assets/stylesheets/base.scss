@@ -1,0 +1,78 @@
+body {
+  font-family: Roboto, Helvetica Neue, Arial, sans-seriff;
+  font-size: 14px;
+  color: $blue-dark-1;
+  line-height: 1.42857;
+  margin: 0;
+  padding: 0;
+  background-color: #efefef;
+}
+
+img {
+  vertical-align: middle;
+  border: 0
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 35px;
+  color: $blue-dark-1;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 28px;
+  color: $blue-dark-1;
+
+  &.dark {
+    background-color: $blue-dark-1;
+    color: $white;
+  }
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 21px;
+  color: $blue-dark-1;
+  margin-bottom: 5px;
+  &.dark {
+    background-color: $blue-dark-1;
+    color: $white;
+  }
+}
+
+h4 {
+  font-size: 14px;
+  line-height: 21px;
+  color: $blue-dark-1;
+
+  &.dark {
+    background-color: $blue-dark-1;
+    color: #ECECEC;
+  }
+}
+
+h5 {
+  font-size: 14px;
+  line-height: 30px;
+  color: $blue-dark-1;
+  margin-bottom: 0;
+  margin-top: 0;
+
+  &.dark {
+    background-color: $blue-dark-1;
+    color: $white;
+  }
+}
+
+.workday-sub-phase-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+

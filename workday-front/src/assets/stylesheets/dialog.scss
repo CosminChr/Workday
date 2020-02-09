@@ -1,0 +1,38 @@
+.dialog .mat-dialog-container {
+  padding: 0;
+  overflow: visible;
+  border-radius: 0;
+}
+
+.dialog .row {
+  align-items: center;
+}
+
+.dialog .mat-dialog-title {
+  padding: 10px 20px;
+  border-bottom: 1px solid $grey-light-1;
+
+  mat-icon {
+    cursor: pointer;
+    font-size: 35px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+  }
+}
+
+.dialog .mat-dialog-content {
+  margin: 0 20px;
+  padding: 0;
+  overflow: visible;
+}
+
+.dialog .mat-dialog-actions {
+  padding: 0;
+  margin: 20px;
+  float: right;
+  min-height: 0;
+
+  button:not(:first-child) {
+    margin-left: 20px;
+  }
+}

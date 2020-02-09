@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../core/services/security/auth.service";
-import {TokenStorageService} from "../../core/services/security/token-storage.service";
+import { AuthService } from '../../core/services/security/auth.service';
+import { TokenStorageService } from '../../core/services/security/token-storage.service';
+import {FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'app-login',
+  selector: 'workday-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -13,6 +14,9 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
+
+
+  loginForm: FormGroup;
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
 

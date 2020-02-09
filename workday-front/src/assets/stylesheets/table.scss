@@ -1,0 +1,74 @@
+.workday-table {
+  width: 100%;
+  thead {
+    background-color: $blue-dark-1;
+    color: $white;
+    tr {
+      th {
+        border: 1px solid $grey-dark-1;
+        padding: 15px 10px;
+        &.col-1 {
+          width: 8.33%;
+        }
+        &.col-2 {
+          width: 16.66%;
+        }
+        &.col-3 {
+          width: 25%;
+        }
+        &.col-4 {
+          width: 33.32%;
+        }
+        &.col-5 {
+          width: 41.65%;
+        }
+        &.col-6 {
+          width: 50%;
+        }
+        &.col-7 {
+          width: 58.33%;
+        }
+        &.col-8 {
+          width: 66.66%;
+        }
+        &.col-9 {
+          width: 75%;
+        }
+        &.col-10 {
+          width: 83.32%;
+        }
+        &.col-11 {
+          width: 91.65%;
+        }
+        &.col-12 {
+          width: 100%;
+        }
+      }
+    }
+  }
+  tbody, tfoot {
+    tr {
+      td, th {
+        padding: 10px;
+        vertical-align: middle;
+        border: 1px solid $grey-dark-1;
+
+        &.workday-table-category {
+          background-color: $grey-light-1;
+          padding: 15px 10px;
+          font-weight: 500;
+        }
+
+        &.workday-table-actions {
+          text-align: center;
+          button {
+            width: 100;
+          }
+        }
+      }
+    }
+  }
+  .total {
+    background-color: $blue-light-2;
+  }
+}

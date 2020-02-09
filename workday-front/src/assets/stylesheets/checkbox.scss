@@ -1,0 +1,44 @@
+.workday-checkbox {
+
+  .mat-checkbox-inner-container {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  .mat-checkbox:first-child {
+    margin-left: 10px;
+  }
+
+  &.mat-checkbox-indeterminate, &.mat-checkbox-checked {
+    &.mat-accent .mat-checkbox-background {
+      background-color: $red;
+    }
+  }
+
+  &.mat-checkbox-disabled {
+    &.mat-checkbox-indeterminate, &.mat-checkbox-checked {
+      &.mat-accent .mat-checkbox-background {
+        background-color: $grey-dark-2;
+      }
+    }
+  }
+
+  .mat-checkbox-inner-container {
+    background-color: $white;
+  }
+
+  .mat-checkbox-frame {
+    border-width: 1px;
+  }
+
+  /deep/ .mat-checkbox-label, /deep/ .mat-checkbox-disabled .mat-checkbox-label {
+    color: rgba(0, 0, 0, 1);
+  }
+
+  &.mat-checkbox-disabled {
+    /deep/ .mat-checkbox-background {
+      background-color: $grey-dark-2;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.mat-calendar-body-selected {
+  background-color: $red;
+}
+
+.mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: $red;
+}
