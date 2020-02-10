@@ -76,24 +76,36 @@
 
 <form> <!--[formGroup] = "loginForm>"-->
 
-<div class = "workday-card workday-login-form">
-    <div class = "row ">
-      <h2 class = "ml-5 pl-5">{{"WORKDAY Login"}}</h2>
+  <div class="workday-card workday-login-form">
+    <div class="row "  style="justify-content: center;  display: flex">
+      <h2  style="text-align: center">{{"WORKDAY Login"}}</h2>
     </div>
-  <div class = "workday-card-body ">
-  <h5> {{"Utilizator"}}</h5>
-</div>
+    <div class="workday-card-body ">
+      <h5> {{"Utilizator"}}</h5>
+      <input class="form-control p-4" placeholder="Utilizator">
+      <hr>
 
-  <div class = "workday-card-header ">
+    </div>
+
+    <div class="workday-card-body">
+      <h5> {{"Parola"}}</h5>
+      <input class="form-control p-4" placeholder="Parola">
+
+    </div>
+
+    <div class="workday-card-body">
+
+    <div class = "row" >
+      <div  class = "col-12" >
+        <div class = "workday-action-bar " style = "margin: 0 auto;">
+            <button mat-flat-button class = "button" style = "display: block">
+              CONECTARE
+            </button>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
-  <div class = "workday-card-body ">
-    <h5> {{"Parola"}}</h5>
-  </div>
-
-  <div class = "workday-card-header ">
-  </div>
-
-
-</div>
 
 </form>
+

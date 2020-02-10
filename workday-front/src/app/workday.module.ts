@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import { WorkdayRoutingModule } from './workday-routing.module';
 import { WorkdayComponent } from './workday.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -11,6 +12,20 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { BoardAdminComponent } from './pages/board-admin/board-admin.component';
 import { BoardManagerComponent } from './pages/board-manager/board-manager.component';
 import { BoardEmployeeComponent } from './pages/board-employee/board-employee.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatNativeDateModule,
+  MatProgressSpinnerModule, MatTabsModule
+} from "@angular/material";
+import {MaterialModule} from "./material.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -26,7 +41,24 @@ import { BoardEmployeeComponent } from './pages/board-employee/board-employee.co
   imports: [
     BrowserModule,
     HttpClientModule,
-    WorkdayRoutingModule
+    WorkdayRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MaterialModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    MatTabsModule
+
   ],
   providers: [],
   bootstrap: [WorkdayComponent]
