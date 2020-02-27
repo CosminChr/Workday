@@ -14,21 +14,21 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
         })
-public class Employee implements Serializable {
+public class Employee extends User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 30)
     private String username;
 
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 30)
     @Email
     private String email;
 
-    @Size(max = 120)
+    @Size(max = 60)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)

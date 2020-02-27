@@ -1,6 +1,6 @@
 package com.cosmin.licenta.workday.entity;
 
-import com.cosmin.licenta.workday.util.RoleType;
+import com.cosmin.licenta.workday.util.RoleTypeEnum;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,12 +14,12 @@ public class Role implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private RoleType name;
+    private RoleTypeEnum name;
 
     public Role() {
 
     }
-    public Role(RoleType name) {
+    public Role(RoleTypeEnum name) {
         this.name = name;
     }
 
@@ -31,11 +31,11 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public RoleType getName() {
+    public RoleTypeEnum getName() {
         return name;
     }
 
-    public void setName(RoleType name) {
+    public void setName(RoleTypeEnum name) {
         this.name = name;
     }
 }

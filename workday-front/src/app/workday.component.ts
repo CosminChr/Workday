@@ -35,10 +35,13 @@
 //   }
 // }
 
-import {ViewEncapsulation} from '@angular/core';
+import {Input, ViewEncapsulation} from '@angular/core';
 
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "./core/services/security/token-storage.service";
+import {Router} from "@angular/router";
+import {EmployeeService} from "./shared/services/employee/employee.service";
+import {WorkdayService} from "./workday.service";
 
 @Component({
   selector: 'workday-root',
@@ -47,18 +50,26 @@ import {TokenStorageService} from "./core/services/security/token-storage.servic
 })
 export class WorkdayComponent implements OnInit {
 
-  isLoggedIn = false;
-  currentUser: any;
+  isConnected = false;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService,
+              private employeeService: EmployeeService,
+              private workdayService: WorkdayService,
+              private router: Router) { }
 
   ngOnInit() {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-    console.log(this.tokenStorageService.getToken());
-    if (this.isLoggedIn) {
-      this.currentUser = this.tokenStorageService.getUser();
-      console.log(this.currentUser);
-
+    //  localStorage.clear();
+    console.log(localStorage);
+   // console.log(  this.isConnected);
+    this.workdayService.getIsConnected().asObservable().subscribe(value => {
+      this.isConnected = value;
+    });
+    this.isConnected = !!this.tokenStorageService.getToken();
+    if (this.isConnected) {
+      // this.currentUser = this.tokenStorageService.getUser();
+       this.employeeService.setStoredEmployee(this.tokenStorageService.getUser());
+      //console.log("userul curent",this.employeeService.getSavedEmployee());
+      this.router.navigate(['/home']);
       // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       // this.showModeratorBoard = this.roles.includes('ROLE_MANAGER');
       //
@@ -69,5 +80,9 @@ export class WorkdayComponent implements OnInit {
   logout() {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  userIsConnected(isConnected: boolean) {
+    this.isConnected = isConnected;
   }
 }

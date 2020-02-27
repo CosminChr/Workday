@@ -1,6 +1,7 @@
 package com.cosmin.licenta.workday.service;
 
 import com.cosmin.licenta.workday.entity.Employee;
+import com.cosmin.licenta.workday.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
@@ -34,10 +36,16 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(Employee user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
+    public static UserDetailsImpl build(User user) {
+        List<GrantedAuthority> authorities;
+        if (user instanceof Employee) {
+            authorities = user.getRoles().stream()
+                    .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                    .collect(Collectors.toList());
+        } else {
+            authorities = Stream.of(new SimpleGrantedAuthority(user.getRole().getName().name()))
+                    .collect(Collectors.toList());
+        }
 
         return new UserDetailsImpl(
                 user.getId(),

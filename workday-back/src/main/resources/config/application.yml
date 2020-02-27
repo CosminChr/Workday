@@ -25,7 +25,13 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+  main:
+    allow-bean-definition-overriding: true
 
 app:
   jwtSecret: licentaSecretKey
-  jwtExpirationMs: 86400000
+  jwtExpirationMs: 3600000
+
+logging:
+  level:
+    web=TRACE:

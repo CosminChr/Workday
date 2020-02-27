@@ -7,6 +7,7 @@ import {ProfileComponent} from "./pages/profile/profile.component";
 import {BoardEmployeeComponent} from "./pages/board-employee/board-employee.component";
 import {BoardManagerComponent} from "./pages/board-manager/board-manager.component";
 import {BoardAdminComponent} from "./pages/board-admin/board-admin.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 const routes: Routes = [
@@ -17,11 +18,14 @@ const routes: Routes = [
   { path: 'user', component: BoardEmployeeComponent },
   { path: 'mod', component: BoardManagerComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes),
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  exports: [RouterModule],
 })
 export class WorkdayRoutingModule { }

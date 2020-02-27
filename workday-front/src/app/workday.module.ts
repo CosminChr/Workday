@@ -22,6 +22,8 @@ import {
 import {MaterialModule} from "./material.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -36,7 +38,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProfileComponent,
     BoardAdminComponent,
     BoardManagerComponent,
-    BoardEmployeeComponent
+    BoardEmployeeComponent,
+    NavbarComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

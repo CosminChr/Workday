@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UserService } from '../../shared/services/employee/employee.service';
+import { EmployeeService } from '../../shared/services/employee/employee.service';
 
 @Component({
   selector: 'app-board-admin',
@@ -10,7 +10,7 @@ import { UserService } from '../../shared/services/employee/employee.service';
 export class BoardAdminComponent implements OnInit {
   content = '';
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: EmployeeService) { }
 
   ngOnInit() {
     this.userService.getAdminBoard().subscribe(
