@@ -56,9 +56,9 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveUser(data);
 
         this.isLoginFailed = false;
-
         this.workDayService.setIsConnected(true);
-        this.router.navigate(['/home']);
+        console.log("Am navigat home");
+        this.router.navigate(['/personalData']);
         //this.roles = this.tokenStorage.getUser().roles;
         // this.reloadPage();
       },

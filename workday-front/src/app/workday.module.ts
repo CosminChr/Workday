@@ -8,7 +8,6 @@ import { WorkdayComponent } from './workday.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ProfileComponent } from './pages/profile/profile.component';
 import { BoardAdminComponent } from './pages/board-admin/board-admin.component';
 import { BoardManagerComponent } from './pages/board-manager/board-manager.component';
 import { BoardEmployeeComponent } from './pages/board-employee/board-employee.component';
@@ -35,7 +34,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ProfileComponent,
     BoardAdminComponent,
     BoardManagerComponent,
     BoardEmployeeComponent,

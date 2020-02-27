@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.sidebarService.getMenuItems().subscribe(menuItems => {
      this.menuItems = menuItems as Array<MenuItem>;
+     this.menuItems = this.menuItems.filter(menuItem => menuItem);
      console.log( this.menuItems);
     });
   }

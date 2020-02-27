@@ -58,22 +58,25 @@ export class WorkdayComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    //  localStorage.clear();
+     localStorage.clear();
     console.log(localStorage);
-   // console.log(  this.isConnected);
     this.workdayService.getIsConnected().asObservable().subscribe(value => {
       this.isConnected = value;
     });
     this.isConnected = !!this.tokenStorageService.getToken();
+
     if (this.isConnected) {
       // this.currentUser = this.tokenStorageService.getUser();
        this.employeeService.setStoredEmployee(this.tokenStorageService.getUser());
       //console.log("userul curent",this.employeeService.getSavedEmployee());
-      this.router.navigate(['/home']);
+      this.router.navigate(['/personalData']);
       // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       // this.showModeratorBoard = this.roles.includes('ROLE_MANAGER');
       //
       // this.username = user.username;
+    } else {
+      // console.log(" am navigat pe login");
+      this.router.navigate(['/login']);
     }
   }
 
