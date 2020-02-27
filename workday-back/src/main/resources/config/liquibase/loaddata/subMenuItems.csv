@@ -1,0 +1,9 @@
+path;name;acronym;menu_item_id
+/personalData;Personal Data;PD;1
+/address;Address;AD;1
+/bankAccount;Bank Account;BA;1
+/personalDocuments;Personal Documents;PD;1
+/employmentHistory;Employment History;EY;1
+/maritalStatus;Marital Status/Children;MS;1
+/citizenship;Citizenhsip/Foreign Languages;C;1
+/studies;Studies;S;1

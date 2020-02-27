@@ -1,0 +1,96 @@
+/*!
+
+ =========================================================
+ * Paper Dashboard Pro Angular - v1.2.0
+ =========================================================
+
+ * Product Page: https://www.creative-tim.com/product/paper-dashboard-pro-angular
+ * Copyright 2018 Creative Tim (http://www.creative-tim.com)
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+ */
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+@import '../scss/paper-dashboard/variables';
+@import '../scss/paper-dashboard/mixins';
+
+// Plugins CSS
+@import '../scss/paper-dashboard/plugins/plugin-bootstrap-switch';
+@import '../scss/paper-dashboard/plugins/plugin-bootstrap-table';
+@import '../scss/paper-dashboard/plugins/plugin-nouislider';
+@import '../scss/paper-dashboard/plugins/plugin-animate-bootstrap-notify';
+@import '../scss/paper-dashboard/plugins/plugin-perfect-scrollbar';
+
+@import '../scss/paper-dashboard/plugins/plugin-card-wizard';
+@import '../scss/paper-dashboard/plugins/plugin-datetimepicker';
+@import '../scss/paper-dashboard/plugins/plugin-bootstrap-select';
+@import '../scss/paper-dashboard/plugins/plugin-jasny-fileupload';
+@import '../scss/paper-dashboard/plugins/plugin-tagsinput';
+@import '../scss/paper-dashboard/plugins/plugin-datatables.net';
+@import '../scss/paper-dashboard/plugins/plugin-jquery.jvectormap';
+@import '../scss/paper-dashboard/plugins/plugin-fullcalendar';
+
+// Core CSS
+@import '../scss/paper-dashboard/nucleo-outline';
+@import '../scss/paper-dashboard/buttons';
+@import '../scss/paper-dashboard/social-buttons';
+@import '../scss/paper-dashboard/animated-buttons';
+@import '../scss/paper-dashboard/inputs';
+@import '../scss/paper-dashboard/typography';
+@import '../scss/paper-dashboard/misc';
+@import '../scss/paper-dashboard/misc-extend';
+@import '../scss/paper-dashboard/navbar';
+@import '../scss/paper-dashboard/dropdown';
+@import '../scss/paper-dashboard/alerts';
+@import '../scss/paper-dashboard/images';
+@import '../scss/paper-dashboard/tables';
+@import '../scss/paper-dashboard/footers';
+@import '../scss/paper-dashboard/fixed-plugin';
+
+// components
+@import '../scss/paper-dashboard/checkboxes-radio';
+@import '../scss/paper-dashboard/progress';
+@import '../scss/paper-dashboard/badges';
+@import '../scss/paper-dashboard/pagination';
+@import '../scss/paper-dashboard/info-areas';
+@import '../scss/paper-dashboard/pills';
+@import '../scss/paper-dashboard/tabs';
+@import '../scss/paper-dashboard/popups';
+@import '../scss/paper-dashboard/modals';
+@import '../scss/paper-dashboard/carousel';
+@import '../scss/paper-dashboard/sidebar-and-main-panel';
+@import '../scss/paper-dashboard/timeline';
+
+
+
+// cards
+@import '../scss/paper-dashboard/cards';
+@import "../scss/paper-dashboard/cards/card-chart";
+@import "../scss/paper-dashboard/cards/card-map";
+@import "../scss/paper-dashboard/cards/card-user";
+
+@import "../scss/paper-dashboard/cards/card-background";
+@import "../scss/paper-dashboard/cards/card-collapse";
+@import "../scss/paper-dashboard/cards/card-contributions";
+@import "../scss/paper-dashboard/cards/card-info-area";
+@import "../scss/paper-dashboard/cards/card-lock";
+@import "../scss/paper-dashboard/cards/card-pricing";
+@import "../scss/paper-dashboard/cards/card-profile";
+@import "../scss/paper-dashboard/cards/card-signup";
+@import "../scss/paper-dashboard/cards/card-stats-mini";
+@import "../scss/paper-dashboard/cards/card-stats";
+@import "../scss/paper-dashboard/cards/card-subcategories";
+@import "../scss/paper-dashboard/cards/card-testimonials";
+@import "../scss/paper-dashboard/cards/card-tasks";
+
+
+
+// example pages and sections
+@import '../scss/paper-dashboard/example-pages';
+@import '../scss/paper-dashboard/sections';
+
+
+@import '../scss/paper-dashboard/responsive';
+@import '../scss/paper-dashboard/media-queries';
