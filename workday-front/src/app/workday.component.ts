@@ -1,41 +1,3 @@
-// import {Component, OnInit} from '@angular/core';
-// import {TokenStorageService} from "./core/services/security/token-storage.service";
-//
-// @Component({
-//   selector: 'workday-root',
-//   templateUrl: './workday.component.html',
-//   styleUrls: ['./workday.component.scss']
-// })
-// export class WorkdayComponent implements OnInit {
-//   private roles: string[];
-//   isLoggedIn = false;
-//   showAdminBoard = false;
-//   showModeratorBoard = false;
-//   username: string;
-//
-//   constructor(private tokenStorageService: TokenStorageService) { }
-//
-//   ngOnInit() {
-//     this.isLoggedIn = !!this.tokenStorageService.getToken();
-//
-//     if (this.isLoggedIn) {
-//       const user = this.tokenStorageService.getUser();
-//       this.roles = user.roles;
-//
-//       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-//       this.showModeratorBoard = this.roles.includes('ROLE_MANAGER');
-//
-//       this.username = user.username;
-//     }
-//   }
-//
-//   logout() {
-//     this.tokenStorageService.signOut();
-//     window.location.reload();
-//   }
-// }
-
-import {Input, ViewEncapsulation} from '@angular/core';
 
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "./core/services/security/token-storage.service";
@@ -58,22 +20,25 @@ export class WorkdayComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    //  localStorage.clear();
+  //  localStorage.clear();
     console.log(localStorage);
-   // console.log(  this.isConnected);
     this.workdayService.getIsConnected().asObservable().subscribe(value => {
       this.isConnected = value;
     });
     this.isConnected = !!this.tokenStorageService.getToken();
+
     if (this.isConnected) {
       // this.currentUser = this.tokenStorageService.getUser();
-       this.employeeService.setStoredEmployee(this.tokenStorageService.getUser());
+      this.employeeService.setStoredEmployee(this.tokenStorageService.getUser());
       //console.log("userul curent",this.employeeService.getSavedEmployee());
-      this.router.navigate(['/home']);
+    //  this.router.navigate(['/personalData']);
       // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       // this.showModeratorBoard = this.roles.includes('ROLE_MANAGER');
       //
       // this.username = user.username;
+    } else {
+      // console.log(" am navigat pe login");
+      this.router.navigate(['/login']);
     }
   }
 

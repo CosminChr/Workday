@@ -58,7 +58,8 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
 
         this.workDayService.setIsConnected(true);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/personalData']);
+       // this.router.navigate(['/personalData']);
         //this.roles = this.tokenStorage.getUser().roles;
         // this.reloadPage();
       },
