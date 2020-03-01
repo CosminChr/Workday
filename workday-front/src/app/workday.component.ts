@@ -20,7 +20,7 @@ export class WorkdayComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-  //  localStorage.clear();
+  //localStorage.clear();
     console.log(localStorage);
     this.workdayService.getIsConnected().asObservable().subscribe(value => {
       this.isConnected = value;
