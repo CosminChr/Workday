@@ -49,8 +49,6 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.loginForm).subscribe(
       data => {
-        console.log("ce vine", data);
-        console.log("username", data.username);
         this.tokenStorage.saveToken(data.accessToken);
         //this.employeeService.setStoredEmployee(data.username);
         this.tokenStorage.saveUser(data);
@@ -58,7 +56,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
 
         this.workDayService.setIsConnected(true);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/profile/personalData']);
         //this.roles = this.tokenStorage.getUser().roles;
         // this.reloadPage();
       },

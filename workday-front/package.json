@@ -71,12 +71,10 @@
     "twitter-bootstrap-wizard": "1.2.0",
     "web-animations-js": "2.3.1",
     "tslib": "^1.10.0",
-    "webpack": "^4.41.5",
-    "webpack-dev-server": "^3.10.3",
+    "webpack-dev-server": "^3.9.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "node-sass": "^4.13.1",
     "@angular-devkit/build-angular": "~0.803.23",
     "@angular/cli": "~8.3.23",
     "@angular/compiler-cli": "~8.2.14",
@@ -93,6 +91,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
+    "node-sass": "^4.13.1",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",

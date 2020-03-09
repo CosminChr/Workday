@@ -59,7 +59,6 @@ export class WorkdayComponent implements OnInit {
 
   ngOnInit() {
     //  localStorage.clear();
-    console.log(localStorage);
    // console.log(  this.isConnected);
     this.workdayService.getIsConnected().asObservable().subscribe(value => {
       this.isConnected = value;
@@ -69,11 +68,13 @@ export class WorkdayComponent implements OnInit {
       // this.currentUser = this.tokenStorageService.getUser();
        this.employeeService.setStoredEmployee(this.tokenStorageService.getUser());
       //console.log("userul curent",this.employeeService.getSavedEmployee());
-      this.router.navigate(['/home']);
+      this.router.navigate(['/profile/personalData']);
       // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       // this.showModeratorBoard = this.roles.includes('ROLE_MANAGER');
       //
       // this.username = user.username;
+    } else {
+      this.router.navigate(['/login']);
     }
   }
 
