@@ -1,29 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import { WorkdayRoutingModule } from './workday-routing.module';
-import { WorkdayComponent } from './workday.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { HomeComponent } from './pages/home/home.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { BoardAdminComponent } from './pages/board-admin/board-admin.component';
-import { BoardManagerComponent } from './pages/board-manager/board-manager.component';
-import { BoardEmployeeComponent } from './pages/board-employee/board-employee.component';
+import {WorkdayRoutes} from './workday-routing';
+import {WorkdayComponent} from './workday.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   MatDatepickerModule,
   MatFormFieldModule,
   MatNativeDateModule,
-  MatProgressSpinnerModule, MatTabsModule
+  MatProgressSpinnerModule,
+  MatTabsModule
 } from "@angular/material";
 import {MaterialModule} from "./material.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
+import {SidebarComponent} from "./shared/components/sidebar/sidebar.component";
+
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {RouterModule} from "@angular/router";
+import {HttpModule} from "@angular/http";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,20 +29,16 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     WorkdayComponent,
-    LoginComponent,
-    RegisterComponent,
-    HomeComponent,
-    ProfileComponent,
-    BoardAdminComponent,
-    BoardManagerComponent,
-    BoardEmployeeComponent,
-    NavbarComponent,
     SidebarComponent
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
+    RouterModule.forRoot(WorkdayRoutes, {
+      useHash: true
+    }),
     BrowserModule,
     HttpClientModule,
-    WorkdayRoutingModule,
+    HttpModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -54,6 +47,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatNativeDateModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    NgbModule.forRoot(),
+
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -62,9 +57,10 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     MatTabsModule
-
   ],
+  exports: [RouterModule],
   providers: [],
   bootstrap: [WorkdayComponent]
 })
-export class WorkdayModule { }
+export class WorkdayModule {
+}
