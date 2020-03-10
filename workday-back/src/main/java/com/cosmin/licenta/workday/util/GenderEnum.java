@@ -1,13 +1,12 @@
 package com.cosmin.licenta.workday.util;
 
-public enum RoleTypeEnum {
-    ADMIN("Admin"),
-    EMPLOYEE("Employee"),
-    MANAGER("Manager");
+public enum GenderEnum {
+    MALE("Male"),
+    FEMALE("Female");
 
     private String label;
 
-    RoleTypeEnum(String label) {
+    GenderEnum(String label) {
         this.label = label;
     }
 

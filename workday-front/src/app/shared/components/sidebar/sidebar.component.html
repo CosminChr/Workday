@@ -16,12 +16,12 @@
 
   <div class="user">
     <div class="photo">
-      <img src="./assets/img/faces/ilona-cojoaca.jpg" />
+      <img src="./assets/img/faces/cristiana-manescu.jpg" />
     </div>
     <div class="info">
       <a data-toggle="collapse" href="#collapseExample" class="collapsed">
         <span>
-          Ilona Cojoaca
+          Cristiana Mănescu
           <b class="caret"></b>
         </span>
       </a>
@@ -99,13 +99,13 @@
         <p>{{menuitem.name}}</p>
       </a>
       <!--If it have a submenu-->
-      <a data-toggle="collapse" href="#{{menuitem.collapse}}" *ngIf="menuitem.collapse">
+      <a data-toggle="collapse" href="#{{menuitem.collapse}}" aria-expanded="false" aria-controls="collapseExample" *ngIf="menuitem.collapse">
         <i class="nc-icon {{menuitem.iconName}}"></i>
         <p>{{menuitem.name}}<b class="caret"></b></p>
       </a>
 
       <!--Display the submenu items-->
-      <div id="{{menuitem.collapse}}" class="collapse" *ngIf="menuitem.collapse">
+      <div id="{{menuitem.collapse}}" class="collapse " *ngIf="menuitem.collapse">
         <ul class="nav">
           <li routerLinkActive="active" *ngFor="let childitem of menuitem.subMenuItemList">
             <a [routerLink]="[menuitem.path, childitem.path]">

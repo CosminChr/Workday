@@ -27,7 +27,7 @@ public class Admin extends User implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private Role role;
+    private RoleReferential role;
 
     public Admin() {
     }
@@ -71,11 +71,11 @@ public class Admin extends User implements Serializable {
     }
 
     @Override
-    public Role getRole() {
+    public RoleReferential getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(RoleReferential role) {
         this.role = role;
     }
 }

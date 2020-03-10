@@ -4,8 +4,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet id="create_table_workday_role_ref" author="cosminchiriac">
-        <createTable tableName="workday_role_ref">
+    <changeSet id="create_table_workday_job_position_ref" author="cosminchiriac">
+        <createTable tableName="workday_job_position_ref">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"></constraints>
             </column>
@@ -15,9 +15,9 @@
 
     <changeSet id="users" author="cosminchiriac">
         <loadData  encoding="UTF-8"
-                   file="config/liquibase/loaddata/roles.csv"
+                   file="config/liquibase/loaddata/jobPositions.csv"
                    separator=";"
-                   tableName="workday_role_ref">
+                   tableName="workday_job_position_ref">
         </loadData>
     </changeSet>
 </databaseChangeLog>

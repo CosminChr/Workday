@@ -13,11 +13,11 @@ public abstract class User {
 
     public abstract String getPassword();
 
-    public Role getRole() {
-        return new Role();
+    public RoleReferential getRole() {
+        return new RoleReferential();
     }
 
-    public Set<Role> getRoles() {
+    public Set<RoleReferential> getRoles() {
         return Collections.EMPTY_SET;
     }
 }

@@ -13,8 +13,8 @@
             <column name="email" type="varchar(30)"/>
             <column name="password" type="varchar(60)"/>
             <column name="role_id" type="bigint">
-                <constraints foreignKeyName="fk_workday_admin_role_id"
-                             referencedTableName="workday_role"
+                <constraints foreignKeyName="fk_workday_admin_role_ref_id"
+                             referencedTableName="workday_role_ref"
                              referencedColumnNames="id" deleteCascade="false" nullable="false"/>
             </column>
         </createTable>

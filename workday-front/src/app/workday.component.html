@@ -3,10 +3,8 @@
   *ngIf="isConnected">
     <workday-sidebar *ngIf="isConnected"></workday-sidebar>
   </div>
-  <div [ngClass]="{'main-panel' : isConnected, '' : !isConnected}">
+  <div [ngClass]="{'main-panel' : isConnected, '' : !isConnected}" class ="main">
     <router-outlet></router-outlet>
-    <div >
-    </div>
   </div>
 </div>
 

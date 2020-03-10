@@ -10,7 +10,7 @@ export class WorkdayService {
 
   isConnected: boolean;
 
-  getIsConnected(): BehaviorSubject<boolean> {
+  getStoredIsConnected(): BehaviorSubject<boolean> {
     return this.storedIsConnected;
   }
 

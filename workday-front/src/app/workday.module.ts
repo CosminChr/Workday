@@ -6,14 +6,7 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {WorkdayRoutes} from './workday-routing';
 import {WorkdayComponent} from './workday.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {
-  MatDatepickerModule,
-  MatFormFieldModule,
-  MatNativeDateModule,
-  MatProgressSpinnerModule,
-  MatTabsModule
-} from "@angular/material";
-import {MaterialModule} from "./material.module";
+
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {SidebarComponent} from "./shared/components/sidebar/sidebar.component";
@@ -21,6 +14,8 @@ import {SidebarComponent} from "./shared/components/sidebar/sidebar.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {RouterModule} from "@angular/router";
 import {HttpModule} from "@angular/http";
+import {apiInterceptorProvider} from "./core/interceptors/api.interceptor";
+import {authInterceptorProvider} from "./core/interceptors/auth.interceptor";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -41,13 +36,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MaterialModule,
-    MatNativeDateModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    NgbModule.forRoot(),
+    NgbModule,
 
     TranslateModule.forRoot({
       loader: {
@@ -56,10 +46,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    MatTabsModule
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [authInterceptorProvider,
+  apiInterceptorProvider],
   bootstrap: [WorkdayComponent]
 })
 export class WorkdayModule {
