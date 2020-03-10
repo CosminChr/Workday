@@ -1,9 +1,9 @@
 path;name;collapse;icon_name
-/profile;My profile;profile;nc-single-02
-/holidays;Holidays;null;nc-sun-fog-29
-/certificates;Certificates;null;nc-single-copy-04
-/medicalServices;Medical services;null;nc-ambulance
+/profile;Profilul meu;profile;nc-single-02
+/holidays;Concedii;null;nc-sun-fog-29
+/certificates;Adeverințe;null;nc-single-copy-04
+/medicalServices;Servicii Medicale;null;nc-ambulance
 /workFromHome;Work From Home;null;nc-laptop
 /overtime;Overtime;null;nc-user-run
-/companyJobs;Company Jobs;null;nc-badge
+/companyJobs;Joburile Companiei;null;nc-badge
 

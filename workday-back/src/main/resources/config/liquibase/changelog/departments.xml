@@ -4,22 +4,20 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet id="create_table_workday_employee" author="cosminchiriac">
-        <createTable tableName="workday_employee">
+    <changeSet id="create_table_workday_department_ref" author="cosminchiriac">
+        <createTable tableName="workday_department_ref">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"></constraints>
             </column>
-            <column name="username" type="varchar(30)"/>
-            <column name="email" type="varchar(30)"/>
-            <column name="password" type="varchar(60)"/>
+            <column name="label" type="varchar(100)"/>
         </createTable>
     </changeSet>
 
     <changeSet id="users" author="cosminchiriac">
         <loadData  encoding="UTF-8"
-                   file="config/liquibase/loaddata/employees.csv"
+                   file="config/liquibase/loaddata/departments.csv"
                    separator=";"
-                   tableName="workday_employee">
+                   tableName="workday_department_ref">
         </loadData>
     </changeSet>
 </databaseChangeLog>

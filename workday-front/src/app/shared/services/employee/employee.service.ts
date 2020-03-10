@@ -1,19 +1,22 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
+import {Employee} from "../../models/employee.model";
+import {AuthService} from "../../../core/services/security/auth.service";
 
-const API_URL = 'http://localhost:8080/api/test/';
+const EMPLOYEE_API = 'employee/';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  employee: any;
+  employee: Employee;
 
   storedEmployee = new BehaviorSubject(this.employee);
 
-  getSavedEmployee() {
+  getSavedEmployee(): Employee {
     return this.employee;
   }
 
@@ -26,30 +29,17 @@ export class EmployeeService {
     this.storedEmployee.next(employee);
   }
 
-
-
-
-
-  constructor(private http: HttpClient) { }
-
-  getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'all', { responseType: 'text' });
+  constructor(private http: HttpClient,
+              private authService: AuthService) {
   }
 
-  getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'user', { responseType: 'text' });
+
+  getEmployee(username: string): Observable<Object> {
+    return this.http.get(EMPLOYEE_API + username);
   }
 
-  getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + 'mod', { responseType: 'text' });
-  }
-
-  getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'admin', { responseType: 'text' });
-  }
-
-  getCurrentUser() {
-    return
+  putEmployee(employee: Employee): Observable<Object> {
+    return this.http.put(EMPLOYEE_API, employee);
   }
 
 

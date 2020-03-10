@@ -35,8 +35,6 @@
 //   }
 // }
 
-import {Input, ViewEncapsulation} from '@angular/core';
-
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "./core/services/security/token-storage.service";
 import {Router} from "@angular/router";
@@ -55,24 +53,21 @@ export class WorkdayComponent implements OnInit {
   constructor(private tokenStorageService: TokenStorageService,
               private employeeService: EmployeeService,
               private workdayService: WorkdayService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
-    //  localStorage.clear();
-   // console.log(  this.isConnected);
-    this.workdayService.getIsConnected().asObservable().subscribe(value => {
-      this.isConnected = value;
-    });
+  //  localStorage.clear();
+
+   this.workdayService.getStoredIsConnected().asObservable()
+     .subscribe(
+     data => {
+       this.isConnected = data;
+     });
     this.isConnected = !!this.tokenStorageService.getToken();
+
     if (this.isConnected) {
-      // this.currentUser = this.tokenStorageService.getUser();
-       this.employeeService.setStoredEmployee(this.tokenStorageService.getUser());
-      //console.log("userul curent",this.employeeService.getSavedEmployee());
       this.router.navigate(['/profile/personalData']);
-      // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      // this.showModeratorBoard = this.roles.includes('ROLE_MANAGER');
-      //
-      // this.username = user.username;
     } else {
       this.router.navigate(['/login']);
     }
@@ -80,10 +75,5 @@ export class WorkdayComponent implements OnInit {
 
   logout() {
     this.tokenStorageService.signOut();
-    window.location.reload();
-  }
-
-  userIsConnected(isConnected: boolean) {
-    this.isConnected = isConnected;
   }
 }

@@ -1,9 +1,9 @@
 path;name;acronym;menu_item_id
-personalData;Personal Data;PD;1
-address;Address;AD;1
-bankAccount;Bank Account;BA;1
-personalDocuments;Personal Documents;PD;1
-employmentHistory;Employment History;EY;1
-maritalStatus;Marital Status/Children;MS;1
-citizenship;Citizenhsip/Foreign Languages;C;1
-studies;Studies;S;1
+personalData;Date Personale;DP;1
+address;Adresa;AD;1
+bankAccount;Cont Bancar;CB;1
+personalDocuments;Documente Personale;DP;1
+employmentHistory;Istoric Angajare;IA;1
+maritalStatus;Stare Civilă/Copii;SC;1
+citizenship;Cetățenie/Limbi Straine;C;1
+studies;Studii;S;1

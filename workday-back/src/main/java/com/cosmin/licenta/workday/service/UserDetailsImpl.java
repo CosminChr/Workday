@@ -40,10 +40,10 @@ public class UserDetailsImpl implements UserDetails {
         List<GrantedAuthority> authorities;
         if (user instanceof Employee) {
             authorities = user.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                    .map(role -> new SimpleGrantedAuthority(role.getLabel()))
                     .collect(Collectors.toList());
         } else {
-            authorities = Stream.of(new SimpleGrantedAuthority(user.getRole().getName().name()))
+            authorities = Stream.of(new SimpleGrantedAuthority(user.getRole().getLabel()))
                     .collect(Collectors.toList());
         }
 

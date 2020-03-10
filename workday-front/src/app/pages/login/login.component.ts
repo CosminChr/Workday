@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {EmployeeService} from "../../shared/services/employee/employee.service";
 import {WorkdayService} from "../../workday.service";
+import {HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'workday-login',
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(private authService: AuthService,
-              private tokenStorage: TokenStorageService,
+              private tokenStorageService: TokenStorageService,
               private employeeService: EmployeeService,
               private workDayService: WorkdayService,
               private formBuilder: FormBuilder,
@@ -36,8 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.tokenStorage.getToken()) {
-
+    if (this.tokenStorageService.getToken()) {
       this.workDayService.setIsConnected(true);
       //this.roles = this.tokenStorage.getUser().roles;
     } else {
@@ -49,45 +49,18 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.loginForm).subscribe(
       data => {
-        this.tokenStorage.saveToken(data.accessToken);
-        //this.employeeService.setStoredEmployee(data.username);
-        this.tokenStorage.saveUser(data);
-
+        this.tokenStorageService.saveToken(data.accessToken);
+        this.tokenStorageService.saveUser(data);
+        //this.roles = this.tokenStorage.getUser().roles;
         this.isLoginFailed = false;
-
         this.workDayService.setIsConnected(true);
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }, () => {
         this.router.navigate(['/profile/personalData']);
-        //this.roles = this.tokenStorage.getUser().roles;
-        // this.reloadPage();
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
-      }
-    );
-  }
-
-  functie() {
-    this.authService.register(["copilescumic", "copilescu@gmail.com", "copilescumic"]).subscribe(
-      data => {
-        // this.tokenStorage.saveToken(data.accessToken);
-        // this.tokenStorage.saveUser(data);
-        //
-        // this.isLoginFailed = false;
-        //   this.isConnected.emit(true);
-        //this.roles = this.tokenStorage.getUser().roles;
-        // this.reloadPage();
-        console.log("s-a apeelat mizeria");
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
-      }
-    );
-  }
-
-  reloadPage() {
-    window.location.reload();
+      });
   }
 
   private createLoginForm() {

@@ -5,7 +5,7 @@ import com.cosmin.licenta.workday.dto.request.LoginRequestDTO;
 import com.cosmin.licenta.workday.dto.request.SignupRequestDTO;
 import com.cosmin.licenta.workday.dto.response.JwtResponseDTO;
 import com.cosmin.licenta.workday.dto.response.MessageResponseDTO;
-import com.cosmin.licenta.workday.entity.Role;
+import com.cosmin.licenta.workday.entity.RoleReferential;
 import com.cosmin.licenta.workday.entity.Employee;
 import com.cosmin.licenta.workday.repository.RoleRepository;
 import com.cosmin.licenta.workday.repository.EmployeeRepository;
@@ -88,29 +88,29 @@ public class AuthController {
                 encoder.encode(signUpRequestDTO.getPassword()));
 
         Set<String> strRoles = signUpRequestDTO.getRole();
-        Set<Role> roles = new HashSet<>();
+        Set<RoleReferential> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(RoleTypeEnum.employee)
+            RoleReferential userRole = roleRepository.findByLabel(RoleTypeEnum.EMPLOYEE.getLabel())
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(RoleTypeEnum.admin)
+                        RoleReferential adminRole = roleRepository.findByLabel(RoleTypeEnum.ADMIN.getLabel())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
                     case "mod":
-                        Role modRole = roleRepository.findByName(RoleTypeEnum.manager)
+                        RoleReferential modRole = roleRepository.findByLabel(RoleTypeEnum.MANAGER.getLabel())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
 
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(RoleTypeEnum.employee)
+                        RoleReferential userRole = roleRepository.findByLabel(RoleTypeEnum.EMPLOYEE.getLabel())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }
