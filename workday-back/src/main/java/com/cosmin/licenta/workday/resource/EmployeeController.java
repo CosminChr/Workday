@@ -27,4 +27,10 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getEmployee(username));
     }
 
+    @PutMapping("/")
+    public ResponseEntity<EmployeeDTO> putEmployee(@RequestBody final EmployeeDTO employee) {
+        return ResponseEntity.ok(employeeService.putEmployee(employee));
+    }
+
+
 }

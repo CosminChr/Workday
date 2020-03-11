@@ -25,7 +25,7 @@
             <column name="entity" type="varchar(30)"/>
             <column name="location" type="varchar(30)"/>
             <column name="department_id" type="bigint"/>
-            <column name="it_deduction" type="bit"/>
+            <column name="it_deduction" type="boolean"/>
             <column name="joining_date" type="date"/>
             <column name="current_position_starting_date" type="date"/>
         </createTable>

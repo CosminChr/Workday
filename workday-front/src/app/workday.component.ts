@@ -1,40 +1,3 @@
-// import {Component, OnInit} from '@angular/core';
-// import {TokenStorageService} from "./core/services/security/token-storage.service";
-//
-// @Component({
-//   selector: 'workday-root',
-//   templateUrl: './workday.component.html',
-//   styleUrls: ['./workday.component.scss']
-// })
-// export class WorkdayComponent implements OnInit {
-//   private roles: string[];
-//   isLoggedIn = false;
-//   showAdminBoard = false;
-//   showModeratorBoard = false;
-//   username: string;
-//
-//   constructor(private tokenStorageService: TokenStorageService) { }
-//
-//   ngOnInit() {
-//     this.isLoggedIn = !!this.tokenStorageService.getToken();
-//
-//     if (this.isLoggedIn) {
-//       const user = this.tokenStorageService.getUser();
-//       this.roles = user.roles;
-//
-//       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-//       this.showModeratorBoard = this.roles.includes('ROLE_MANAGER');
-//
-//       this.username = user.username;
-//     }
-//   }
-//
-//   logout() {
-//     this.tokenStorageService.signOut();
-//     window.location.reload();
-//   }
-// }
-
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "./core/services/security/token-storage.service";
 import {Router} from "@angular/router";
@@ -57,7 +20,7 @@ export class WorkdayComponent implements OnInit {
   }
 
   ngOnInit() {
-  //  localStorage.clear();
+ // localStorage.clear();
 
    this.workdayService.getStoredIsConnected().asObservable()
      .subscribe(

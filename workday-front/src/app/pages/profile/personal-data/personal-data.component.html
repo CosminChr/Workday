@@ -8,28 +8,27 @@
           <h4 class="card-title">Date Personale</h4>
         </div>
         <div class="card-body ">
-          <form method="get" action="/" class="form-horizontal">
-
+          <form [formGroup]="personalDataForm" method="get" action="/" class="form-horizontal"
+                *ngIf="personalDataForm">
             <div class="row">
-<!--              <label class="col-sm-2 col-form-label">Column sizing</label>-->
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Nume</label>
-                      <input type="text" class="form-control" placeholder="Nume">
+                      <input formControlName="lastName" type="text" class="form-control" placeholder="Nume">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Prenume</label>
-                      <input type="text" class="form-control" placeholder="Prenume">
+                      <input formControlName="firstName" type="text" class="form-control" placeholder="Prenume">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Gen</label>
-                      <input type="text" class="form-control" placeholder="Gen">
+                      <input formControlName="gender" type="text" class="form-control" placeholder="Gen">
                     </div>
                   </div>
                 </div>
@@ -38,25 +37,25 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Locul nasterii</label>
-                      <input type="text" class="form-control" placeholder="Locul nașterii">
+                      <input formControlName="birthPlace" type="text" class="form-control" placeholder="Locul nașterii">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>CNP</label>
-                      <input type="text" class="form-control" placeholder="CNP">
+                      <input formControlName="personIdentifier" type="text" class="form-control" placeholder="CNP">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Data nașterii</label>
-                      <input type="text" class="form-control" placeholder="Data nașterii">
+                      <input formControlName="birthDate" type="text" class="form-control" placeholder="Data nașterii">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Nume anterior căsătoriei</label>
-                      <input type="text" class="form-control" placeholder="Nume anterior căsătoriei">
+                      <input formControlName="birthName" type="text" class="form-control" placeholder="Nume anterior căsătoriei">
                     </div>
                   </div>
                 </div>
@@ -65,24 +64,30 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Email</label>
-                      <input type="text" class="form-control" placeholder="Email">
+                      <input formControlName="email" type="text" class="form-control" placeholder="Email">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Telefon fix</label>
-                      <input type="text" class="form-control" placeholder="Telefon fix">
+                      <input formControlName="homePhoneNumber" type="text" class="form-control" placeholder="Telefon fix">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Telefon mobil</label>
-                      <input type="text" class="form-control" placeholder="Telefon mobil">
+                      <input formControlName="mobilePhoneNumber" type="text" class="form-control" placeholder="Telefon mobil">
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putPersonalData()">Salvează</button>
+            </div>
+
           </form>
         </div>
       </div>
@@ -95,28 +100,27 @@
           <h4 class="card-title">Date Angajat</h4>
         </div>
         <div class="card-body ">
-          <form method="get" action="/" class="form-horizontal">
-
+          <form [formGroup]="employeeDataForm" method="get" action="/" class="form-horizontal"
+          *ngIf="employeeDataForm">
             <div class="row">
-              <!--              <label class="col-sm-2 col-form-label">Column sizing</label>-->
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Funcție</label>
-                      <input type="text" class="form-control" placeholder="Funcție">
+                      <input formControlName="jobPosition" type="text" class="form-control" placeholder="Funcție">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Entitate</label>
-                      <input type="text" class="form-control" placeholder="Entitate">
+                      <input formControlName="entity" type="text" class="form-control" placeholder="Entitate">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Locație</label>
-                      <input type="text" class="form-control" placeholder="Locație">
+                      <input formControlName="location" type="text" class="form-control" placeholder="Locație">
                     </div>
                   </div>
                 </div>
@@ -125,28 +129,28 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Departament</label>
-                      <input type="text" class="form-control" placeholder="Departament">
+                      <input formControlName="department" type="text" class="form-control" placeholder="Departament">
                     </div>
                   </div>
 
-<!--                  <div class="col-lg-5 col-md-6 col-sm-3">-->
-<!--                    <select class="selectpicker" data-size="7" data-style="btn btn-outline-danger btn-round" title="Departament" >-->
-<!--                      <option disabled selected>Departament</option>-->
-<!--                      <option value="2">SSCM/CORP</option>-->
-<!--                      <option value="3">SSCM/HR</option>-->
-<!--                      <option value="4">SSCM/FIN</option>-->
-<!--                      <option value="5">SSCM/ITIM</option>-->
-<!--                    </select>-->
-<!--                  </div>-->
+                  <!--                  <div class="col-lg-5 col-md-6 col-sm-3">-->
+                  <!--                    <select class="selectpicker" data-size="7" data-style="btn btn-outline-danger btn-round" title="Departament" >-->
+                  <!--                      <option disabled selected>Departament</option>-->
+                  <!--                      <option value="2">SSCM/CORP</option>-->
+                  <!--                      <option value="3">SSCM/HR</option>-->
+                  <!--                      <option value="4">SSCM/FIN</option>-->
+                  <!--                      <option value="5">SSCM/ITIM</option>-->
+                  <!--                    </select>-->
+                  <!--                  </div>-->
 
                   <div class="col-md-4">
                     <div class="form-group">
-                   <label></label>
+                      <label></label>
 
                       <div class="col-sm-10 checkbox-radios">
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox">
+                            <input formControlName="ITDeduction" class="form-check-input" type="checkbox">
                             <span class="form-check-sign"></span>
                             Scutire impozit personal IT
                           </label>
@@ -156,43 +160,44 @@
 
                     </div>
                   </div>
-<!--                  <div class="col-md-3">-->
-<!--                    <div class="form-group">-->
-<!--                      <label>Data nașterii</label>-->
-<!--                      <input type="text" class="form-control" placeholder="Data nașterii">-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-3">-->
-<!--                    <div class="form-group">-->
-<!--                      <label>Nume anterior căsătoriei</label>-->
-<!--                      <input type="text" class="form-control" placeholder="Nume anterior căsătoriei">-->
-<!--                    </div>-->
-<!--                  </div>-->
+                  <!--                  <div class="col-md-3">-->
+                  <!--                    <div class="form-group">-->
+                  <!--                      <label>Data nașterii</label>-->
+                  <!--                      <input type="text" class="form-control" placeholder="Data nașterii">-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
+                  <!--                  <div class="col-md-3">-->
+                  <!--                    <div class="form-group">-->
+                  <!--                      <label>Nume anterior căsătoriei</label>-->
+                  <!--                      <input type="text" class="form-control" placeholder="Nume anterior căsătoriei">-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
                 </div>
 
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Data angajării</label>
-                      <input type="text" class="form-control" placeholder="Data angajării">
+                      <input formControlName="joiningDate" type="text" class="form-control" placeholder="Data angajării">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Data ultimei modificări de poziție</label>
-                      <input type="text" class="form-control" placeholder="Data ultimei modificări de poziție">
+                      <input formControlName="currentPositionStartingDate" type="text" class="form-control" placeholder="Data ultimei modificări de poziție">
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putEmployeeData()">Salvează</button>
+            </div>
+
           </form>
         </div>
       </div>
     </div>
-
-
-
-
   </div>
 </div>

@@ -34,12 +34,12 @@ export class EmployeeService {
   }
 
 
-  getEmployee(username: string): Observable<Object> {
-    return this.http.get(EMPLOYEE_API + username);
+  getEmployee(username: string): Observable<Employee> {
+    return this.http.get<Employee>(EMPLOYEE_API + username);
   }
 
-  putEmployee(employee: Employee): Observable<Object> {
-    return this.http.put(EMPLOYEE_API, employee);
+  putEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(EMPLOYEE_API, employee);
   }
 
 
