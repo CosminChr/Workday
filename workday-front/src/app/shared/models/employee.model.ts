@@ -1,3 +1,5 @@
+import {Referential} from "./referential.model";
+
 export class Employee {
 
   id: number;
@@ -6,11 +8,13 @@ export class Employee {
 
   email: string;
 
+  password: string;
+
   lastName: string;
 
   firstName: string;
 
-  gender: string;
+  gender: Referential;
 
   birthPlace: string;
 
@@ -23,5 +27,19 @@ export class Employee {
   homePhoneNumber: string;
 
   mobilePhoneNumber: string;
+
+  jobPosition: Referential;
+
+  entity: string;
+
+  location: string;
+
+  department: Referential;
+
+  ITDeduction: boolean;
+
+  joiningDate: Date;
+
+  currentPositionStartingDate: Date;
 
 }

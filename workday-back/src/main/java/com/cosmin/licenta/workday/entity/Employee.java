@@ -20,11 +20,9 @@ public class Employee extends User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Size(max = 30)
     private String username;
 
-    @NotBlank
     @Size(max = 30)
     @Email
     private String email;
@@ -82,7 +80,7 @@ public class Employee extends User implements Serializable {
     private DepartmentReferential department;
 
     @Column(name = "it_deduction")
-    private boolean ITDeduction;
+    private Boolean ITDeduction;
 
     @Column(name = "joining_date")
     private LocalDate joiningDate;
@@ -245,11 +243,11 @@ public class Employee extends User implements Serializable {
         this.department = department;
     }
 
-    public boolean isITDeduction() {
+    public Boolean isITDeduction() {
         return ITDeduction;
     }
 
-    public void setITDeduction(boolean ITDeduction) {
+    public void setITDeduction(Boolean ITDeduction) {
         this.ITDeduction = ITDeduction;
     }
 
