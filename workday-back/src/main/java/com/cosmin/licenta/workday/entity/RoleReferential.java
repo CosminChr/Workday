@@ -1,6 +1,5 @@
 package com.cosmin.licenta.workday.entity;
 
-import com.cosmin.licenta.workday.util.RoleTypeEnum;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 import javax.persistence.*;

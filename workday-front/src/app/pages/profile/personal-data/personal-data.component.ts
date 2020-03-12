@@ -61,8 +61,8 @@ export class PersonalDataComponent implements OnInit {
       'location': [this.employee.location, [Validators.required, Validators.maxLength(30)]],
       'department': [this.employee.department ? this.employee.department.label : '', [Validators.required, Validators.maxLength(20)]],
       'ITDeduction': [this.employee.ITDeduction, [Validators.required]],
-      'joiningDate': [this.employee.joiningDate, [Validators.required]],
-      'currentPositionStartingDate': [this.employee.currentPositionStartingDate, [Validators.required]],
+      'joiningDate': [this.employee.joiningDate ? formatDate(this.employee.joiningDate): '', [Validators.required]],
+      'currentPositionStartingDate': [this.employee.currentPositionStartingDate ? formatDate(this.employee.currentPositionStartingDate) : '', [Validators.required]],
     });
     return this.employeeDataForm;
   }
@@ -91,12 +91,27 @@ export class PersonalDataComponent implements OnInit {
     this.employee.homePhoneNumber = this.personalDataForm.controls.homePhoneNumber.value;
     this.employee.mobilePhoneNumber = this.personalDataForm.controls.mobilePhoneNumber.value;
 
-    console.log(this.employee);
-
     this.employeeService.putEmployee(this.employee).subscribe();
   }
 
   putEmployeeData() {
+    if (!this.employee.jobPosition) {
+      this.employee.jobPosition = new Referential();
+    }
+    this.employee.jobPosition.label = this.employeeDataForm.controls.jobPosition.value;
+    this.employee.entity = this.employeeDataForm.controls.entity.value;
+    this.employee.location = this.employeeDataForm.controls.location.value;
+    if (!this.employee.department) {
+      this.employee.department = new Referential();
+    }
+    this.employee.department.label = this.employeeDataForm.controls.department.value;
+    this.employee.ITDeduction = this.employeeDataForm.controls.ITDeduction.value;
+   // console.log("valoarea",this.personalDataForm.controls);
+    //console.log("valoarea",this.personalDataForm.controls.ITDeduction.value);
+    this.employee.joiningDate = parseDate(this.employeeDataForm.controls.joiningDate.value);
+    this.employee.currentPositionStartingDate = parseDate(this.employeeDataForm.controls.currentPositionStartingDate.value);
+
+
 
 
     this.employeeService.putEmployee(this.employee).subscribe();

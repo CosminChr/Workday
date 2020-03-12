@@ -1,12 +1,12 @@
 package com.cosmin.licenta.workday.util;
 
-public enum GenderEnum {
+public enum GenderReferentialEnum {
     MALE("Male"),
     FEMALE("Female");
 
     private String label;
 
-    GenderEnum(String label) {
+    GenderReferentialEnum(String label) {
         this.label = label;
     }
 

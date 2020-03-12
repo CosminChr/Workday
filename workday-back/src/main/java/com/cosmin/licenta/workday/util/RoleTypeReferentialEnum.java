@@ -1,13 +1,13 @@
 package com.cosmin.licenta.workday.util;
 
-public enum RoleTypeEnum {
+public enum RoleTypeReferentialEnum {
     ADMIN("Admin"),
     EMPLOYEE("Employee"),
     MANAGER("Manager");
 
     private String label;
 
-    RoleTypeEnum(String label) {
+    RoleTypeReferentialEnum(String label) {
         this.label = label;
     }
 

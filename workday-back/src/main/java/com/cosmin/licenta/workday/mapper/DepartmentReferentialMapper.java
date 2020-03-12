@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface DepartmentMapper {
+public interface DepartmentReferentialMapper {
 
     DepartmentReferential domainToEntity(final ReferentialDTO source);
 

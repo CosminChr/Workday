@@ -2,17 +2,16 @@ package com.cosmin.licenta.workday.mapper;
 
 import com.cosmin.licenta.workday.dto.EmployeeDTO;
 import com.cosmin.licenta.workday.entity.Employee;
-import com.cosmin.licenta.workday.entity.JobPositionReferential;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {RoleMapper.class,
-        GenderMapper.class,
-        JobPositionMapper.class,
-        DepartmentMapper.class})
+@Mapper(componentModel = "spring", uses = {RoleReferentialMapper.class,
+        GenderReferentialMapper.class,
+        JobPositionReferentialMapper.class,
+        DepartmentReferentialMapper.class})
 public interface EmployeeMapper {
 
     Employee domainToEntity(final EmployeeDTO source);
