@@ -4,7 +4,8 @@ import {TokenStorageService} from "../../../core/services/security/token-storage
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Employee} from "../../../shared/models/employee.model";
 import {Referential} from "../../../shared/models/referential.model";
-import {parseDate, formatDate} from "../../../shared/utils/utils";
+import {formatDate, parseDate} from "../../../shared/utils/utils";
+
 
 @Component({
   selector: 'app-personal-data',
@@ -28,7 +29,6 @@ export class PersonalDataComponent implements OnInit {
   ngOnInit() {
     this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe(
       data => {
-        console.log(data);
         this.employeeService.setStoredEmployee(data);
         this.employee = data as Employee;
         this.personalDataForm = this.createPersonalDataForm();
@@ -37,14 +37,15 @@ export class PersonalDataComponent implements OnInit {
       });
   }
 
+
   createPersonalDataForm(): FormGroup {
     this.personalDataForm = this.formBuilder.group({
       'lastName': [this.employee.lastName, [Validators.required, Validators.maxLength(30)]],
       'firstName': [this.employee.firstName, [Validators.required, Validators.maxLength(30)]],
-      'gender': [this.employee.gender ? this.employee.gender.label: '', [Validators.required, Validators.maxLength(10)]],
+      'gender': [this.employee.gender ? this.employee.gender.label : '', [Validators.required, Validators.maxLength(10)]],
       'birthPlace': [this.employee.birthPlace, [Validators.required, Validators.maxLength(13)]],
       'personIdentifier': [this.employee.personIdentifier, [Validators.required, Validators.minLength(13), Validators.maxLength(13)]],
-      'birthDate': [this.employee.birthDate ? formatDate(this.employee.birthDate): '', [Validators.required]],
+      'birthDate': [this.employee.birthDate ? formatDate(this.employee.birthDate) : '', [Validators.required]],
       'birthName': [this.employee.birthName, [Validators.required, Validators.maxLength(40)]],
       'email': [this.employee.email, [Validators.required, Validators.maxLength(40)]],
       'homePhoneNumber': [this.employee.homePhoneNumber, [Validators.maxLength(10)]],
@@ -61,8 +62,8 @@ export class PersonalDataComponent implements OnInit {
       'location': [this.employee.location, [Validators.required, Validators.maxLength(30)]],
       'department': [this.employee.department ? this.employee.department.label : '', [Validators.required, Validators.maxLength(20)]],
       'ITDeduction': [this.employee.ITDeduction, [Validators.required]],
-      'joiningDate': [this.employee.joiningDate, [Validators.required]],
-      'currentPositionStartingDate': [this.employee.currentPositionStartingDate, [Validators.required]],
+      'joiningDate': [this.employee.joiningDate ? formatDate(this.employee.joiningDate) : '', [Validators.required]],
+      'currentPositionStartingDate': [this.employee.currentPositionStartingDate ? formatDate(this.employee.currentPositionStartingDate) : '', [Validators.required]],
     });
     return this.employeeDataForm;
   }
@@ -85,18 +86,31 @@ export class PersonalDataComponent implements OnInit {
     this.employee.gender.label = this.personalDataForm.controls.gender.value;
     this.employee.birthPlace = this.personalDataForm.controls.birthPlace.value;
     this.employee.personIdentifier = this.personalDataForm.controls.personIdentifier.value;
-    this.employee.birthDate =  parseDate(this.personalDataForm.controls.birthDate.value);
+    this.employee.birthDate = parseDate(this.personalDataForm.controls.birthDate.value);
     this.employee.birthName = this.personalDataForm.controls.birthName.value;
     this.employee.email = this.personalDataForm.controls.email.value;
     this.employee.homePhoneNumber = this.personalDataForm.controls.homePhoneNumber.value;
     this.employee.mobilePhoneNumber = this.personalDataForm.controls.mobilePhoneNumber.value;
 
-    console.log(this.employee);
-
     this.employeeService.putEmployee(this.employee).subscribe();
   }
 
   putEmployeeData() {
+    if (!this.employee.jobPosition) {
+      this.employee.jobPosition = new Referential();
+    }
+    this.employee.jobPosition.label = this.employeeDataForm.controls.jobPosition.value;
+    this.employee.entity = this.employeeDataForm.controls.entity.value;
+    this.employee.location = this.employeeDataForm.controls.location.value;
+    if (!this.employee.department) {
+      this.employee.department = new Referential();
+    }
+    this.employee.department.label = this.employeeDataForm.controls.department.value;
+    this.employee.ITDeduction = this.employeeDataForm.controls.ITDeduction.value;
+    // console.log("valoarea",this.personalDataForm.controls);
+    //console.log("valoarea",this.personalDataForm.controls.ITDeduction.value);
+    this.employee.joiningDate = parseDate(this.employeeDataForm.controls.joiningDate.value);
+    this.employee.currentPositionStartingDate = parseDate(this.employeeDataForm.controls.currentPositionStartingDate.value);
 
 
     this.employeeService.putEmployee(this.employee).subscribe();

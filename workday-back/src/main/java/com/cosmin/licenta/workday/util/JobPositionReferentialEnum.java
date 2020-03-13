@@ -1,6 +1,6 @@
 package com.cosmin.licenta.workday.util;
 
-public enum JobPositionEnum {
+public enum JobPositionReferentialEnum {
     PROGRAMMER_ANALYST("Programmer analyst"),
     DATA_ANALYST("Data analyst"),
     SOFTWARE_DEVELOPER("Software developer"),
@@ -55,7 +55,7 @@ public enum JobPositionEnum {
 
     private String label;
 
-    JobPositionEnum(String label) {
+    JobPositionReferentialEnum(String label) {
         this.label = label;
     }
 

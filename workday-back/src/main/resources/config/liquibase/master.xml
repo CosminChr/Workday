@@ -11,4 +11,6 @@
     <include file="classpath:config/liquibase/changelog/departments.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/genders.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/jobPositions.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/holidays.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/holidays_refs.xml" relativeToChangelogFile="false"></include>
 </databaseChangeLog>
