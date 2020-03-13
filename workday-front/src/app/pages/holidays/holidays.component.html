@@ -2,41 +2,21 @@
 <div class="main-content">
 
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-12" >
       <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">An</h4>
-        </div>
         <div class="card-body">
-
-
-          <div class="row">
-
-            <div class="col-lg-5 col-md-6 col-sm-3">
-              <select class="selectpicker" data-size="7" data-style="btn btn-outline-danger btn-round" title="Departament" >
-<!--                <option disabled selected>Departament</option>-->
-<!--                <option value="2">SSCM/CORP</option>-->
-<!--                <option value="3">SSCM/HR</option>-->
-<!--                <option value="4">SSCM/FIN</option>-->
-<!--                <option value="5">SSCM/ITIM</option>-->
+          <div class="row" >
+            <div class="col-lg-5 col-md-6 col-sm-3" style="margin: 0vw 1.5vw;">
+              <select class="selectpicker" data-size="7" data-style="btn btn-outline-danger btn-round" title="Anul" [selectedIndex]="0">
+                <option *ngFor="let year of yearsInCompany">
+                  {{year}}
+                </option>
               </select>
             </div>
-
           </div>
-
-
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">Concedii</h4>
-        </div>
-        <div class="card-body">
+
           <div class="table-responsive">
             <table class="table">
               <thead class="">
@@ -159,4 +139,4 @@
       </div>
     </div>
   </div>
-</div>
+
