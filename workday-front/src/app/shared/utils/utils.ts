@@ -16,6 +16,6 @@ export function formatDate(theDate: any): String {
 
 export function dateDifference(date1: Date, date2: Date) :number {
   const diffTime = Math.abs(new Date(date2).getTime() - new Date(date1).getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
 }
