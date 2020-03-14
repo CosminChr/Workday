@@ -5,11 +5,14 @@
     <div class="col-md-12" >
       <div class="card">
         <div class="card-body">
+          <div class="row" style="margin: 0vw 32vw;">
+            <h4>Istoric concedii</h4>
+          </div>
           <div class="row" >
             <div class="col-lg-5 col-md-6 col-sm-3" style="margin: 0vw 1.5vw;">
               <select class="selectpicker" data-size="7" data-style="btn btn-outline-danger btn-round" title="Anul"
                       (change)="selectChangeHandler($event)" >
-                <option  *ngFor="let year of yearsInCompany" [selected]="year == yearsInCompany[yearsInCompany.length-1]">
+                <option  *ngFor="let year of yearsInCompany" [selected]="year == yearsInCompany[yearsInCompany.length-1]" selected = 'selected'>
                   {{year}}
                 </option>
               </select>
@@ -69,6 +72,176 @@
           </div>
         </div>
       </div>
+
+
+
+    <div class="col-md-12" >
+      <div class="card">
+        <div class="card-body">
+          <div class="row" style="margin: 0vw 31vw;">
+            <h4>Concedii an curent</h4>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="">
+            <th>
+           Motiv plecare
+            </th>
+            <th>
+              Zile legale
+            </th>
+            <th>
+              Ianuarie
+            </th>
+            <th>
+              Februarie
+            </th>
+            <th>
+              Martie
+            </th>
+            <th>
+              Aprilie
+            </th>
+            <th>
+              Mai
+            </th>
+            <th>
+              Iunie
+            </th>
+            <th>
+              Iulie
+            </th>
+            <th>
+              August
+            </th>
+            <th>
+              Septembrie
+            </th>
+            <th>
+              Octombrie
+            </th>
+            <th>
+              Noiembrie
+            </th>
+            <th>
+              Decembrie
+            </th>
+            <th>
+              Zile utilizate
+            </th>
+            <th>
+              Zile rămase
+            </th>
+            </thead>
+            <tbody>
+            <tr  *ngFor="let holiday of holidays; let i = index;">
+              <td>
+                Concediu de odihnă
+              </td>
+              <td>
+                 21
+              </td>
+              <td>
+                 {{currentYearLeaveByMonth.get(i)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+1)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+2)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+3)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+4)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+5)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+6)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+7)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+8)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+9)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+10)}}
+              </td>
+              <td>
+                {{currentYearLeaveByMonth.get(i+11)}}
+              </td>
+              <td>
+                {{ getDaysUsedFromCurrentLeave()}}
+              </td>
+              <td>
+                {{18}}
+              </td>
+
+            </tr>
+            <tr  *ngFor="let holiday of holidays; let i = index;">
+              <td>
+                Necesitate medicală
+              </td>
+              <td>
+                3
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+1)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+2)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+3)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+4)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+5)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+6)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+7)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+8)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+9)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+10)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+11)}}
+              </td>
+              <td>
+                {{sickDaysLeaveByMonth.get(i+11)}}
+              </td>
+              <td>
+                {{3}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     </div>
   </div>
 
