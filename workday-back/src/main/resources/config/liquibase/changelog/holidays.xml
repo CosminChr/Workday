@@ -9,19 +9,21 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"></constraints>
             </column>
+            <column name="employee_id" type="bigint"/>
             <column name="holiday_type_id" type="bigint"/>
             <column name="from" type="date"/>
             <column name="to" type="date"/>
+            <column name="approved" type="boolean"/>
+            <column name="validated" type="boolean"/>
             <column name="comment" type="varchar(40)"/>
             <column name="attesting_document" type="blob"/>
         </createTable>
     </changeSet>
-
-<!--    <changeSet id="users" author="cosminchiriac">-->
-<!--        <loadData  encoding="UTF-8"-->
-<!--                   file="config/liquibase/loaddata/holidays.csv"-->
-<!--                   separator=";"-->
-<!--                   tableName="workday_holiday">-->
-<!--        </loadData>-->
-<!--    </changeSet>-->
+    <changeSet id="users" author="cosminchiriac">
+        <loadData  encoding="UTF-8"
+                   file="config/liquibase/loaddata/holidays.csv"
+                   separator=";"
+                   tableName="workday_holiday">
+        </loadData>
+    </changeSet>
 </databaseChangeLog>

@@ -12,12 +12,22 @@ public class Holiday {
     private Long id;
 
     @Size(max = 30)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @Size(max = 30)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "holiday_type_id")
     private HolidayReferential holidayType;
 
     private LocalDate from;
 
     private LocalDate to;
+
+    private boolean approved;
+
+    private boolean validated;
 
     @Size(max = 200)
     private String comment;
@@ -32,6 +42,14 @@ public class Holiday {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public HolidayReferential getHolidayType() {
@@ -56,6 +74,22 @@ public class Holiday {
 
     public void setTo(LocalDate to) {
         this.to = to;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public void setValidated(boolean validated) {
+        this.validated = validated;
     }
 
     public String getComment() {

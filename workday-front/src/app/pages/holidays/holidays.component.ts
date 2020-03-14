@@ -1,8 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Employee} from "../../shared/models/employee.model";
 import {EmployeeService} from "../../shared/services/employee/employee.service";
+import {HolidaysService} from "./holiday.service";
+import {Holiday} from "../../shared/models/holiday.model";
+import {dateDifference} from "../../shared/utils/utils";
 
-declare var require: any;
 declare var $:any;
 
 @Component({
@@ -16,11 +18,20 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
   yearsInCompany = new Array<number>();
 
-  constructor(private employeeService: EmployeeService) { }
+  selectedYear = 2020;
+
+  holidays: Array<Holiday>;
+
+  constructor(private employeeService: EmployeeService,
+              private holidayService: HolidaysService) { }
 
   ngOnInit() {
     this.employee = this.employeeService.getSavedEmployee();
     this.yearsInCompany = this.populateYearsInCompany();
+    this.selectedYear = this.yearsInCompany[this.yearsInCompany.length-1];
+    this.holidayService.getHolidays(this.employee.id).subscribe( data => {
+      this.holidays = data as Array<Holiday>;
+    });
   }
 
 
@@ -35,4 +46,17 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     }
     return this.yearsInCompany;
   }
+
+  dateDifference(date1: Date, date2: Date) {
+    return dateDifference(date1, date2);
+  }
+
+  selectChangeHandler (event: any) {
+    this.selectedYear = event.target.value;
+  }
+
+  yearsAreEqual(date1: Date, year: number): boolean {
+    return new Date(date1).getFullYear() == year;
+  }
+
 }
