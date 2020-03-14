@@ -14,9 +14,9 @@ public class HolidayDTO {
 
     private ReferentialDTO holidayType;
 
-    private LocalDate from;
+    private LocalDate fromDate;
 
-    private LocalDate to;
+    private LocalDate toDate;
 
     private boolean approved;
 
@@ -50,20 +50,20 @@ public class HolidayDTO {
         this.holidayType = holidayType;
     }
 
-    public LocalDate getFrom() {
-        return from;
+    public LocalDate getFromDate() {
+        return fromDate;
     }
 
-    public void setFrom(LocalDate from) {
-        this.from = from;
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public LocalDate getTo() {
-        return to;
+    public LocalDate getToDate() {
+        return toDate;
     }
 
-    public void setTo(LocalDate to) {
-        this.to = to;
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
     }
 
     public boolean isApproved() {
@@ -104,8 +104,8 @@ public class HolidayDTO {
                 .add("id", id)
                 .add("employee", employee)
                 .add("holidayType", holidayType)
-                .add("from", from)
-                .add("to", to)
+                .add("fromDate", fromDate)
+                .add("toDate", toDate)
                 .add("approved", approved)
                 .add("validated", validated)
                 .add("comment", comment)

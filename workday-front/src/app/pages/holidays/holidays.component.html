@@ -1,84 +1,80 @@
-
 <div class="main-content">
-
   <div class="row">
-    <div class="col-md-12" >
+    <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <div class="row" style="margin: 0vw 32vw;">
+          <div class="row" style="margin: 0vw 34vw;">
             <h4>Istoric concedii</h4>
           </div>
-          <div class="row" >
+          <div class="row">
             <div class="col-lg-5 col-md-6 col-sm-3" style="margin: 0vw 1.5vw;">
-              <select class="selectpicker" data-size="7" data-style="btn btn-outline-danger btn-round" title="Anul"
-                      (change)="selectChangeHandler($event)" >
-                <option  *ngFor="let year of yearsInCompany" [selected]="year == yearsInCompany[yearsInCompany.length-1]" selected = 'selected'>
+              <select class="selectpicker" data-size="7" data-style="btn btn-outline-success btn-round" title="Anul"
+                      (change)="selectChangeHandler($event)">
+                <option *ngFor="let year of yearsInCompany" [selected]="year == yearsInCompany[yearsInCompany.length-1]"
+                        selected='selected'>
                   {{year}}
                 </option>
               </select>
             </div>
           </div>
         </div>
-          <div class="table-responsive">
-            <table class="table">
-              <thead class="">
-              <th>
-               De la
-              </th>
-              <th>
-                Până
-              </th>
-              <th>
-                Motiv plecare
-              </th>
-              <th class="text-right">
-                Număr zile
-              </th>
-              <th class="text-right">
-                Stare
-              </th>
-              <th class="text-right">
-                Validat
-              </th>
-              </thead>
-              <tbody>
-              <tr  *ngFor="let holiday of holidays">
-                <td *ngIf="yearsAreEqual(holiday.from, this.selectedYear)">
-                  {{holiday.from}}
-                </td>
-                <td *ngIf="yearsAreEqual(holiday.from, this.selectedYear)">
-                  {{holiday.to}}
-                </td>
-                <td *ngIf="yearsAreEqual(holiday.from, this.selectedYear)">
-                  {{holiday.holidayType.label}}
-                </td>
-                <td class="text-right" *ngIf="yearsAreEqual(holiday.from, this.selectedYear)">
-                  {{dateDifference(holiday.from, holiday.to)}}
-                </td>
-                <td class="text-right" *ngIf="yearsAreEqual(holiday.from, this.selectedYear)">
-                  {{holiday.approved ? 'Aprobat' : 'În aprobare'}}
-                </td>
-                <td class="text-right" *ngIf="yearsAreEqual(holiday.from, this.selectedYear)">
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" [checked]="holiday.validated">
-                      <span class="form-check-sign"></span>
-                    </label>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="">
+            <th>
+              De la
+            </th>
+            <th>
+              Până
+            </th>
+            <th>
+              Motiv plecare
+            </th>
+            <th class="text-right">
+              Număr zile
+            </th>
+            <th class="text-right">
+              Stare
+            </th>
+            <th class="text-right">
+              Validat
+            </th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let holiday of holidays">
+              <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                {{holiday.fromDate}}
+              </td>
+              <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                {{holiday.toDate}}
+              </td>
+              <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                {{holiday.holidayType.label}}
+              </td>
+              <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                {{dateDifference(holiday.fromDate, holiday.toDate)}}
+              </td>
+              <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                {{holiday.approved ? 'Aprobat' : 'În așteptare'}}
+              </td>
+              <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" [checked]="holiday.validated">
+                    <span class="form-check-sign"></span>
+                  </label>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-
-
-
-    <div class="col-md-12" >
+    </div>
+    <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <div class="row" style="margin: 0vw 31vw;">
+          <div class="row" style="margin: 0vw 34vw;">
             <h4>Concedii an curent</h4>
           </div>
         </div>
@@ -86,7 +82,7 @@
           <table class="table">
             <thead class="">
             <th>
-           Motiv plecare
+              Motiv plecare
             </th>
             <th>
               Zile legale
@@ -135,48 +131,48 @@
             </th>
             </thead>
             <tbody>
-            <tr  *ngFor="let holiday of holidays; let i = index;">
+            <tr>
               <td>
                 Concediu de odihnă
               </td>
               <td>
-                 21
+                21
               </td>
               <td>
-                 {{currentYearLeaveByMonth.get(i)}}
+                {{currentYearLeaveByMonth.get(0)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+1)}}
+                {{currentYearLeaveByMonth.get(1)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+2)}}
+                {{currentYearLeaveByMonth.get(2)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+3)}}
+                {{currentYearLeaveByMonth.get(3)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+4)}}
+                {{currentYearLeaveByMonth.get(4)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+5)}}
+                {{currentYearLeaveByMonth.get(5)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+6)}}
+                {{currentYearLeaveByMonth.get(6)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+7)}}
+                {{currentYearLeaveByMonth.get(7)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+8)}}
+                {{currentYearLeaveByMonth.get(8)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+9)}}
+                {{currentYearLeaveByMonth.get(9)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+10)}}
+                {{currentYearLeaveByMonth.get(10)}}
               </td>
               <td>
-                {{currentYearLeaveByMonth.get(i+11)}}
+                {{currentYearLeaveByMonth.get(11)}}
               </td>
               <td>
                 {{ getDaysUsedFromCurrentLeave()}}
@@ -184,9 +180,8 @@
               <td>
                 {{18}}
               </td>
-
             </tr>
-            <tr  *ngFor="let holiday of holidays; let i = index;">
+            <tr>
               <td>
                 Necesitate medicală
               </td>
@@ -194,43 +189,43 @@
                 3
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i)}}
+                {{sickDaysLeaveByMonth.get(0)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+1)}}
+                {{sickDaysLeaveByMonth.get(1)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+2)}}
+                {{sickDaysLeaveByMonth.get(2)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+3)}}
+                {{sickDaysLeaveByMonth.get(3)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+4)}}
+                {{sickDaysLeaveByMonth.get(4)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+5)}}
+                {{sickDaysLeaveByMonth.get(5)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+6)}}
+                {{sickDaysLeaveByMonth.get(6)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+7)}}
+                {{sickDaysLeaveByMonth.get(7)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+8)}}
+                {{sickDaysLeaveByMonth.get(8)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+9)}}
+                {{sickDaysLeaveByMonth.get(9)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+10)}}
+                {{sickDaysLeaveByMonth.get(10)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+11)}}
+                {{sickDaysLeaveByMonth.get(11)}}
               </td>
               <td>
-                {{sickDaysLeaveByMonth.get(i+11)}}
+                {{getDaysUsedFromSickDaysLeave()}}
               </td>
               <td>
                 {{3}}
@@ -241,7 +236,66 @@
         </div>
       </div>
     </div>
-
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body text-center">
+          <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
+                  data-target="#myModal" (click)="reinitializePicker()">Cerere nouă de concediu
+          </button>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Cerere de concediu pentru {{employee.lastName + ' ' + employee.firstName}}</h4>
+        </div>
+        <div class="modal-body">
+          <form  [formGroup]="holidayForm" *ngIf="holidayForm">
+            <div class ="row">
+              <div class="col-lg-5 col-md-6 col-sm-3">
+                <select formControlName = "holidayType" class="selectpicker" data-size="7" data-style="btn btn-outline-success btn-round"
+                        title="Tip concediu">
+                  <option *ngFor="let referential of holidayReferentials">
+                    {{referential.label}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class = "row">
+              <div class="col-md-5 text-center">
+                <div class="form-group">
+                  <label >De la</label>
+                  <input formControlName = "fromDate" type="text" class="form-control text-center" placeholder="De la">
+                </div>
+              </div>
+              <div class="col-md-5 text-center">
+                <div class="form-group">
+                  <label>Până</label>
+                  <input formControlName = "toDate" type="text" class="form-control text-center" placeholder="Până">
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="modal-footer">
+            <div class="left-side">
+              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putHoliday()">Trimite spre validare</button>
+            </div>
+            <div class="divider"></div>
+            <div class="right-side">
+              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 

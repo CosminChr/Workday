@@ -30,20 +30,24 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    @Autowired
+
     AuthenticationManager authenticationManager;
 
-    @Autowired
     EmployeeRepository employeeRepository;
 
-    @Autowired
     RoleReferentialRepository roleReferentialRepository;
 
-    @Autowired
     PasswordEncoder encoder;
 
-    @Autowired
     JwtUtils jwtUtils;
+
+    public AuthController(AuthenticationManager authenticationManager, EmployeeRepository employeeRepository, RoleReferentialRepository roleReferentialRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+        this.authenticationManager = authenticationManager;
+        this.employeeRepository = employeeRepository;
+        this.roleReferentialRepository = roleReferentialRepository;
+        this.encoder = encoder;
+        this.jwtUtils = jwtUtils;
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {

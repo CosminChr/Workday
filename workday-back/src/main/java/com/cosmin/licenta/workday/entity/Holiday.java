@@ -11,19 +11,19 @@ public class Holiday {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 30)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @Size(max = 30)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "holiday_type_id")
     private HolidayReferential holidayType;
 
-    private LocalDate from;
+    @Column(name = "from_date")
+    private LocalDate fromDate;
 
-    private LocalDate to;
+    @Column(name = "to_date")
+    private LocalDate toDate;
 
     private boolean approved;
 
@@ -60,20 +60,20 @@ public class Holiday {
         this.holidayType = holidayType;
     }
 
-    public LocalDate getFrom() {
-        return from;
+    public LocalDate getFromDate() {
+        return fromDate;
     }
 
-    public void setFrom(LocalDate from) {
-        this.from = from;
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public LocalDate getTo() {
-        return to;
+    public LocalDate getToDate() {
+        return toDate;
     }
 
-    public void setTo(LocalDate to) {
-        this.to = to;
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
     }
 
     public boolean isApproved() {

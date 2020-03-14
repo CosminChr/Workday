@@ -18,8 +18,8 @@ export class HolidaysService {
     return this.http.get<Array<Holiday>>(HOLIDAYS_API + employeeId);
   }
 
-  // putHoliday(holiday: Holiday): Observable<Holiday> {
-  //   return this.http.put<Holiday>(HOLIDAYS_API, holiday);
-  // }
+  putHoliday(holiday: Holiday): Observable<Holiday> {
+    return this.http.put<Holiday>(HOLIDAYS_API, holiday);
+  }
 
 }

@@ -19,8 +19,12 @@ import java.util.List;
 @RequestMapping("/api/employee")
 public class EmployeeController {
 
-    @Autowired
+
     private EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("/{username}")
     public ResponseEntity<EmployeeDTO> getEmployeeByUsername(@PathVariable(name = "username") final String username) {

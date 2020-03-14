@@ -37,4 +37,10 @@ public class HolidayService {
         }
         return null;
     }
+
+    public HolidayDTO putHoliday(final HolidayDTO holiday) {
+        holidayRepository.save(holidayMapper.domainToEntity(holiday));
+        return holiday;
+    }
+
 }
