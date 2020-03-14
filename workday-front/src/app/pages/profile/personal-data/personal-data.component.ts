@@ -92,7 +92,9 @@ export class PersonalDataComponent implements OnInit {
     this.employee.homePhoneNumber = this.personalDataForm.controls.homePhoneNumber.value;
     this.employee.mobilePhoneNumber = this.personalDataForm.controls.mobilePhoneNumber.value;
 
-    this.employeeService.putEmployee(this.employee).subscribe();
+    this.employeeService.putEmployee(this.employee).subscribe( data => {
+      this.employeeService.setStoredEmployee(data);
+    });
   }
 
   putEmployeeData() {
@@ -107,13 +109,12 @@ export class PersonalDataComponent implements OnInit {
     }
     this.employee.department.label = this.employeeDataForm.controls.department.value;
     this.employee.ITDeduction = this.employeeDataForm.controls.ITDeduction.value;
-    // console.log("valoarea",this.personalDataForm.controls);
-    //console.log("valoarea",this.personalDataForm.controls.ITDeduction.value);
     this.employee.joiningDate = parseDate(this.employeeDataForm.controls.joiningDate.value);
     this.employee.currentPositionStartingDate = parseDate(this.employeeDataForm.controls.currentPositionStartingDate.value);
 
-
-    this.employeeService.putEmployee(this.employee).subscribe();
+    this.employeeService.putEmployee(this.employee).subscribe( data => {
+      this.employeeService.setStoredEmployee(data);
+    });
   }
 
 }

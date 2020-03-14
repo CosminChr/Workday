@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Employee} from "../../models/employee.model";
-import {AuthService} from "../../../core/services/security/auth.service";
 
 const EMPLOYEE_API = 'employee/';
 
@@ -29,8 +28,7 @@ export class EmployeeService {
     this.storedEmployee.next(employee);
   }
 
-  constructor(private http: HttpClient,
-              private authService: AuthService) {
+  constructor(private http: HttpClient) {
   }
 
 

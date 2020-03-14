@@ -1,3 +1,4 @@
+
 export function parseDate(theDate: any): Date {
   const day = theDate.toString().substring(0, 2);
   const month = theDate.toString().substring(3, 5);
@@ -10,4 +11,11 @@ export function formatDate(theDate: any): String {
   const month = theDate.toString().substring(5, 7);
   const year = theDate.toString().substring(0, 4);
   return day + '-' + month + '-' + year;
+}
+
+
+export function dateDifference(date1: Date, date2: Date) :number {
+  const diffTime = Math.abs(new Date(date2).getTime() - new Date(date1).getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
 }
