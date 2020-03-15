@@ -111,18 +111,17 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
         if (new Date(holiday.fromDate).getFullYear() === new Date(holiday.toDate).getFullYear()) {
           if (new Date(holiday.fromDate).getMonth() === new Date(holiday.toDate).getMonth() == index) {
             numberOfDaysFirstMonth = numberOfDaysFirstMonth +
-              dateDifference(holiday.fromDate, holiday.toDate);
+              this.dateDifference(holiday.fromDate, holiday.toDate);
           } else if (new Date(holiday.fromDate).getMonth() == index && new Date(holiday.toDate).getMonth() == (index + 1)) {
             numberOfDaysFirstMonth = numberOfDaysFirstMonth +
-              dateDifference(holiday.fromDate, new Date(new Date(holiday.fromDate).getFullYear(), new Date(holiday.fromDate).getMonth(), new Date(new Date(holiday.fromDate).getFullYear(), new Date(holiday.fromDate).getMonth() + 1, 0).getDate()));
+              this.dateDifference(holiday.fromDate, new Date(new Date(holiday.fromDate).getFullYear(), new Date(holiday.fromDate).getMonth(), new Date(new Date(holiday.fromDate).getFullYear(), new Date(holiday.fromDate).getMonth() + 1, 0).getDate()));
             numberOfDaysSecondMonth = numberOfDaysSecondMonth +
-              dateDifference(new Date(new Date(holiday.toDate).getFullYear(), new Date(holiday.toDate).getMonth(), 1), holiday.toDate);
+              this.dateDifference(new Date(new Date(holiday.toDate).getFullYear(), new Date(holiday.toDate).getMonth(), 1), holiday.toDate);
           }
 
           if (holiday.holidayType.label === HolidayTypeEnum.CURRENT_LEAVE) {
             this.currentYearHolidaysByMonth.set(index+1, this.currentYearHolidaysByMonth.get(index+1) + numberOfDaysFirstMonth);
             this.currentYearHolidaysByMonth.set(index + 2, this.currentYearHolidaysByMonth.get(index + 2) + numberOfDaysSecondMonth);
-            console.log(this.currentYearHolidaysByMonth);
 
           } else {
             this.sickDaysHolidaysByMonth.set(index + 1, this.sickDaysHolidaysByMonth.get(index + 1) + numberOfDaysFirstMonth);
@@ -167,8 +166,8 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     holidayType.id = referential.id;
 
     this.plannedHoliday.holidayType = holidayType;
-    this.plannedHoliday.fromDate = parseDate(this.holidayForm.controls.from.value);
-    this.plannedHoliday.toDate = parseDate(this.holidayForm.controls.to.value);
+    this.plannedHoliday.fromDate = parseDate(this.holidayForm.controls.fromDate.value);
+    this.plannedHoliday.toDate = parseDate(this.holidayForm.controls.toDate.value);
     this.plannedHoliday.employee = this.employee;
     this.plannedHoliday.approved = false;
     this.plannedHoliday.validated = false;
