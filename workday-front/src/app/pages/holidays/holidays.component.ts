@@ -24,9 +24,9 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
   yearsInCompany = new Array<number>();
 
-  currentYearLeaveByMonth = new Map<number, number>();
+  currentYearHolidaysByMonth = new Map<number, number>();
 
-  sickDaysLeaveByMonth = new Map<number, number>();
+  sickDaysHolidaysByMonth = new Map<number, number>();
 
   selectedYear = 2020;
 
@@ -55,10 +55,9 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     ])
       .subscribe( data => {
         this.holidays = data[0] as Array<Holiday>;
-        console.log(this.holidays);
-        this.populateLeaveMapsByMonth();
+        this.populateHolidayMapsByMonth();
         this.holidayReferentials = data[1] as Array<Referential>;
-        this.createHolidayForm()
+        this.createHolidayForm();
       });
   }
 
@@ -93,27 +92,27 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     return new Date(date1).getFullYear() == year;
   }
 
-  populateLeaveMapsByMonth() {
+  populateHolidayMapsByMonth() {
 
     for (let index of range(11)) {
-      this.currentYearLeaveByMonth.set(index, 0);
-      this.currentYearLeaveByMonth.set(index+1, 0);
-      this.sickDaysLeaveByMonth.set(index, 0);
-      this.sickDaysLeaveByMonth.set(index+1, 0);
+      this.currentYearHolidaysByMonth.set(index, 0);
+      this.currentYearHolidaysByMonth.set(index+ 1, 0);
+      this.sickDaysHolidaysByMonth.set(index, 0);
+      this.sickDaysHolidaysByMonth.set(index+ 1, 0);
     }
 
     this.holidays.forEach(holiday => {
 
-      for (let index of range(11)) {
+      for (let index of range(10)) {
 
         let numberOfDaysFirstMonth = 0;
         let numberOfDaysSecondMonth = 0;
 
         if (new Date(holiday.fromDate).getFullYear() === new Date(holiday.toDate).getFullYear()) {
-          if (new Date(holiday.fromDate).getMonth() === new Date(holiday.toDate).getMonth() === index) {
+          if (new Date(holiday.fromDate).getMonth() === new Date(holiday.toDate).getMonth() == index) {
             numberOfDaysFirstMonth = numberOfDaysFirstMonth +
               dateDifference(holiday.fromDate, holiday.toDate);
-          } else if (new Date(holiday.fromDate).getMonth() === index && new Date(holiday.toDate).getMonth() === (index + 1)) {
+          } else if (new Date(holiday.fromDate).getMonth() == index && new Date(holiday.toDate).getMonth() == (index + 1)) {
             numberOfDaysFirstMonth = numberOfDaysFirstMonth +
               dateDifference(holiday.fromDate, new Date(new Date(holiday.fromDate).getFullYear(), new Date(holiday.fromDate).getMonth(), new Date(new Date(holiday.fromDate).getFullYear(), new Date(holiday.fromDate).getMonth() + 1, 0).getDate()));
             numberOfDaysSecondMonth = numberOfDaysSecondMonth +
@@ -121,12 +120,13 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
           }
 
           if (holiday.holidayType.label === HolidayTypeEnum.CURRENT_LEAVE) {
-            this.currentYearLeaveByMonth.set(index, this.currentYearLeaveByMonth.get(index) + numberOfDaysFirstMonth);
-            this.currentYearLeaveByMonth.set(index + 1, this.currentYearLeaveByMonth.get(index + 1) + numberOfDaysSecondMonth);
+            this.currentYearHolidaysByMonth.set(index+1, this.currentYearHolidaysByMonth.get(index+1) + numberOfDaysFirstMonth);
+            this.currentYearHolidaysByMonth.set(index + 2, this.currentYearHolidaysByMonth.get(index + 2) + numberOfDaysSecondMonth);
+            console.log(this.currentYearHolidaysByMonth);
 
           } else {
-            this.sickDaysLeaveByMonth.set(index, this.sickDaysLeaveByMonth.get(index) + numberOfDaysFirstMonth);
-            this.sickDaysLeaveByMonth.set(index + 1, this.sickDaysLeaveByMonth.get(index + 1) + numberOfDaysSecondMonth);
+            this.sickDaysHolidaysByMonth.set(index + 1, this.sickDaysHolidaysByMonth.get(index + 1) + numberOfDaysFirstMonth);
+            this.sickDaysHolidaysByMonth.set(index + 2, this.sickDaysHolidaysByMonth.get(index + 2) + numberOfDaysSecondMonth);
           }
         }
       }
@@ -134,13 +134,13 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   }
 
   getDaysUsedFromCurrentLeave(): number {
-      return reduce(Array.from(this.currentYearLeaveByMonth.values()), (sum, numberOfDays) => {
+      return reduce(Array.from(this.currentYearHolidaysByMonth.values()), (sum, numberOfDays) => {
         return sum + numberOfDays;
       }, 0);
   }
 
   getDaysUsedFromSickDaysLeave(): number {
-    return reduce(Array.from(this.sickDaysLeaveByMonth.values()), (sum, numberOfDays) => {
+    return reduce(Array.from(this.sickDaysHolidaysByMonth.values()), (sum, numberOfDays) => {
       return sum + numberOfDays;
     }, 0);
   }
@@ -175,7 +175,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     this.holidayService.putHoliday(this.plannedHoliday).subscribe( () => {
       this.holidayService.getHolidays(this.employee.id).subscribe( data => {
         this.holidays = data as Array<Holiday>;
-        this.populateLeaveMapsByMonth();
+        this.populateHolidayMapsByMonth();
       });
     });
   }
