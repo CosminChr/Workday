@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
       }, () => {
         this.router.navigate(['/profile/personalData']);
-        this.notificationService.showNotification('top','center', 'success', 'Bine ai venit în aplicația WorkDay, ' + this.tokenStorageService.getUser().username);
+        this.notificationService.showNotification('top','center', 'success', 'Bine ai venit în aplicația WorkDay, ' + this.tokenStorageService.getUser().username + ' !');
       });
   }
 

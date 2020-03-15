@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {WorkdayService} from "../../../workday.service";
+import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 const AUTH_API = 'auth/';
 
@@ -17,7 +18,8 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private workdayService: WorkdayService) {
+              private workdayService: WorkdayService,
+              private notificationService: NotificationService) {
   }
 
   login(credentials): Observable<any> {
