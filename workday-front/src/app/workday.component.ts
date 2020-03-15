@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {TokenStorageService} from "./core/services/security/token-storage.service";
 import {Router} from "@angular/router";
 import {EmployeeService} from "./shared/services/employee/employee.service";
@@ -11,6 +11,7 @@ import {WorkdayService} from "./workday.service";
 })
 export class WorkdayComponent implements OnInit {
 
+  @Output()
   isConnected = false;
 
   constructor(private tokenStorageService: TokenStorageService,
@@ -34,9 +35,5 @@ export class WorkdayComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
-  }
-
-  logout() {
-    this.tokenStorageService.signOut();
   }
 }

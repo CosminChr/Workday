@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-overtime',
+  selector: 'workday-overtime',
   templateUrl: './overtime.component.html',
   styleUrls: ['./overtime.component.scss']
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-marital-status',
+  selector: 'workday-marital-status',
   templateUrl: './marital-status.component.html',
   styleUrls: ['./marital-status.component.scss']
 })

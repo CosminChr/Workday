@@ -1,9 +1,12 @@
+
+
 <div class="wrapper">
   <div class = "sidebar" data-color="white" data-active-color="info"
   *ngIf="isConnected">
     <workday-sidebar *ngIf="isConnected"></workday-sidebar>
   </div>
   <div [ngClass]="{'main-panel' : isConnected, '' : !isConnected}" class ="main">
+    <workday-navbar [isConnected] = isConnected *ngIf="isConnected"></workday-navbar>
     <router-outlet></router-outlet>
   </div>
 </div>

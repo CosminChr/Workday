@@ -8,7 +8,7 @@ import {formatDate, parseDate} from "../../../shared/utils/utils";
 
 
 @Component({
-  selector: 'app-personal-data',
+  selector: 'workday-personal-data',
   templateUrl: './personal-data.component.html',
   styleUrls: ['./personal-data.component.scss']
 })

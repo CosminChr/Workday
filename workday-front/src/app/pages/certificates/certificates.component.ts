@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-certificates',
+  selector: 'workday-certificates',
   templateUrl: './certificates.component.html',
   styleUrls: ['./certificates.component.scss']
 })

@@ -1,6 +1,8 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
+import {WorkdayService} from "../../../workday.service";
 
 const AUTH_API = 'auth/';
 
@@ -13,7 +15,9 @@ const httpOptions = {
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private workdayService: WorkdayService) {
   }
 
   login(credentials): Observable<any> {
@@ -29,5 +33,11 @@ export class AuthService {
       email: user[1],
       password: user[2]
     }, httpOptions);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.workdayService.setIsConnected(false);
+    this.router.navigate(['/login']);
   }
 }
