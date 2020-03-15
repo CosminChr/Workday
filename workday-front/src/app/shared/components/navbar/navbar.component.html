@@ -45,7 +45,7 @@
       </div>
       <div class="modal-footer">
         <div class="left-side">
-          <button type="button" class="btn btn-link btn-link" (click)="authService.logout();hideLogoutModal()"  data-dismiss="modal">Confirmă</button>
+          <button type="button" class="btn btn-link btn-link" (click)="authService.logout();hideLogoutModal(); showNotification();"  data-dismiss="modal">Confirmă</button>
         </div>
         <div class="divider"></div>
         <div class="right-side">

@@ -25,5 +25,9 @@ export class NavbarComponent implements OnInit {
     $(".modal-backdrop").remove();
   }
 
+  showNotification() {
+    this.notificationService.showNotification('top','center', 'success', 'Mulțumim că ai folosit aplicația WorkDay !');
+  }
+
 
 }
