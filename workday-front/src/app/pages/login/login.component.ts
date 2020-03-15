@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
       err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
+        this.notificationService.showNotification('top','center', 'danger', 'Ai introdus greșit usernameul sau parola. Te rugăm reîncearcă !');
       }, () => {
         this.router.navigate(['/profile/personalData']);
         this.notificationService.showNotification('top','center', 'success', 'Bine ai venit în aplicația WorkDay, ' + this.tokenStorageService.getUser().username + ' !');

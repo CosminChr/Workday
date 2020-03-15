@@ -21,7 +21,7 @@ export class WorkdayComponent implements OnInit {
   }
 
   ngOnInit() {
-   //    localStorage.clear();
+    //  localStorage.clear();
 
    this.workdayService.getStoredIsConnected().asObservable()
      .subscribe(
