@@ -9,9 +9,9 @@ export class Holiday {
 
   holidayType: Referential;
 
-  from: Date;
+  fromDate: Date;
 
-  to: Date;
+  toDate: Date;
 
   approved: boolean;
 

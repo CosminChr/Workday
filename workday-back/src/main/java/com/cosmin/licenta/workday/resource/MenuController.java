@@ -15,11 +15,14 @@ import java.util.List;
 @RequestMapping("/api/menu")
 public class MenuController {
 
-    @Autowired
     private MenuItemService menuItemService;
 
-    @Autowired
     private SubMenuItemService subMenuItemService;
+
+    public MenuController(MenuItemService menuItemService, SubMenuItemService subMenuItemService) {
+        this.menuItemService = menuItemService;
+        this.subMenuItemService = subMenuItemService;
+    }
 
     @GetMapping("/menuItems")
     public ResponseEntity<List<MenuItemDTO>> getMenuItems() {

@@ -3,9 +3,13 @@ import {Employee} from "../../shared/models/employee.model";
 import {EmployeeService} from "../../shared/services/employee/employee.service";
 import {HolidaysService} from "./holiday.service";
 import {Holiday} from "../../shared/models/holiday.model";
-import {dateDifference} from "../../shared/utils/utils";
-import {range, reduce} from "lodash";
+import {dateDifference, formatDate, parseDate} from "../../shared/utils/utils";
+import {range, reduce, find} from "lodash";
 import {HolidayTypeEnum} from "../../shared/enums/holiday-type.enum";
+import {HolidaysReferentialService} from "./holiday-referential.service";
+import {Referential} from "../../shared/models/referential.model";
+import {forkJoin} from "rxjs";
+import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 declare var $: any;
 
@@ -20,33 +24,52 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
   yearsInCompany = new Array<number>();
 
-  currentYearLeaveByMonth = new Map<number, number>();
+  currentYearHolidaysByMonth = new Map<number, number>();
 
-  sickDaysLeaveByMonth = new Map<number, number>();
+  sickDaysHolidaysByMonth = new Map<number, number>();
 
   selectedYear = 2020;
 
   holidays: Array<Holiday>;
 
+  holidayReferentials: Array<Referential>;
+
+  holidayForm: FormGroup;
+
+  plannedHoliday = new Holiday();
+
   constructor(private employeeService: EmployeeService,
-              private holidayService: HolidaysService) {
+              private holidayService: HolidaysService,
+              private holidayReferentialService: HolidaysReferentialService,
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
     this.employee = this.employeeService.getSavedEmployee();
     this.yearsInCompany = this.populateYearsInCompany();
     this.selectedYear = this.yearsInCompany[this.yearsInCompany.length - 1];
-    this.holidayService.getHolidays(this.employee.id).subscribe(data => {
-      this.holidays = data as Array<Holiday>;
-      this.populateLeaveMapsByMonth();
-    });
 
+    forkJoin([
+      this.holidayService.getHolidays(this.employee.id),
+      this.holidayReferentialService.getHolidayReferentials()
+    ])
+      .subscribe( data => {
+        this.holidays = data[0] as Array<Holiday>;
+        this.populateHolidayMapsByMonth();
+        this.holidayReferentials = data[1] as Array<Referential>;
+        this.createHolidayForm();
+      });
   }
 
 
   ngAfterViewInit(): void {
     $('.selectpicker').selectpicker();
   }
+
+  reinitializePicker() {
+    $('.selectpicker').selectpicker('refresh');
+  }
+
 
   populateYearsInCompany() {
     let i = Number(this.employee.joiningDate.toString().substring(0, 4));
@@ -69,40 +92,40 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     return new Date(date1).getFullYear() == year;
   }
 
-  populateLeaveMapsByMonth() {
+  populateHolidayMapsByMonth() {
 
     for (let index of range(11)) {
-      this.currentYearLeaveByMonth.set(index, 0);
-      this.currentYearLeaveByMonth.set(index+1, 0);
-      this.sickDaysLeaveByMonth.set(index, 0);
-      this.sickDaysLeaveByMonth.set(index+1, 0);
+      this.currentYearHolidaysByMonth.set(index, 0);
+      this.currentYearHolidaysByMonth.set(index+ 1, 0);
+      this.sickDaysHolidaysByMonth.set(index, 0);
+      this.sickDaysHolidaysByMonth.set(index+ 1, 0);
     }
 
     this.holidays.forEach(holiday => {
 
-      for (let index of range(11)) {
+      for (let index of range(10)) {
 
         let numberOfDaysFirstMonth = 0;
         let numberOfDaysSecondMonth = 0;
 
-        if (new Date(holiday.from).getFullYear() === new Date(holiday.to).getFullYear()) {
-          if (new Date(holiday.from).getMonth() === new Date(holiday.to).getMonth() === index) {
+        if (new Date(holiday.fromDate).getFullYear() === new Date(holiday.toDate).getFullYear()) {
+          if (new Date(holiday.fromDate).getMonth() === new Date(holiday.toDate).getMonth() == index) {
             numberOfDaysFirstMonth = numberOfDaysFirstMonth +
-              dateDifference(holiday.from, holiday.to);
-          } else if (new Date(holiday.from).getMonth() === index && new Date(holiday.to).getMonth() === (index + 1)) {
+              this.dateDifference(holiday.fromDate, holiday.toDate);
+          } else if (new Date(holiday.fromDate).getMonth() == index && new Date(holiday.toDate).getMonth() == (index + 1)) {
             numberOfDaysFirstMonth = numberOfDaysFirstMonth +
-              dateDifference(holiday.from, new Date(new Date(holiday.from).getFullYear(), new Date(holiday.from).getMonth(), new Date(new Date(holiday.from).getFullYear(), new Date(holiday.from).getMonth() + 1, 0).getDate()));
+              this.dateDifference(holiday.fromDate, new Date(new Date(holiday.fromDate).getFullYear(), new Date(holiday.fromDate).getMonth(), new Date(new Date(holiday.fromDate).getFullYear(), new Date(holiday.fromDate).getMonth() + 1, 0).getDate()));
             numberOfDaysSecondMonth = numberOfDaysSecondMonth +
-              dateDifference(new Date(new Date(holiday.to).getFullYear(), new Date(holiday.to).getMonth(), 1), holiday.to);
+              this.dateDifference(new Date(new Date(holiday.toDate).getFullYear(), new Date(holiday.toDate).getMonth(), 1), holiday.toDate);
           }
 
           if (holiday.holidayType.label === HolidayTypeEnum.CURRENT_LEAVE) {
-            this.currentYearLeaveByMonth.set(index, this.currentYearLeaveByMonth.get(index) + numberOfDaysFirstMonth);
-            this.currentYearLeaveByMonth.set(index + 1, this.currentYearLeaveByMonth.get(index + 1) + numberOfDaysSecondMonth);
+            this.currentYearHolidaysByMonth.set(index+1, this.currentYearHolidaysByMonth.get(index+1) + numberOfDaysFirstMonth);
+            this.currentYearHolidaysByMonth.set(index + 2, this.currentYearHolidaysByMonth.get(index + 2) + numberOfDaysSecondMonth);
 
           } else {
-            this.sickDaysLeaveByMonth.set(index, this.sickDaysLeaveByMonth.get(index) + numberOfDaysFirstMonth);
-            this.sickDaysLeaveByMonth.set(index + 1, this.sickDaysLeaveByMonth.get(index + 1) + numberOfDaysSecondMonth);
+            this.sickDaysHolidaysByMonth.set(index + 1, this.sickDaysHolidaysByMonth.get(index + 1) + numberOfDaysFirstMonth);
+            this.sickDaysHolidaysByMonth.set(index + 2, this.sickDaysHolidaysByMonth.get(index + 2) + numberOfDaysSecondMonth);
           }
         }
       }
@@ -110,14 +133,49 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   }
 
   getDaysUsedFromCurrentLeave(): number {
-      return reduce(Array.from(this.currentYearLeaveByMonth.values()), (sum, numberOfDays) => {
+      return reduce(Array.from(this.currentYearHolidaysByMonth.values()), (sum, numberOfDays) => {
         return sum + numberOfDays;
       }, 0);
   }
 
   getDaysUsedFromSickDaysLeave(): number {
-    return reduce(Array.from(this.sickDaysLeaveByMonth.values()), (sum, numberOfDays) => {
+    return reduce(Array.from(this.sickDaysHolidaysByMonth.values()), (sum, numberOfDays) => {
       return sum + numberOfDays;
     }, 0);
+  }
+
+  createHolidayForm(): FormGroup {
+    this.holidayForm = this.formBuilder.group({
+      'holidayType': [this.plannedHoliday.holidayType, [Validators.required, Validators.maxLength(100)]],
+      'fromDate': [this.plannedHoliday.fromDate ? formatDate(this.plannedHoliday.fromDate) : '', [Validators.required]],
+      'toDate': [this.plannedHoliday.toDate ? formatDate(this.plannedHoliday.toDate) : '', [Validators.required]]
+    });
+    return this.holidayForm;
+  }
+
+  putHoliday() {
+
+    let holidayType = new Referential();
+    holidayType.label = this.holidayForm.controls.holidayType.value;
+
+
+    let referential: Referential = find(this.holidayReferentials, (ref) => {
+        return ref.label = holidayType.label;
+    });
+
+    holidayType.id = referential.id;
+
+    this.plannedHoliday.holidayType = holidayType;
+    this.plannedHoliday.fromDate = parseDate(this.holidayForm.controls.fromDate.value);
+    this.plannedHoliday.toDate = parseDate(this.holidayForm.controls.toDate.value);
+    this.plannedHoliday.employee = this.employee;
+    this.plannedHoliday.approved = false;
+    this.plannedHoliday.validated = false;
+    this.holidayService.putHoliday(this.plannedHoliday).subscribe( () => {
+      this.holidayService.getHolidays(this.employee.id).subscribe( data => {
+        this.holidays = data as Array<Holiday>;
+        this.populateHolidayMapsByMonth();
+      });
+    });
   }
 }

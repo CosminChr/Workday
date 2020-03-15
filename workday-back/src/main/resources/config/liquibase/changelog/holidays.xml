@@ -11,8 +11,8 @@
             </column>
             <column name="employee_id" type="bigint"/>
             <column name="holiday_type_id" type="bigint"/>
-            <column name="from" type="date"/>
-            <column name="to" type="date"/>
+            <column name="from_date" type="date"/>
+            <column name="to_date" type="date"/>
             <column name="approved" type="boolean"/>
             <column name="validated" type="boolean"/>
             <column name="comment" type="varchar(40)"/>
