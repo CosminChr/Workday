@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../core/services/security/auth.service";
 
 @Component({
-  selector: 'app-register',
+  selector: 'workday-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })

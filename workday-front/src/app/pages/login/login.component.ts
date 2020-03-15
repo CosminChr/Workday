@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {EmployeeService} from "../../shared/services/employee/employee.service";
 import {WorkdayService} from "../../workday.service";
-import {HttpHeaders} from "@angular/common/http";
+import {NotificationService} from "../../shared/services/notification/notification.service";
 
 @Component({
   selector: 'workday-login',
@@ -33,7 +33,8 @@ export class LoginComponent implements OnInit {
               private employeeService: EmployeeService,
               private workDayService: WorkdayService,
               private formBuilder: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
       }, () => {
         this.router.navigate(['/profile/personalData']);
+        this.notificationService.showNotification('top','center', 'success', 'Bine ai venit în aplicația WorkDay, ' + this.tokenStorageService.getUser().username);
       });
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-citizenship',
+  selector: 'workday-citizenship',
   templateUrl: './citizenship.component.html',
   styleUrls: ['./citizenship.component.scss']
 })

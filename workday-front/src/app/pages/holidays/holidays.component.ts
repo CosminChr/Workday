@@ -14,7 +14,7 @@ import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
 declare var $: any;
 
 @Component({
-  selector: 'app-holidays',
+  selector: 'workday-holidays',
   templateUrl: './holidays.component.html',
   styleUrls: ['./holidays.component.scss']
 })
@@ -119,11 +119,11 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
               this.dateDifference(new Date(new Date(holiday.toDate).getFullYear(), new Date(holiday.toDate).getMonth(), 1), holiday.toDate);
           }
 
-          if (holiday.holidayType.label === HolidayTypeEnum.CURRENT_LEAVE) {
+          if (holiday.holidayType.label === HolidayTypeEnum.CURRENT_LEAVE && holiday.approved && holiday.validated) {
             this.currentYearHolidaysByMonth.set(index+1, this.currentYearHolidaysByMonth.get(index+1) + numberOfDaysFirstMonth);
             this.currentYearHolidaysByMonth.set(index + 2, this.currentYearHolidaysByMonth.get(index + 2) + numberOfDaysSecondMonth);
 
-          } else {
+          } else if (holiday.holidayType.label === HolidayTypeEnum.SICK_DAYS && holiday.approved && holiday.validated) {
             this.sickDaysHolidaysByMonth.set(index + 1, this.sickDaysHolidaysByMonth.get(index + 1) + numberOfDaysFirstMonth);
             this.sickDaysHolidaysByMonth.set(index + 2, this.sickDaysHolidaysByMonth.get(index + 2) + numberOfDaysSecondMonth);
           }

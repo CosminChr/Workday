@@ -7,7 +7,7 @@ const URL_API = 'http://localhost:8080/api/';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private tokenStorageService: TokenStorageService) {
+  constructor() {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {

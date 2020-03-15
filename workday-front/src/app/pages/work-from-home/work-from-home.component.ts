@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-work-from-home',
+  selector: 'workday-work-from-home',
   templateUrl: './work-from-home.component.html',
   styleUrls: ['./work-from-home.component.scss']
 })

@@ -16,6 +16,7 @@ import {RouterModule} from "@angular/router";
 import {HttpModule} from "@angular/http";
 import {apiInterceptorProvider} from "./core/interceptors/api.interceptor";
 import {authInterceptorProvider} from "./core/interceptors/auth.interceptor";
+import {NavbarComponent} from "./shared/components/navbar/navbar.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -24,7 +25,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     WorkdayComponent,
-    SidebarComponent
+    SidebarComponent,
+    NavbarComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -45,7 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }),
+    })
   ],
   exports: [RouterModule],
   providers: [authInterceptorProvider,
