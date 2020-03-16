@@ -23,11 +23,11 @@ export class WorkdayComponent implements OnInit {
   ngOnInit() {
     //  localStorage.clear();
 
-   this.workdayService.getStoredIsConnected().asObservable()
-     .subscribe(
-     data => {
-       this.isConnected = data;
-     });
+    this.workdayService.getStoredIsConnected().asObservable()
+      .subscribe(
+        data => {
+          this.isConnected = data;
+        });
     this.isConnected = !!this.tokenStorageService.getToken();
 
     if (this.isConnected) {
