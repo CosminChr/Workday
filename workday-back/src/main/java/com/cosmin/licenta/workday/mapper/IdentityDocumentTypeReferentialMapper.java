@@ -1,12 +1,13 @@
 package com.cosmin.licenta.workday.mapper;
 
 import com.cosmin.licenta.workday.dto.ReferentialDTO;
+import com.cosmin.licenta.workday.entity.IdentityDocumentTypeReferential;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface IdentityDocumentTypeReferential {
+public interface IdentityDocumentTypeReferentialMapper {
 
     IdentityDocumentTypeReferential domainToEntity(final ReferentialDTO source);
 

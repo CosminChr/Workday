@@ -25,6 +25,10 @@ public class BankAccount {
     @Column(name = "primary_account")
     private boolean primaryAccount;
 
+    @Lob
+    @Column(name = "attesting_document")
+    private byte [] attestingDocument;
+
     public Long getId() {
         return id;
     }
@@ -71,5 +75,13 @@ public class BankAccount {
 
     public void setPrimaryAccount(boolean primaryAccount) {
         this.primaryAccount = primaryAccount;
+    }
+
+    public byte[] getAttestingDocument() {
+        return attestingDocument;
+    }
+
+    public void setAttestingDocument(byte[] attestingDocument) {
+        this.attestingDocument = attestingDocument;
     }
 }

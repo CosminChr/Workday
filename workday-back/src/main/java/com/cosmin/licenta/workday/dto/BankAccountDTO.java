@@ -3,6 +3,8 @@ package com.cosmin.licenta.workday.dto;
 import com.cosmin.licenta.workday.entity.CurrencyReferential;
 import com.google.common.base.MoreObjects;
 
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import java.time.LocalDate;
 
 public class BankAccountDTO {
@@ -18,6 +20,8 @@ public class BankAccountDTO {
     private CurrencyReferential currency;
 
     private boolean primaryAccount;
+
+    private byte [] attestingDocument;
 
     public Long getId() {
         return id;
@@ -67,6 +71,14 @@ public class BankAccountDTO {
         this.primaryAccount = primaryAccount;
     }
 
+    public byte[] getAttestingDocument() {
+        return attestingDocument;
+    }
+
+    public void setAttestingDocument(byte[] attestingDocument) {
+        this.attestingDocument = attestingDocument;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -76,6 +88,7 @@ public class BankAccountDTO {
                 .add("expirationDate", expirationDate)
                 .add("currency", currency)
                 .add("primaryAccount", primaryAccount)
+                .add("attestingDocument", attestingDocument)
                 .toString();
     }
 }

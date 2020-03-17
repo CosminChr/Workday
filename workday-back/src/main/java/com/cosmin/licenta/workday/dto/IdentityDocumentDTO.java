@@ -2,6 +2,8 @@ package com.cosmin.licenta.workday.dto;
 
 import com.google.common.base.MoreObjects;
 
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import java.time.LocalDate;
 
 public class IdentityDocumentDTO {
@@ -19,6 +21,10 @@ public class IdentityDocumentDTO {
     private String issuer;
 
     private ReferentialDTO country;
+
+    private byte [] attestingDocument;
+
+    private String description;
 
     public Long getId() {
         return id;
@@ -76,6 +82,22 @@ public class IdentityDocumentDTO {
         this.country = country;
     }
 
+    public byte[] getAttestingDocument() {
+        return attestingDocument;
+    }
+
+    public void setAttestingDocument(byte[] attestingDocument) {
+        this.attestingDocument = attestingDocument;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -86,6 +108,8 @@ public class IdentityDocumentDTO {
                 .add("expirationDate", expirationDate)
                 .add("issuer", issuer)
                 .add("country", country)
+                .add("attestingDocument", attestingDocument)
+                .add("description", description)
                 .toString();
     }
 }

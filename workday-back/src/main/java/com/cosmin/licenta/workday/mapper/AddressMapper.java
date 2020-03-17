@@ -14,7 +14,7 @@ public interface AddressMapper {
 
     AddressDTO entityToDomain(final Address source);
 
-    List<AddressDTO> domainsToEntities(final List<CityDTO> sourceList);
+    List<Address> domainsToEntities(final List<AddressDTO> sourceList);
 
     List<AddressDTO> entitiesToDomains(final List<Address> sourceList);
 }

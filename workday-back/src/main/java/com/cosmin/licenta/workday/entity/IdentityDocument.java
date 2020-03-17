@@ -26,6 +26,12 @@ public class IdentityDocument {
 
     private CountryReferential country;
 
+    @Lob
+    @Column(name = "attesting_document")
+    private byte [] attestingDocument;
+
+    private String description;
+
     public Long getId() {
         return id;
     }
@@ -80,5 +86,21 @@ public class IdentityDocument {
 
     public void setCountry(CountryReferential country) {
         this.country = country;
+    }
+
+    public byte[] getAttestingDocument() {
+        return attestingDocument;
+    }
+
+    public void setAttestingDocument(byte[] attestingDocument) {
+        this.attestingDocument = attestingDocument;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
