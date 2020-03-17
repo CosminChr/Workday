@@ -1,5 +1,7 @@
 package com.cosmin.licenta.workday.dto;
 
+import com.google.common.base.MoreObjects;
+
 public class CityDTO {
 
     private Long id;
@@ -8,7 +10,7 @@ public class CityDTO {
 
     private String county;
 
-    private String country;
+    private ReferentialDTO country;
 
     public Long getId() {
         return id;
@@ -34,11 +36,21 @@ public class CityDTO {
         this.county = county;
     }
 
-    public String getCountry() {
+    public ReferentialDTO getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(ReferentialDTO country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("name", name)
+                .add("county", county)
+                .add("country", country)
+                .toString();
     }
 }
