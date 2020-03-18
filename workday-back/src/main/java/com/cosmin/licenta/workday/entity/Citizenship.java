@@ -10,10 +10,19 @@ public class Citizenship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "citizenship_id")
     private CitizenshipReferential citizenship;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nationality_id")
     private NationalityReferential nationality;
 
+    @Column(name = "attesting_document")
     private byte [] attestingDocument;
 
     public Long getId() {
@@ -22,6 +31,14 @@ public class Citizenship {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public CitizenshipReferential getCitizenship() {

@@ -11,6 +11,10 @@ public class AcademicStudy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
     @OneToOne
     @JoinColumn(name = "study_level_id")
     private StudyLevelReferential studyLevel;
@@ -44,6 +48,14 @@ public class AcademicStudy {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public StudyLevelReferential getStudyLevel() {

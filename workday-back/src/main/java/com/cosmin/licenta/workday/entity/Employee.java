@@ -16,19 +16,6 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "email")
         })
 public class Employee extends User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Size(max = 30)
-    private String username;
-
-    @Size(max = 30)
-    @Email
-    private String email;
-
-    @Size(max = 60)
-    private String password;
 
     @Size(max = 40)
     @Column(name = "last_name")
@@ -98,45 +85,9 @@ public class Employee extends User implements Serializable {
     }
 
     public Employee(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        this.setUsername(username);
+        this.setEmail(email);
+        this.setPassword(password);
     }
 
     public String getLastName() {
@@ -265,11 +216,6 @@ public class Employee extends User implements Serializable {
 
     public void setCurrentPositionStartingDate(LocalDate currentPositionStartingDate) {
         this.currentPositionStartingDate = currentPositionStartingDate;
-    }
-
-    @Override
-    public Set<RoleReferential> getRoles() {
-        return roles;
     }
 
     public void setRoles(Set<RoleReferential> roles) {

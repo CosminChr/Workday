@@ -10,6 +10,10 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_type_id")
     private AddressTypeReferential addressType;
@@ -38,7 +42,15 @@ public class Address {
         this.id = id;
     }
 
-    public AddressTypeReferential getAddressTypeReferential() {
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public AddressTypeReferential getAddressType() {
         return addressType;
     }
 

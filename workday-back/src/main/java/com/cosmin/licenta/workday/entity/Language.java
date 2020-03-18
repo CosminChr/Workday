@@ -10,6 +10,10 @@ public class Language {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id")
     private LanguageReferential language;
@@ -38,6 +42,14 @@ public class Language {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public LanguageReferential getLanguage() {

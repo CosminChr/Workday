@@ -11,14 +11,22 @@ public class PreviousJob {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
     private String employer;
 
     private String position;
 
+    @OneToOne
+    @JoinColumn(name = "city_id")
     private City city;
 
+    @Column(name = "from_date")
     private LocalDate fromDate;
 
+    @Column(name = "to_date")
     private LocalDate toDate;
 
     @Column(name = "fiscal_code")
@@ -30,6 +38,14 @@ public class PreviousJob {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public String getEmployer() {

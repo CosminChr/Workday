@@ -14,6 +14,8 @@ public class City {
 
     private String county;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
     private CountryReferential country;
 
     public Long getId() {

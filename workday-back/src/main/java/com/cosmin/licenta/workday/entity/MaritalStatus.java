@@ -13,12 +13,18 @@ public class MaritalStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "marital_status_id")
     private MaritalStatusReferential maritalStatus;
 
+    @Column(name = "starting_date")
     private LocalDate startingDate;
 
+    @OneToOne
+    @JoinColumn(name = "partner_id")
     private Partner partner;
 
+    @Column(name = "attesting_document")
     private byte [] attestingDocument;
 
     public Long getId() {

@@ -8,6 +8,6 @@ import java.io.Serializable;
 
 @Entity
 @Immutable
-@Table(name = "country_ref")
+@Table(name = "workday_country_ref")
 public class CountryReferential extends AbstractReferential implements Serializable {
 }
