@@ -2,10 +2,10 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Istoric concedii</h4>
+        </div>
         <div class="card-body">
-          <div class="row" style="margin: 0vw 34vw;">
-            <h4>Istoric concedii</h4>
-          </div>
           <div class="row">
             <div class="col-lg-5 col-md-6 col-sm-3" style="margin: 0vw 1.5vw;">
               <select class="selectpicker" data-size="7" data-style="btn btn-outline-success btn-round" title="Anul"
@@ -17,7 +17,7 @@
               </select>
             </div>
           </div>
-        </div>
+
         <div class="table-responsive">
           <table class="table">
             <thead class="">
@@ -69,15 +69,16 @@
             </tbody>
           </table>
         </div>
+        </div>
       </div>
     </div>
     <div class="col-md-12">
       <div class="card">
-        <div class="card-body">
-          <div class="row" style="margin: 0vw 34vw;">
-            <h4>Concedii an curent</h4>
-          </div>
+        <div class="card-header">
+          <h4 class="card-title">Concedii an curent</h4>
         </div>
+        <div class="card-body">
+
         <div class="table-responsive">
           <table class="table">
             <thead class="">
@@ -235,6 +236,7 @@
           </table>
         </div>
       </div>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -249,7 +251,7 @@
     </div>
   </div>
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-bg">
       <div class="modal-content">
         <div class="modal-header justify-content-center">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -260,7 +262,7 @@
         <div class="modal-body">
           <form  [formGroup]="holidayForm" *ngIf="holidayForm">
             <div class ="row">
-              <div class="col-lg-5 col-md-6 col-sm-3">
+              <div class="col-lg-4 col-md-4 col-sm-3">
                 <select formControlName = "holidayType" class="selectpicker" data-size="7" data-style="btn btn-outline-success btn-round"
                         title="Tip concediu">
                   <option *ngFor="let referential of holidayReferentials">
@@ -268,21 +270,22 @@
                   </option>
                 </select>
               </div>
-            </div>
-            <div class = "row">
-              <div class="col-md-5 text-center">
+              <div class="col-md-4 text-center">
                 <div class="form-group">
-                  <label >De la</label>
-                  <input formControlName = "fromDate" type="text" class="form-control text-center" placeholder="De la">
+<!--                  <label >De la</label>-->
+                  <input formControlName = "fromDate" type="text" class="form-control text-center mt-sm-2" placeholder="De la">
                 </div>
               </div>
-              <div class="col-md-5 text-center">
+              <div class="col-md-4 text-center">
                 <div class="form-group">
-                  <label>Până</label>
-                  <input formControlName = "toDate" type="text" class="form-control text-center" placeholder="Până">
+<!--                  <label>Până</label>-->
+                  <input formControlName = "toDate" type="text" class="form-control text-center mt-sm-2" placeholder="Până">
                 </div>
               </div>
             </div>
+
+
+
           </form>
           <div class="modal-footer">
             <div class="left-side">

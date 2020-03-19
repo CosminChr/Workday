@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CountryReferentialMapper.class})
 public interface CityMapper {
 
     City domainToEntity(final CityDTO source);
