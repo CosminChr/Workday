@@ -1,7 +1,10 @@
 package com.cosmin.licenta.workday.dto;
 
+import com.cosmin.licenta.workday.entity.*;
 import com.google.common.base.MoreObjects;
 
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -69,6 +72,28 @@ public class EmployeeDTO {
     private LocalDate currentPositionStartingDate;
 
     private Set<ReferentialDTO> roles = new HashSet<>();
+
+    private Set<AcademicStudy> academicStudies;
+
+    private Set<Address> addresses;
+
+    private Set<BankAccount> bankAccounts;
+
+    private Set<Child> children;
+
+    private Set<Citizenship> citizenships;
+
+    private Set<Holiday> holidays;
+
+    private Set<IdentityDocument> identityDocuments;
+
+    private Set<Language> languages;
+
+    private MaritalStatus maritalStatus;
+
+    private Partner partner;
+
+    private Set<PreviousJob> previousJobs;
 
     public Long getId() {
         return id;
@@ -238,6 +263,95 @@ public class EmployeeDTO {
         this.roles = roles;
     }
 
+
+    public Set<AcademicStudy> getAcademicStudies() {
+        return academicStudies;
+    }
+
+    public void setAcademicStudies(Set<AcademicStudy> academicStudies) {
+        this.academicStudies = academicStudies;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Set<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(Set<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
+
+    public Set<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Child> children) {
+        this.children = children;
+    }
+
+    public Set<Citizenship> getCitizenships() {
+        return citizenships;
+    }
+
+    public void setCitizenships(Set<Citizenship> citizenships) {
+        this.citizenships = citizenships;
+    }
+
+    public Set<Holiday> getHolidays() {
+        return holidays;
+    }
+
+    public void setHolidays(Set<Holiday> holidays) {
+        this.holidays = holidays;
+    }
+
+    public Set<IdentityDocument> getIdentityDocuments() {
+        return identityDocuments;
+    }
+
+    public void setIdentityDocuments(Set<IdentityDocument> identityDocuments) {
+        this.identityDocuments = identityDocuments;
+    }
+
+    public Set<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(Set<Language> languages) {
+        this.languages = languages;
+    }
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public Partner getPartner() {
+        return partner;
+    }
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+    public Set<PreviousJob> getPreviousJobs() {
+        return previousJobs;
+    }
+
+    public void setPreviousJobs(Set<PreviousJob> previousJobs) {
+        this.previousJobs = previousJobs;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -262,6 +376,17 @@ public class EmployeeDTO {
                 .add("joiningDate", joiningDate)
                 .add("currentPositionStartingDate", currentPositionStartingDate)
                 .add("roles", roles)
+                .add("academicStudies", academicStudies)
+                .add("addresses", addresses)
+                .add("bankAccount", bankAccounts)
+                .add("children", children)
+                .add("citizenships", citizenships)
+                .add("holidays", holidays)
+                .add("identityDocuments", identityDocuments)
+                .add("languages", languages)
+                .add("maritalStatus", maritalStatus)
+                .add("partner", partner)
+                .add("previousJobs", previousJobs)
                 .toString();
     }
 }

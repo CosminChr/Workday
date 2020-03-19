@@ -18,6 +18,8 @@ public class AddressDTO {
 
     private Integer floor;
 
+    private Integer apartmentNumber;
+
     private CityDTO city;
 
     private String postalCode;
@@ -78,6 +80,14 @@ public class AddressDTO {
         this.floor = floor;
     }
 
+    public Integer getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void setApartmentNumber(Integer apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
+    }
+
     public CityDTO getCity() {
         return city;
     }
@@ -104,6 +114,7 @@ public class AddressDTO {
                 .add("block", block)
                 .add("stairwell", stairwell)
                 .add("floor", floor)
+                .add("apartmentNumber", apartmentNumber)
                 .add("city", city)
                 .add("postalCode", postalCode)
                 .toString();

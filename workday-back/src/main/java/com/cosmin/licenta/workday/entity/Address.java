@@ -1,5 +1,7 @@
 package com.cosmin.licenta.workday.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,7 @@ public class Address {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
@@ -27,6 +30,8 @@ public class Address {
     private String stairwell;
 
     private Integer floor;
+
+    private Integer apartmentNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
@@ -96,6 +101,14 @@ public class Address {
 
     public void setFloor(Integer floor) {
         this.floor = floor;
+    }
+
+    public Integer getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void setApartmentNumber(Integer apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
     }
 
     public City getCity() {

@@ -1,5 +1,7 @@
 package com.cosmin.licenta.workday.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -7,6 +9,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -80,6 +83,48 @@ public class Employee extends User implements Serializable {
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleReferential> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<AcademicStudy> academicStudies;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<Address> addresses;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<BankAccount> bankAccounts;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<Child> children;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<Citizenship> citizenships;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<Holiday> holidays;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<IdentityDocument> identityDocuments;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<Language> languages;
+
+    @OneToOne(mappedBy = "employee")
+    private MaritalStatus maritalStatus;
+
+    @OneToOne(mappedBy = "employee")
+    private Partner partner;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    private Set<PreviousJob> previousJobs;
 
     public Employee() {
     }
@@ -194,7 +239,7 @@ public class Employee extends User implements Serializable {
         this.department = department;
     }
 
-    public Boolean isITDeduction() {
+    public Boolean getITDeduction() {
         return ITDeduction;
     }
 
@@ -218,7 +263,100 @@ public class Employee extends User implements Serializable {
         this.currentPositionStartingDate = currentPositionStartingDate;
     }
 
+    @Override
+    public Set<RoleReferential> getRoles() {
+        return roles;
+    }
+
     public void setRoles(Set<RoleReferential> roles) {
         this.roles = roles;
+    }
+
+    public Set<AcademicStudy> getAcademicStudies() {
+        return academicStudies;
+    }
+
+    public void setAcademicStudies(Set<AcademicStudy> academicStudies) {
+        this.academicStudies = academicStudies;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Set<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(Set<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
+
+    public Set<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Child> children) {
+        this.children = children;
+    }
+
+    public Set<Citizenship> getCitizenships() {
+        return citizenships;
+    }
+
+    public void setCitizenships(Set<Citizenship> citizenships) {
+        this.citizenships = citizenships;
+    }
+
+    public Set<Holiday> getHolidays() {
+        return holidays;
+    }
+
+    public void setHolidays(Set<Holiday> holidays) {
+        this.holidays = holidays;
+    }
+
+    public Set<IdentityDocument> getIdentityDocuments() {
+        return identityDocuments;
+    }
+
+    public void setIdentityDocuments(Set<IdentityDocument> identityDocuments) {
+        this.identityDocuments = identityDocuments;
+    }
+
+    public Set<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(Set<Language> languages) {
+        this.languages = languages;
+    }
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public Partner getPartner() {
+        return partner;
+    }
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+    public Set<PreviousJob> getPreviousJobs() {
+        return previousJobs;
+    }
+
+    public void setPreviousJobs(Set<PreviousJob> previousJobs) {
+        this.previousJobs = previousJobs;
     }
 }

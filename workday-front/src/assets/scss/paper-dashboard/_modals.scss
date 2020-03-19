@@ -32,6 +32,7 @@
 }
 .modal-dialog{
     &.modal-sm,
+    &.modal-bg,
     &.modal-register{
         .modal-header{
             button.close{
@@ -54,7 +55,17 @@
 
 .modal-dialog {
     padding-top: 60px;
+    max-width:none;
 }
+
+.modal-bg {
+  max-width: 700px;
+}
+
+.modal-sm{
+  max-width: 350px;
+}
+
 .modal-body{
     padding: 20px 50px;
     color: #000;

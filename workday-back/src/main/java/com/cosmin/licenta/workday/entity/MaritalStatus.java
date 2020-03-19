@@ -14,6 +14,10 @@ public class MaritalStatus {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "marital_status_id")
     private MaritalStatusReferential maritalStatus;
 
