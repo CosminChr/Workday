@@ -24,7 +24,7 @@ public class PreviousJob {
 
     @OneToOne
     @JoinColumn(name = "city_id")
-    private City city;
+    private LocalityReferential locality;
 
     @Column(name = "from_date")
     private LocalDate fromDate;
@@ -67,12 +67,12 @@ public class PreviousJob {
         this.position = position;
     }
 
-    public City getCity() {
-        return city;
+    public LocalityReferential getLocality() {
+        return locality;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setLocality(LocalityReferential locality) {
+        this.locality = locality;
     }
 
     public LocalDate getFromDate() {

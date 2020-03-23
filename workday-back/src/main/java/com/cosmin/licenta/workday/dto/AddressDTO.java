@@ -20,7 +20,7 @@ public class AddressDTO {
 
     private Integer apartmentNumber;
 
-    private CityDTO city;
+    private LocalityReferentialDTO city;
 
     private String postalCode;
 
@@ -88,11 +88,11 @@ public class AddressDTO {
         this.apartmentNumber = apartmentNumber;
     }
 
-    public CityDTO getCity() {
+    public LocalityReferentialDTO getCity() {
         return city;
     }
 
-    public void setCity(CityDTO city) {
+    public void setCity(LocalityReferentialDTO city) {
         this.city = city;
     }
 

@@ -1,6 +1,5 @@
 package com.cosmin.licenta.workday.dto;
 
-import com.cosmin.licenta.workday.entity.City;
 import com.google.common.base.MoreObjects;
 
 import java.time.LocalDate;
@@ -13,7 +12,7 @@ public class PreviousJobDTO {
 
     private String position;
 
-    private City city;
+    private LocalityReferentialDTO locality;
 
     private LocalDate fromDate;
 
@@ -45,12 +44,12 @@ public class PreviousJobDTO {
         this.position = position;
     }
 
-    public City getCity() {
-        return city;
+    public LocalityReferentialDTO getLocality() {
+        return locality;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setLocality(LocalityReferentialDTO locality) {
+        this.locality = locality;
     }
 
     public LocalDate getFromDate() {
@@ -83,7 +82,7 @@ public class PreviousJobDTO {
                 .add("id", id)
                 .add("employer", employer)
                 .add("position", position)
-                .add("city", city)
+                .add("city", locality)
                 .add("fromDate", fromDate)
                 .add("toDate", toDate)
                 .add("fiscalCode", fiscalCode)
