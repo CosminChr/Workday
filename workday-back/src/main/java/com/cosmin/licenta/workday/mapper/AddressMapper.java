@@ -1,7 +1,6 @@
 package com.cosmin.licenta.workday.mapper;
 
 import com.cosmin.licenta.workday.dto.AddressDTO;
-import com.cosmin.licenta.workday.dto.CityDTO;
 import com.cosmin.licenta.workday.entity.Address;
 import org.mapstruct.Mapper;
 

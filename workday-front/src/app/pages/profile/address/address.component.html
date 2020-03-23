@@ -1,102 +1,119 @@
 <div class="main-content">
-  <div class="row">
-
+  <div class="row" *ngFor="let cop of copchi; let i = index">
     <div class="col-md-12">
-      <div class="card ">
-        <div class="card-header">
-          <h4 class="card-title">Adresă</h4>
-        </div>
-        <div class="card-body ">
-          <form method="get" action="/" class="form-horizontal"
-             >
-            <div class="row">
-              <div class="col-sm-10">
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label>Tip adresă</label>
-                      <input formControlName="addressType" type="text" class="form-control" placeholder="Tip adresă">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label>Stradă</label>
-                      <input formControlName="street" type="text" class="form-control" placeholder="Strada">
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label>Număr</label>
-                      <input formControlName="number" type="text" class="form-control" placeholder="Număr">
-                    </div>
-                  </div>
-                </div>
+      <div class="card">
+        <div class="card-body">
+          <div id="accordion{{i}}" role="tablist" aria-multiselectable="true" class="card-collapse">
+            <h4 class="card-title">Adresă </h4>
+            <div class="card card-plain">
+              <div class="card-header" role="tab" id="headingOne">
+                <a data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapseOne{{i}}" aria-expanded="false" aria-controls="collapseOne{{i}}">
+                     {{i}}
+                  <i class="nc-icon nc-minimal-down"></i>
+                </a>
+              </div>
+              <div id="collapseOne{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                  <form method="get" action="/" class="form-horizontal"
+                  >
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Tip adresă</label>
+                              <input  type="text" class="form-control" placeholder="Tip adresă">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Stradă</label>
+                              <input type="text" class="form-control" placeholder="Strada">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              <label>Număr</label>
+                              <input  type="text" class="form-control" placeholder="Număr">
+                            </div>
+                          </div>
+                        </div>
 
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Bloc</label>
-                      <input formControlName="block" type="text" class="form-control" placeholder="Bloc">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Scara</label>
-                      <input formControlName="stairwell" type="text" class="form-control" placeholder="Scara">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Etaj</label>
-                      <input formControlName="floor" type="text" class="form-control" placeholder="Etaj">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Apartament</label>
-                      <input formControlName="apartmentNumber" type="text" class="form-control" placeholder="Apartament">
-                    </div>
-                  </div>
-                </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Bloc</label>
+                              <input  type="text" class="form-control" placeholder="Bloc">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Scara</label>
+                              <input  type="text" class="form-control" placeholder="Scara">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Etaj</label>
+                              <input  type="text" class="form-control" placeholder="Etaj">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Apartament</label>
+                              <input  type="text" class="form-control" placeholder="Apartament">
+                            </div>
+                          </div>
+                        </div>
 
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Oraș</label>
-                      <input formControlName="city" type="text" class="form-control" placeholder="Oraș">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Localitate</label>
+                              <input  type="text" class="form-control" placeholder="Localitate">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Județ</label>
+                              <input  type="text" class="form-control" placeholder="Județ">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Țară</label>
+                              <input  type="text" class="form-control" placeholder="Țară">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              <label>Cod poștal</label>
+                              <input  type="text" class="form-control" placeholder="Cod poștal">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Județ</label>
-                      <input formControlName="county" type="text" class="form-control" placeholder="Județ">
+
+
+                    <div class="card-footer text-right">
+                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Țară</label>
-                      <input formControlName="country" type="text" class="form-control" placeholder="Țară">
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label>Cod poștal</label>
-                      <input formControlName="postalCode" type="text" class="form-control" placeholder="Cod poștal">
-                    </div>
-                  </div>
+
+                  </form>
                 </div>
               </div>
             </div>
 
-
-            <div class="card-footer text-right">
-              <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
-            </div>
-
-          </form>
+          </div>
         </div>
       </div>
     </div>
+
+
+
+
+
 
   </div>
 </div>

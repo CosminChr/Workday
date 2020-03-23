@@ -1,10 +1,7 @@
 package com.cosmin.licenta.workday.mapper;
 
 import com.cosmin.licenta.workday.dto.AcademicStudyDTO;
-import com.cosmin.licenta.workday.dto.AddressDTO;
-import com.cosmin.licenta.workday.dto.CityDTO;
 import com.cosmin.licenta.workday.entity.AcademicStudy;
-import com.cosmin.licenta.workday.entity.Address;
 import com.cosmin.licenta.workday.entity.StudyFieldReferential;
 import com.cosmin.licenta.workday.entity.StudyLevelReferential;
 import org.mapstruct.Mapper;

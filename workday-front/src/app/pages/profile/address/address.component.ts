@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddressComponent implements OnInit {
 
+  copilescu = 'copilescu';
+  copchi =  [1,2];
+
   constructor() { }
 
   ngOnInit() {

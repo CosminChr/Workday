@@ -34,8 +34,8 @@ public class Address {
     private Integer apartmentNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id")
-    private City city;
+    @JoinColumn(name = "locality_id")
+    private LocalityReferential locality;
 
     private String postalCode;
 
@@ -111,12 +111,12 @@ public class Address {
         this.apartmentNumber = apartmentNumber;
     }
 
-    public City getCity() {
-        return city;
+    public LocalityReferential getLocality() {
+        return locality;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setLocality(LocalityReferential locality) {
+        this.locality = locality;
     }
 
     public String getPostalCode() {
