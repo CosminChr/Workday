@@ -12,12 +12,12 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "address_type_id")
     private AddressTypeReferential addressType;
 
@@ -31,12 +31,14 @@ public class Address {
 
     private Integer floor;
 
+    @Column(name = "apartment_number")
     private Integer apartmentNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "locality_id")
     private LocalityReferential locality;
 
+    @Column(name = "postal_code")
     private String postalCode;
 
     public Long getId() {

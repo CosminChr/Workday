@@ -13,7 +13,7 @@ public class BankAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "employee_id")
     private Employee employee;
@@ -26,7 +26,7 @@ public class BankAccount {
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "currency_id")
     private CurrencyReferential currency;
 
