@@ -1,40 +1,46 @@
 <div class="main-content">
-  <div class="row" *ngFor="let cop of copchi; let i = index">
+  <div class="alert alert-warning fade show" *ngIf="!isDoesAnyAddressExist">
+    <span>Nu a fost adăugată încă nicio adresă"</span>
+  </div>
+
+
+  <div class="row" *ngFor="let address of addresses; let i = index">
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
           <div id="accordion{{i}}" role="tablist" aria-multiselectable="true" class="card-collapse">
-            <h4 class="card-title">Adresă </h4>
+            <h4 class="card-title">Adresă {{ address.addressType.label}} </h4>
             <div class="card card-plain">
               <div class="card-header" role="tab" id="headingOne">
-                <a data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapseOne{{i}}" aria-expanded="false" aria-controls="collapseOne{{i}}">
-                     {{i}}
+                <a data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapseOne{{i}}" aria-expanded="false"
+                   aria-controls="collapseOne{{i}}">
+                  {{address.street + ' ' + address.number + ', ' + address.locality.label}}
                   <i class="nc-icon nc-minimal-down"></i>
                 </a>
               </div>
               <div id="collapseOne{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-body">
-                  <form method="get" action="/" class="form-horizontal"
-                  >
+                  <form [formGroup]="addressFormGroups[i]" *ngIf="addressFormGroups">
                     <div class="row">
                       <div class="col-sm-10">
                         <div class="row">
                           <div class="col-md-4">
                             <div class="form-group">
                               <label>Tip adresă</label>
-                              <input  type="text" class="form-control" placeholder="Tip adresă">
+                              <input formControlName="addressType" type="text" class="form-control"
+                                     placeholder="Tip adresă">
                             </div>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
                               <label>Stradă</label>
-                              <input type="text" class="form-control" placeholder="Strada">
+                              <input formControlName="street" type="text" class="form-control" placeholder="Strada">
                             </div>
                           </div>
                           <div class="col-md-2">
                             <div class="form-group">
                               <label>Număr</label>
-                              <input  type="text" class="form-control" placeholder="Număr">
+                              <input formControlName="number" type="text" class="form-control" placeholder="Număr">
                             </div>
                           </div>
                         </div>
@@ -43,25 +49,26 @@
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Bloc</label>
-                              <input  type="text" class="form-control" placeholder="Bloc">
+                              <input formControlName="block" type="text" class="form-control" placeholder="Bloc">
                             </div>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Scara</label>
-                              <input  type="text" class="form-control" placeholder="Scara">
+                              <input formControlName="stairwell" type="text" class="form-control" placeholder="Scară">
                             </div>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Etaj</label>
-                              <input  type="text" class="form-control" placeholder="Etaj">
+                              <input formControlName="floor" type="text" class="form-control" placeholder="Etaj">
                             </div>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Apartament</label>
-                              <input  type="text" class="form-control" placeholder="Apartament">
+                              <input formControlName="apartmentNumber" type="text" class="form-control"
+                                     placeholder="Apartament">
                             </div>
                           </div>
                         </div>
@@ -70,25 +77,27 @@
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Localitate</label>
-                              <input  type="text" class="form-control" placeholder="Localitate">
+                              <input formControlName="locality" type="text" class="form-control"
+                                     placeholder="Localitate">
                             </div>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Județ</label>
-                              <input  type="text" class="form-control" placeholder="Județ">
+                              <input formControlName="county" type="text" class="form-control" placeholder="Județ">
                             </div>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Țară</label>
-                              <input  type="text" class="form-control" placeholder="Țară">
+                              <input formControlName="country" type="text" class="form-control" placeholder="Țară">
                             </div>
                           </div>
                           <div class="col-md-2">
                             <div class="form-group">
                               <label>Cod poștal</label>
-                              <input  type="text" class="form-control" placeholder="Cod poștal">
+                              <input formControlName="postalCode" type="text" class="form-control"
+                                     placeholder="Cod poștal">
                             </div>
                           </div>
                         </div>
@@ -111,9 +120,120 @@
     </div>
 
 
-
-
-
-
   </div>
+
+  <div class ="text-right">
+    <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
+            data-target="#myModal" (click)="reinitializePicker()">Adaugă adresă nouă
+    </button>
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-bg">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Adresă nouă pentru {{employee.lastName + ' ' + employee.firstName}}</h4>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="newAddressForm" *ngIf="newAddressForm">
+            <div class ="row">
+              <div class="col-lg-4 col-md-4 col-sm-3">
+                <select formControlName = "addressType" class="selectpicker" data-size="7" data-style="btn btn-outline-success btn-round"
+                        title="Tip adresă">
+                  <option *ngFor="let referential of addressReferentials">
+                    {{referential.label}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-4 text-center">
+                <div class="form-group">
+                  <!--                  <label >De la</label>-->
+                  <input formControlName = "street"  type="text" class="form-control text-center mt-sm-2" placeholder="Stradă">
+                </div>
+              </div>
+              <div class="col-md-4 text-center">
+                <div class="form-group">
+                  <!--                  <label>Până</label>-->
+                  <input formControlName = "number"  type="text" class="form-control text-center mt-sm-2" placeholder="Număr">
+                </div>
+              </div>
+            </div>
+
+
+            <div class ="row">
+              <div class="col-md-3 text-center">
+                <div class="form-group">
+                  <!--                  <label >De la</label>-->
+                  <input formControlName = "block"  type="text" class="form-control text-center mt-sm-2" placeholder="Bloc">
+                </div>
+              </div>
+              <div class="col-md-3 text-center">
+                <div class="form-group">
+                  <!--                  <label >De la</label>-->
+                  <input formControlName = "stairwell"  type="text" class="form-control text-center mt-sm-2" placeholder="Scară">
+                </div>
+              </div>
+              <div class="col-md-3 text-center">
+                <div class="form-group">
+                  <!--                  <label>Până</label>-->
+                  <input formControlName = "floor"  type="text" class="form-control text-center mt-sm-2" placeholder="Etaj">
+                </div>
+              </div>
+              <div class="col-md-3 text-center">
+                <div class="form-group">
+                  <!--                  <label>Până</label>-->
+                  <input formControlName = "apartmentNumber"  type="text" class="form-control text-center mt-sm-2" placeholder="Apartament">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+<!--                  <label>Bloc</label>-->
+                  <input formControlName="locality" type="text" class="form-control" placeholder="Localitate">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+<!--                  <label>Scara</label>-->
+                  <input formControlName="country" type="text" class="form-control" placeholder="Țară">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+<!--                  <label>Etaj</label>-->
+                  <input formControlName="county" type="text" class="form-control" placeholder="Județ">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+<!--                  <label>Apartament</label>-->
+                  <input formControlName="apartmentNumber" type="text" class="form-control"
+                         placeholder="Cod poștal">
+                </div>
+              </div>
+            </div>
+
+
+
+          </form>
+          <div class="modal-footer">
+            <div class="left-side">
+              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putHoliday()">Trimite spre validare</button>
+            </div>
+            <div class="divider"></div>
+            <div class="right-side">
+              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>

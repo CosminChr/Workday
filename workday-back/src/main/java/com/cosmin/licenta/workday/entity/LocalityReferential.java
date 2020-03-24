@@ -1,9 +1,11 @@
 package com.cosmin.licenta.workday.entity;
 
-import com.google.common.base.MoreObjects;
 import org.hibernate.annotations.Immutable;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
@@ -11,11 +13,11 @@ import java.io.Serializable;
 @Table(name = "workday_locality_ref")
 public class LocalityReferential extends AbstractReferential implements Serializable {
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "county_id")
     private CountyReferential county;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "country_id")
     private CountryReferential country;
 
