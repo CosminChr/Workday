@@ -8,7 +8,7 @@ import {AddressTypeReferentialService} from "./address-type.referential.service"
 import {LocalityService} from "./locality.service";
 import {Employee} from "../../../shared/models/employee.model";
 import {EmployeeService} from "../../../shared/services/employee/employee.service";
-import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 declare var $: any;
 
@@ -17,7 +17,7 @@ declare var $: any;
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss']
 })
-export class AddressComponent implements OnInit, AfterViewInit  {
+export class AddressComponent implements OnInit, AfterViewInit {
 
   employee: Employee;
 
@@ -35,6 +35,8 @@ export class AddressComponent implements OnInit, AfterViewInit  {
 
   isDoesAnyAddressExist = true;
 
+  selectedLocality = new Array<string>();
+
   constructor(private addressService: AddressService,
               private addressTypeReferentialService: AddressTypeReferentialService,
               private localityService: LocalityService,
@@ -49,14 +51,10 @@ export class AddressComponent implements OnInit, AfterViewInit  {
     forkJoin([
       this.addressTypeReferentialService.getAddressTypeReferentials(),
       this.addressService.getAddresses(this.employee.id),
-      this.localityService.getLocalityReferentials()
     ])
       .subscribe(data => {
         this.addressReferentials = data[0];
         this.addresses = data[1];
-        this.localities = data[2];
-        this.createAddressForms();
-        this.createnewAddressForm();
       });
   }
 
@@ -108,10 +106,86 @@ export class AddressComponent implements OnInit, AfterViewInit  {
   }
 
   ngAfterViewInit(): void {
+
+    this.localityService.getLocalityReferentials().subscribe(data => {
+      this.localities = data as Array<LocalityReferential>;
+      this.createAddressForms();
+      this.createnewAddressForm();
+    });
+
     $('.selectpicker').selectpicker();
+
+    setTimeout(function () {
+      $('#datatable').DataTable({
+        lengthChange: false,
+        bInfo: false,
+        pagingType: "full_numbers",
+        lengthMenu: [
+          [7],
+          [7]
+        ],
+        responsive: true,
+        language: {
+          search: "_INPUT_",
+          searchPlaceholder: "Caută oraș",
+          paginate: {
+            first: "Prima pagină",
+            previous: "Înapoi",
+            next: "Înainte",
+            last: "Ultima pagină"
+          }
+        }
+
+      });
+    }, 400);
   }
 
   reinitializePicker() {
     $('.selectpicker').selectpicker('refresh');
+  }
+
+  selectRow(event: any) {
+    this.selectedLocality[0] = event.target.parentNode.cells[0].textContent;
+    this.selectedLocality[1] = event.target.parentNode.cells[1].textContent;
+    this.selectedLocality[2] = event.target.parentNode.cells[2].textContent;
+  }
+
+
+  isALocalitySelected(): boolean {
+    return this.selectedLocality[0] != null;
+  }
+
+  setLocality(): string {
+    if (this.isALocalitySelected()) {
+      return this.selectedLocality[0];
+    } else {
+      return "Oraș";
+    }
+  }
+
+  putNewAddress() {
+    if (!this.newAddress.addressType) {
+      this.newAddress.addressType = new Referential();
+    }
+    if (!this.newAddress.locality) {
+      this.newAddress.locality = new LocalityReferential();
+      this.newAddress.locality.county = new Referential();
+      this.newAddress.locality.country = new Referential();
+    }
+
+
+    this.newAddress.addressType.label = this.newAddressForm.controls.addressType.value;
+    this.newAddress.street = this.newAddressForm.controls.street.value;
+    this.newAddress.number = this.newAddressForm.controls.number.value;
+    this.newAddress.block = this.newAddressForm.controls.block.value;
+    this.newAddress.stairwell = this.newAddressForm.controls.stairwell.value;
+    this.newAddress.floor = Number(this.newAddressForm.controls.floor.value);
+    this.newAddress.apartmentNumber = Number(this.newAddressForm.controls.apartmentNumber.value);
+    this.newAddress.locality.label = this.newAddressForm.controls.locality.value;
+    this.newAddress.locality.county = this.newAddressForm.controls.county.value;
+    this.newAddress.locality.country = this.newAddressForm.controls.country.value;
+    this.newAddress.postalCode = this.newAddressForm.controls.postalCode.value;
+
+    this.addressService.putAddress(this.newAddress).subscribe();
   }
 }
