@@ -122,14 +122,14 @@
 
   </div>
 
-  <div class ="text-right">
+  <div class="text-right">
     <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
             data-target="#myModal" (click)="reinitializePicker()">Adaugă adresă nouă
     </button>
   </div>
 
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-bg">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header justify-content-center">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -139,9 +139,10 @@
         </div>
         <div class="modal-body">
           <form [formGroup]="newAddressForm" *ngIf="newAddressForm">
-            <div class ="row">
+            <div class="row">
               <div class="col-lg-4 col-md-4 col-sm-3">
-                <select formControlName = "addressType" class="selectpicker" data-size="7" data-style="btn btn-outline-success btn-round"
+                <select formControlName="addressType" class="selectpicker" data-size="7"
+                        data-style="btn btn-outline-success btn-round"
                         title="Tip adresă">
                   <option *ngFor="let referential of addressReferentials">
                     {{referential.label}}
@@ -151,41 +152,47 @@
               <div class="col-md-4 text-center">
                 <div class="form-group">
                   <!--                  <label >De la</label>-->
-                  <input formControlName = "street"  type="text" class="form-control text-center mt-sm-2" placeholder="Stradă">
+                  <input formControlName="street" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Stradă">
                 </div>
               </div>
               <div class="col-md-4 text-center">
                 <div class="form-group">
                   <!--                  <label>Până</label>-->
-                  <input formControlName = "number"  type="text" class="form-control text-center mt-sm-2" placeholder="Număr">
+                  <input formControlName="number" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Număr">
                 </div>
               </div>
             </div>
 
 
-            <div class ="row">
+            <div class="row">
               <div class="col-md-3 text-center">
                 <div class="form-group">
                   <!--                  <label >De la</label>-->
-                  <input formControlName = "block"  type="text" class="form-control text-center mt-sm-2" placeholder="Bloc">
+                  <input formControlName="block" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Bloc">
                 </div>
               </div>
               <div class="col-md-3 text-center">
                 <div class="form-group">
                   <!--                  <label >De la</label>-->
-                  <input formControlName = "stairwell"  type="text" class="form-control text-center mt-sm-2" placeholder="Scară">
+                  <input formControlName="stairwell" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Scară">
                 </div>
               </div>
               <div class="col-md-3 text-center">
                 <div class="form-group">
                   <!--                  <label>Până</label>-->
-                  <input formControlName = "floor"  type="text" class="form-control text-center mt-sm-2" placeholder="Etaj">
+                  <input formControlName="floor" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Etaj">
                 </div>
               </div>
               <div class="col-md-3 text-center">
                 <div class="form-group">
                   <!--                  <label>Până</label>-->
-                  <input formControlName = "apartmentNumber"  type="text" class="form-control text-center mt-sm-2" placeholder="Apartament">
+                  <input formControlName="apartmentNumber" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Apartament">
                 </div>
               </div>
             </div>
@@ -193,37 +200,42 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="form-group">
-<!--                  <label>Bloc</label>-->
-                  <input formControlName="locality" type="text" class="form-control" placeholder="Localitate">
+                  <!--                  <label>Bloc</label>-->
+                  <button type="button" class="btn btn-outline-info btn-round mb-3" data-toggle="modal"
+                          data-target="#citiesModal">{{setLocality()}}
+                  </button>
+                  <!--                  <input formControlName="locality" type="text" class="form-control" placeholder="Localitate">-->
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-<!--                  <label>Scara</label>-->
-                  <input formControlName="country" type="text" class="form-control" placeholder="Țară">
+                  <!--                  <label>Scara</label>-->
+                  <input formControlName="county" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Județ" disabled [value]="isALocalitySelected() ? selectedLocality[1]: ''">
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-<!--                  <label>Etaj</label>-->
-                  <input formControlName="county" type="text" class="form-control" placeholder="Județ">
+                  <!--                  <label>Etaj</label>-->
+                  <input formControlName="country" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Țară" disabled [value]="isALocalitySelected() ? selectedLocality[2]: ''">
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-<!--                  <label>Apartament</label>-->
-                  <input formControlName="apartmentNumber" type="text" class="form-control"
+                  <!--                  <label>Apartament</label>-->
+                  <input formControlName="apartmentNumber" type="text" class="form-control text-center mt-sm-2"
                          placeholder="Cod poștal">
                 </div>
               </div>
             </div>
 
 
-
           </form>
           <div class="modal-footer">
             <div class="left-side">
-              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putHoliday()">Trimite spre validare</button>
+              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewAddress()">Salvează adresa
+              </button>
             </div>
             <div class="divider"></div>
             <div class="right-side">
@@ -236,4 +248,59 @@
   </div>
 
 
+  <div class="modal fade" id="citiesModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-bg">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Listă orașe</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar              -->
+            </div>
+            <table id="datatable" class="table table-bordered" cellspacing="0" width="100%">
+              <thead>
+              <tr>
+                <th class="text-capitalize">Oraș</th>
+                <th class="text-capitalize">Județ</th>
+                <th class="text-capitalize">Țară</th>
+              </tr>
+              </thead>
+              <tbody>
+                            <tr class = "locality" *ngFor="let localityReferential of localities" (click)="selectRow($event)"
+                                [class.selected]="localityReferential.label === selectedLocality[0] &&
+                                                     localityReferential.county.label === selectedLocality[1] &&
+                                                     localityReferential.country.label === selectedLocality[2]">
+                              <td >{{localityReferential.label}}</td>
+                              <td>{{localityReferential.county.label}}</td>
+                              <td>{{localityReferential.country.label}}</td>
+                            </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- end content-->
+        </div>
+
+        <div class="modal-footer">
+          <div class="left-side">
+            <button type="button" class="btn btn-default btn-link" data-dismiss="modal"
+                    [disabled]="!isALocalitySelected()">Confirmă
+            </button>
+          </div>
+          <div class="divider"></div>
+          <div class="right-side">
+            <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+          </div>
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+  </div>
 </div>
+
