@@ -124,11 +124,11 @@
 
   <div class="text-right">
     <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
-            data-target="#myModal" (click)="reinitializePicker()">Adaugă adresă nouă
+            data-target="#newAddressModal" (click)="reinitializePicker()">Adaugă adresă nouă
     </button>
   </div>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal fade" id="newAddressModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header justify-content-center">
@@ -224,7 +224,7 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <!--                  <label>Apartament</label>-->
-                  <input formControlName="apartmentNumber" type="text" class="form-control text-center mt-sm-2"
+                  <input formControlName="postalCode" type="text" class="form-control text-center mt-sm-2"
                          placeholder="Cod poștal">
                 </div>
               </div>

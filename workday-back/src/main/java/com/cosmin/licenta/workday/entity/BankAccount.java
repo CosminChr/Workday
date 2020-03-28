@@ -18,6 +18,8 @@ public class BankAccount {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    private String bank;
+
     private String agency;
 
     @Column(name = "iban")
@@ -51,6 +53,14 @@ public class BankAccount {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 
     public String getAgency() {

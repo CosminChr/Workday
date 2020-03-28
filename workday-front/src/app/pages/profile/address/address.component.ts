@@ -55,7 +55,13 @@ export class AddressComponent implements OnInit, AfterViewInit {
       .subscribe(data => {
         this.addressReferentials = data[0];
         this.addresses = data[1];
+        this.createAddressForms();
+        this.createnewAddressForm();
       });
+
+    this.localityService.getLocalityReferentials().subscribe(data => {
+      this.localities = data as Array<LocalityReferential>;
+    });
   }
 
   createAddressForms(): Array<FormGroup> {
@@ -107,11 +113,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    this.localityService.getLocalityReferentials().subscribe(data => {
-      this.localities = data as Array<LocalityReferential>;
-      this.createAddressForms();
-      this.createnewAddressForm();
-    });
+
 
     $('.selectpicker').selectpicker();
 
@@ -137,7 +139,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
         }
 
       });
-    }, 400);
+    }, 500);
   }
 
   reinitializePicker() {
@@ -173,7 +175,6 @@ export class AddressComponent implements OnInit, AfterViewInit {
       this.newAddress.locality.country = new Referential();
     }
 
-
     this.newAddress.addressType.label = this.newAddressForm.controls.addressType.value;
     this.newAddress.street = this.newAddressForm.controls.street.value;
     this.newAddress.number = this.newAddressForm.controls.number.value;
@@ -182,10 +183,13 @@ export class AddressComponent implements OnInit, AfterViewInit {
     this.newAddress.floor = Number(this.newAddressForm.controls.floor.value);
     this.newAddress.apartmentNumber = Number(this.newAddressForm.controls.apartmentNumber.value);
     this.newAddress.locality.label = this.newAddressForm.controls.locality.value;
-    this.newAddress.locality.county = this.newAddressForm.controls.county.value;
-    this.newAddress.locality.country = this.newAddressForm.controls.country.value;
+    this.newAddress.locality.county.label = this.selectedLocality[1];
+    this.newAddress.locality.country.label = this.selectedLocality[2];
     this.newAddress.postalCode = this.newAddressForm.controls.postalCode.value;
 
-    this.addressService.putAddress(this.newAddress).subscribe();
+    this.newAddress.employee = this.employee;
+    this.addressService.putAddress(this.newAddress).subscribe( data => {
+       this.addresses.push(data as Address);
+    });
   }
 }
