@@ -1,6 +1,6 @@
 <div class="main-content">
   <div class="alert alert-warning fade show" *ngIf="!isDoesAnyBankAccountExist">
-    <span>Nu a fost adăugată încă niciun cont bancar"</span>
+    <span>Nu a fost adăugat încă niciun cont bancar"</span>
   </div>
 
 
@@ -27,14 +27,14 @@
                           <div class="col-md-4">
                             <div class="form-group">
                               <label>Bancă</label>
-                              <input formControlName="addressType" type="text" class="form-control"
+                              <input formControlName="bank" type="text" class="form-control"
                                      placeholder="Bancă">
                             </div>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
                               <label>Filială</label>
-                              <input formControlName="street" type="text" class="form-control" placeholder="Filială">
+                              <input formControlName="agency" type="text" class="form-control" placeholder="Filială">
                             </div>
                           </div>
                         </div>
@@ -43,13 +43,13 @@
                           <div class="col-md-5">
                             <div class="form-group">
                               <label>IBAN</label>
-                              <input formControlName="block" type="text" class="form-control" placeholder="IBAN">
+                              <input formControlName="IBAN" type="text" class="form-control" placeholder="IBAN">
                             </div>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Data expirării cardului</label>
-                              <input formControlName="stairwell" type="text" class="form-control" placeholder="Data expirării cardului">
+                              <input formControlName="expirationDate" type="text" class="form-control" placeholder="Data expirării cardului">
                             </div>
                           </div>
                         </div>
@@ -58,7 +58,7 @@
                           <div class="col-md-4">
                             <div class="form-group">
                               <label>Moneda</label>
-                              <input formControlName="locality" type="text" class="form-control"
+                              <input formControlName="currency" type="text" class="form-control"
                                      placeholder="Moneda">
                             </div>
                           </div>
@@ -68,7 +68,7 @@
                               <div class="col-sm-10 checkbox-radios">
                                 <div class="form-check">
                                   <label class="form-check-label  mt-sm-2">
-                                    <input formControlName="Cont principal" class="form-check-input" type="checkbox">
+                                    <input formControlName="primaryAccount" class="form-check-input" type="checkbox">
                                     <span class="form-check-sign"></span>
                                     Cont principal
                                   </label>
@@ -96,185 +96,100 @@
 
   </div>
 
-<!--  <div class="text-right">-->
-<!--    <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"-->
-<!--            data-target="#myModal" (click)="reinitializePicker()">Adaugă adresă nouă-->
-<!--    </button>-->
-<!--  </div>-->
+  <div class="text-right">
+    <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
+            data-target="#newBankAccountModal" (click)="reinitializePicker()">Adaugă cont bancar nou
+    </button>
+  </div>
 
-<!--  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog modal-md">-->
-<!--      <div class="modal-content">-->
-<!--        <div class="modal-header justify-content-center">-->
-<!--          <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--            <i class="nc-icon nc-simple-remove"></i>-->
-<!--          </button>-->
-<!--          <h4 class="title">Adresă nouă pentru {{employee.lastName + ' ' + employee.firstName}}</h4>-->
-<!--        </div>-->
-<!--        <div class="modal-body">-->
-<!--          <form [formGroup]="newAddressForm" *ngIf="newAddressForm">-->
-<!--            <div class="row">-->
-<!--              <div class="col-lg-4 col-md-4 col-sm-3">-->
-<!--                <select formControlName="addressType" class="selectpicker" data-size="7"-->
-<!--                        data-style="btn btn-outline-success btn-round"-->
-<!--                        title="Tip adresă">-->
-<!--                  <option *ngFor="let referential of addressReferentials">-->
-<!--                    {{referential.label}}-->
-<!--                  </option>-->
-<!--                </select>-->
-<!--              </div>-->
-<!--              <div class="col-md-4 text-center">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label >De la</label>&ndash;&gt;-->
-<!--                  <input formControlName="street" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Stradă">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-4 text-center">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label>Până</label>&ndash;&gt;-->
-<!--                  <input formControlName="number" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Număr">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+  <div class="modal fade" id="newBankAccountModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Cont bancar nou pentru {{employee.lastName + ' ' + employee.firstName}}</h4>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="bankAccountFormGroup" *ngIf="bankAccountFormGroup">
+            <div class="row">
+              <div class="col-md-6 text-center">
+                <div class="form-group">
+                  <!--                  <label >De la</label>-->
+                  <input formControlName="bank" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Bancă">
+                </div>
+              </div>
+              <div class="col-md-6 text-center">
+                <div class="form-group">
+                  <!--                  <label >De la</label>-->
+                  <input formControlName="agency" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Filială">
+                </div>
+              </div>
+            </div>
 
 
-<!--            <div class="row">-->
-<!--              <div class="col-md-3 text-center">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label >De la</label>&ndash;&gt;-->
-<!--                  <input formControlName="block" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Bloc">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-3 text-center">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label >De la</label>&ndash;&gt;-->
-<!--                  <input formControlName="stairwell" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Scară">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-3 text-center">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label>Până</label>&ndash;&gt;-->
-<!--                  <input formControlName="floor" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Etaj">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-3 text-center">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label>Până</label>&ndash;&gt;-->
-<!--                  <input formControlName="apartmentNumber" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Apartament">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+            <div class="row">
+              <div class="col-md-7 text-center">
+                <div class="form-group">
+                  <!--                  <label >De la</label>-->
+                  <input formControlName="IBAN" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="IBAN">
+                </div>
+              </div>
+              <div class="col-md-5 text-center">
+                <div class="form-group">
+                  <!--                  <label >De la</label>-->
+                  <input formControlName="expirationDate" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Data expirării">
+                </div>
+            </div>
+            </div>
 
-<!--            <div class="row">-->
-<!--              <div class="col-md-3">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label>Bloc</label>&ndash;&gt;-->
-<!--                  <button type="button" class="btn btn-outline-info btn-round mb-3" data-toggle="modal"-->
-<!--                          data-target="#citiesModal">{{setLocality()}}-->
-<!--                  </button>-->
-<!--                  &lt;!&ndash;                  <input formControlName="locality" type="text" class="form-control" placeholder="Localitate">&ndash;&gt;-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-3">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label>Scara</label>&ndash;&gt;-->
-<!--                  <input formControlName="county" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Județ" disabled [value]="isALocalitySelected() ? selectedLocality[1]: ''">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-3">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label>Etaj</label>&ndash;&gt;-->
-<!--                  <input formControlName="country" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Țară" disabled [value]="isALocalitySelected() ? selectedLocality[2]: ''">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-3">-->
-<!--                <div class="form-group">-->
-<!--                  &lt;!&ndash;                  <label>Apartament</label>&ndash;&gt;-->
-<!--                  <input formControlName="postalCode" type="text" class="form-control text-center mt-sm-2"-->
-<!--                         placeholder="Cod poștal">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-6">
+                <select formControlName="currency" class="selectpicker form-control" data-size="7"
+                        data-style="btn btn-outline-success btn-round"
+                        title="Moneda">
+                  <option *ngFor="let referential of currencyReferentials">
+                    {{referential.label}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label></label>
+                  <div class="col-sm-10 checkbox-radios">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input formControlName="primaryAccount" class="form-check-input" type="checkbox">
+                        <span class="form-check-sign"></span>
+                        Cont principal
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
-<!--          </form>-->
-<!--          <div class="modal-footer">-->
-<!--            <div class="left-side">-->
-<!--              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewAddress()">Salvează adresa-->
-<!--              </button>-->
-<!--            </div>-->
-<!--            <div class="divider"></div>-->
-<!--            <div class="right-side">-->
-<!--              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
+          </form>
+          <div class="modal-footer">
+            <div class="left-side">
+              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewBankAccount()">Salvează contul bancar
+              </button>
+            </div>
+            <div class="divider"></div>
+            <div class="right-side">
+              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-<!--  <div class="modal fade" id="citiesModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog modal-bg">-->
-<!--      <div class="modal-content">-->
-<!--        <div class="modal-header justify-content-center">-->
-<!--          <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--            <i class="nc-icon nc-simple-remove"></i>-->
-<!--          </button>-->
-<!--          <h4 class="title">Listă orașe</h4>-->
-<!--        </div>-->
-<!--        <div class="modal-body">-->
-
-<!--          <div class="row">-->
-<!--            <div class="toolbar">-->
-<!--              &lt;!&ndash;        Here you can write extra buttons/actions for the toolbar              &ndash;&gt;-->
-<!--            </div>-->
-<!--            <table id="datatable" class="table table-bordered" cellspacing="0" width="100%">-->
-<!--              <thead>-->
-<!--              <tr>-->
-<!--                <th class="text-capitalize">Oraș</th>-->
-<!--                <th class="text-capitalize">Județ</th>-->
-<!--                <th class="text-capitalize">Țară</th>-->
-<!--              </tr>-->
-<!--              </thead>-->
-<!--              <tbody>-->
-<!--              <tr class = "locality" *ngFor="let localityReferential of localities" (click)="selectRow($event)"-->
-<!--                  [class.selected]="localityReferential.label === selectedLocality[0] &&-->
-<!--                                                     localityReferential.county.label === selectedLocality[1] &&-->
-<!--                                                     localityReferential.country.label === selectedLocality[2]">-->
-<!--                <td >{{localityReferential.label}}</td>-->
-<!--                <td>{{localityReferential.county.label}}</td>-->
-<!--                <td>{{localityReferential.country.label}}</td>-->
-<!--              </tr>-->
-<!--              </tbody>-->
-<!--            </table>-->
-<!--          </div>-->
-<!--          &lt;!&ndash; end content&ndash;&gt;-->
-<!--        </div>-->
-
-<!--        <div class="modal-footer">-->
-<!--          <div class="left-side">-->
-<!--            <button type="button" class="btn btn-default btn-link" data-dismiss="modal"-->
-<!--                    [disabled]="!isALocalitySelected()">Confirmă-->
-<!--            </button>-->
-<!--          </div>-->
-<!--          <div class="divider"></div>-->
-<!--          <div class="right-side">-->
-<!--            <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;  end card  &ndash;&gt;-->
-<!--      </div>-->
-<!--      &lt;!&ndash; end col-md-12 &ndash;&gt;-->
-<!--    </div>-->
-<!--  </div>-->
 </div>
 

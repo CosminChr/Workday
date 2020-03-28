@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Employee} from "../../../shared/models/employee.model";
 import {Referential} from "../../../shared/models/referential.model";
 import {BankAccount} from "../../../shared/models/bank-account.model";
@@ -7,14 +7,16 @@ import {BankAccountService} from "./bank-account.service";
 import {CurrencyReferentialService} from "./currency.service";
 import {forkJoin} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {formatDate} from "../../../shared/utils/utils";
+import {formatDate, parseDate} from "../../../shared/utils/utils";
+
+declare var $: any;
 
 @Component({
   selector: 'workday-bank-account',
   templateUrl: './bank-account.component.html',
   styleUrls: ['./bank-account.component.scss']
 })
-export class BankAccountComponent implements OnInit {
+export class BankAccountComponent implements OnInit, AfterViewInit {
 
   employee: Employee;
 
@@ -28,11 +30,13 @@ export class BankAccountComponent implements OnInit {
 
   bankAccountsFormGroups: Array<FormGroup>;
 
+  bankAccountFormGroup: FormGroup;
+
 
   constructor(private employeeService: EmployeeService,
               private bankAccountService: BankAccountService,
               private currencyReferentialService: CurrencyReferentialService,
-              private formBuilder:FormBuilder) {
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -43,13 +47,21 @@ export class BankAccountComponent implements OnInit {
       this.currencyReferentialService.getCurrencyReferentials(),
       this.bankAccountService.getBankAccounts(this.employee.id)
     ])
-      .subscribe( data => {
+      .subscribe(data => {
         console.log(data);
-          this.currencyReferentials = data[0];
-          this.bankAccounts = data[1];
-          this.createBankAccountForms();
-          this.populateBankAccountForms();
+        this.currencyReferentials = data[0];
+        this.bankAccounts = data[1];
+        this.createBankAccountForms();
+        this.populateBankAccountForms();
+        this.createNewBankAccountForm();
       });
+  }
+
+
+  ngAfterViewInit(): void {
+    setTimeout(function () {
+      $('.selectpicker').selectpicker();
+    }, 500);
   }
 
   formatExpirationDate(date: Date): string {
@@ -77,6 +89,21 @@ export class BankAccountComponent implements OnInit {
     return this.bankAccountsFormGroups;
   }
 
+  createNewBankAccountForm(): FormGroup {
+    this.newBankAccount.currency = new Referential();
+
+    this.bankAccountFormGroup = this.formBuilder.group({
+      'bank': [this.newBankAccount.bank, [Validators.required, Validators.maxLength(100)]],
+      'agency': [this.newBankAccount.agency, [Validators.required, Validators.maxLength(100)]],
+      'IBAN': [this.newBankAccount.iban, [Validators.required, Validators.maxLength(100)]],
+      'expirationDate': [this.newBankAccount.expirationDate ? formatDate(this.newBankAccount.expirationDate) : '', [Validators.required]],
+      'currency': [this.newBankAccount.currency?.label, [Validators.required, Validators.maxLength(100)]],
+      'primaryAccount': [this.newBankAccount.primaryAccount, [Validators.required, Validators.maxLength(100)]],
+    });
+
+    return this.bankAccountFormGroup;
+  }
+
   populateBankAccountForms(): Array<FormGroup> {
 
     if (this.bankAccounts) {
@@ -89,5 +116,26 @@ export class BankAccountComponent implements OnInit {
       }
     }
     return this.bankAccountsFormGroups;
+  }
+
+  putNewBankAccount() {
+    this.newBankAccount.currency = new Referential();
+    console.log(this.bankAccountFormGroup.controls.agency.value);
+    this.newBankAccount.bank = this.bankAccountFormGroup.controls.bank.value;
+    this.newBankAccount.agency = this.bankAccountFormGroup.controls.agency.value;
+    this.newBankAccount.iban = this.bankAccountFormGroup.controls.IBAN.value;
+    this.newBankAccount.expirationDate = parseDate(this.bankAccountFormGroup.controls.expirationDate.value);
+    this.newBankAccount.currency.label = this.bankAccountFormGroup.controls.currency.value;
+    this.newBankAccount.primaryAccount = this.bankAccountFormGroup.controls.primaryAccount.value;
+
+    this.newBankAccount.employee = this.employee;
+    this.bankAccountService.putBankAccount(this.newBankAccount).subscribe(data => {
+      this.bankAccounts.push(data as BankAccount);
+    });
+
+  }
+
+  reinitializePicker() {
+    $('.selectpicker').selectpicker('refresh');
   }
 }
