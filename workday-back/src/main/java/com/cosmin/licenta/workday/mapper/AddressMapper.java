@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {AddressTypeReferentialMapper.class})
+@Mapper(componentModel = "spring", uses = {AddressTypeReferentialMapper.class, EmployeeMapper.class})
 public interface AddressMapper {
 
     Address domainToEntity(final AddressDTO source);

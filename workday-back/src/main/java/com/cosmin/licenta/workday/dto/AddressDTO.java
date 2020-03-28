@@ -6,6 +6,8 @@ public class AddressDTO {
 
     private Long id;
 
+    private EmployeeDTO employee;
+
     private ReferentialDTO addressType;
 
     private String street;
@@ -30,6 +32,14 @@ public class AddressDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     public ReferentialDTO getAddressType() {
@@ -108,6 +118,7 @@ public class AddressDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("addressType", addressType)
                 .add("street", street)
                 .add("number", number)
