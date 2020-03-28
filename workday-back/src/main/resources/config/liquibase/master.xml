@@ -18,4 +18,6 @@
     <include file="classpath:config/liquibase/changelog/localities.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/addressTypes.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/addresses.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/currencies.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/bankAccounts.xml" relativeToChangelogFile="false"></include>
 </databaseChangeLog>

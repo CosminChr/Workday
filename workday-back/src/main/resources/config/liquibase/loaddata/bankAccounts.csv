@@ -1,0 +1,2 @@
+employee_id;bank;agency;IBAN;expiration_date;currency_id;primary_account
+1;BCR;Regina Elisabeta 5;RO49AAAA1B31007593840000;2020-09-01;1;true

@@ -55,7 +55,13 @@ export class AddressComponent implements OnInit, AfterViewInit {
       .subscribe(data => {
         this.addressReferentials = data[0];
         this.addresses = data[1];
+        this.createAddressForms();
+        this.createnewAddressForm();
       });
+
+    this.localityService.getLocalityReferentials().subscribe(data => {
+      this.localities = data as Array<LocalityReferential>;
+    });
   }
 
   createAddressForms(): Array<FormGroup> {
@@ -107,11 +113,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    this.localityService.getLocalityReferentials().subscribe(data => {
-      this.localities = data as Array<LocalityReferential>;
-      this.createAddressForms();
-      this.createnewAddressForm();
-    });
+
 
     $('.selectpicker').selectpicker();
 

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {CurrencyReferentialMapper.class})
+@Mapper(componentModel = "spring", uses = {CurrencyReferentialMapper.class, EmployeeMapper.class})
 public interface BankAccountMapper {
 
     BankAccount domainToEntity(final BankAccountDTO source);

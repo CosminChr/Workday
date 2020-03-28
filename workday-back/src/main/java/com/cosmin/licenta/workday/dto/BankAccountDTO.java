@@ -3,13 +3,15 @@ package com.cosmin.licenta.workday.dto;
 import com.cosmin.licenta.workday.entity.CurrencyReferential;
 import com.google.common.base.MoreObjects;
 
-import javax.persistence.Column;
-import javax.persistence.Lob;
 import java.time.LocalDate;
 
 public class BankAccountDTO {
 
     private Long id;
+
+    private EmployeeDTO employee;
+
+    private String bank;
 
     private String agency;
 
@@ -21,7 +23,7 @@ public class BankAccountDTO {
 
     private boolean primaryAccount;
 
-    private byte [] attestingDocument;
+    private byte[] attestingDocument;
 
     public Long getId() {
         return id;
@@ -29,6 +31,22 @@ public class BankAccountDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 
     public String getAgency() {
@@ -83,6 +101,8 @@ public class BankAccountDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
+                .add("bank", bank)
                 .add("agency", agency)
                 .add("IBAN", IBAN)
                 .add("expirationDate", expirationDate)
