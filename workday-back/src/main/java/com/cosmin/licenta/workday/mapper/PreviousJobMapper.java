@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {LocalityReferentialMapper.class, EmployeeMapper.class, LocalityReferentialMapper.class})
 public interface PreviousJobMapper {
 
     PreviousJob domainToEntity(final PreviousJobDTO source);

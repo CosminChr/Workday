@@ -10,6 +10,8 @@ public class PreviousJobDTO {
 
     private String employer;
 
+    private ReferentialDTO jobDomain;
+
     private String position;
 
     private LocalityReferentialDTO locality;
@@ -17,8 +19,6 @@ public class PreviousJobDTO {
     private LocalDate fromDate;
 
     private LocalDate toDate;
-
-    private String fiscalCode;
 
     public Long getId() {
         return id;
@@ -34,6 +34,14 @@ public class PreviousJobDTO {
 
     public void setEmployer(String employer) {
         this.employer = employer;
+    }
+
+    public ReferentialDTO getJobDomain() {
+        return jobDomain;
+    }
+
+    public void setJobDomain(ReferentialDTO jobDomain) {
+        this.jobDomain = jobDomain;
     }
 
     public String getPosition() {
@@ -68,24 +76,16 @@ public class PreviousJobDTO {
         this.toDate = toDate;
     }
 
-    public String getFiscalCode() {
-        return fiscalCode;
-    }
-
-    public void setFiscalCode(String fiscalCode) {
-        this.fiscalCode = fiscalCode;
-    }
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("employer", employer)
+                .add("jobDomain", jobDomain)
                 .add("position", position)
                 .add("city", locality)
                 .add("fromDate", fromDate)
                 .add("toDate", toDate)
-                .add("fiscalCode", fiscalCode)
                 .toString();
     }
 }

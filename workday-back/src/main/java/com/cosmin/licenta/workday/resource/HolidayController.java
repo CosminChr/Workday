@@ -20,7 +20,7 @@ public class HolidayController {
     }
 
     @GetMapping("/{employeeId}")
-    public ResponseEntity<List<HolidayDTO>> putHoliday(@PathVariable(name = "employeeId") final Long employeeId) {
+    public ResponseEntity<List<HolidayDTO>> getHoliday(@PathVariable(name = "employeeId") final Long employeeId) {
         return ResponseEntity.ok(holidayService.getHolidays(employeeId));
     }
 
