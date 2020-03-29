@@ -4,6 +4,11 @@ import com.cosmin.licenta.workday.entity.IdentityDocumentTypeReferential;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface IdentityDocumentTypeRepository extends JpaRepository<IdentityDocumentTypeReferential, Long> {
+public interface IdentityDocumentTypeReferentialRepository extends JpaRepository<IdentityDocumentTypeReferential, Long> {
+
+
+    Optional<IdentityDocumentTypeReferential> findByLabel(String string);
 }

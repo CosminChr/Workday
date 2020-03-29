@@ -33,13 +33,15 @@ public class IdentityDocument {
 
     private String issuer;
 
+    @OneToOne
+    @JoinColumn(name = "country_id")
     private CountryReferential country;
+
+    private String description;
 
     @Lob
     @Column(name = "attesting_document")
     private byte [] attestingDocument;
-
-    private String description;
 
     public Long getId() {
         return id;

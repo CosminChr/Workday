@@ -20,10 +20,14 @@ public class PreviousJob {
 
     private String employer;
 
+    @OneToOne
+    @JoinColumn(name = "job_domain_id")
+    private JobDomainReferential jobDomain;
+
     private String position;
 
     @OneToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "locality_id")
     private LocalityReferential locality;
 
     @Column(name = "from_date")
@@ -31,9 +35,6 @@ public class PreviousJob {
 
     @Column(name = "to_date")
     private LocalDate toDate;
-
-    @Column(name = "fiscal_code")
-    private String fiscalCode;
 
     public Long getId() {
         return id;
@@ -57,6 +58,14 @@ public class PreviousJob {
 
     public void setEmployer(String employer) {
         this.employer = employer;
+    }
+
+    public JobDomainReferential getJobDomain() {
+        return jobDomain;
+    }
+
+    public void setJobDomain(JobDomainReferential jobDomain) {
+        this.jobDomain = jobDomain;
     }
 
     public String getPosition() {
@@ -91,11 +100,4 @@ public class PreviousJob {
         this.toDate = toDate;
     }
 
-    public String getFiscalCode() {
-        return fiscalCode;
-    }
-
-    public void setFiscalCode(String fiscalCode) {
-        this.fiscalCode = fiscalCode;
-    }
 }

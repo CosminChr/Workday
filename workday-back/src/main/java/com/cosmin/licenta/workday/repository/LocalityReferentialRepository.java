@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface LocalityReferentialRepository extends JpaRepository<LocalityReferential, Long> {
 
-    Optional<LocalityReferential> findByCountyAndCountry(CountyReferential county, CountryReferential country);
+    Optional<LocalityReferential> findByLabelAndCountyAndCountry(String label, CountyReferential county, CountryReferential country);
+
 }

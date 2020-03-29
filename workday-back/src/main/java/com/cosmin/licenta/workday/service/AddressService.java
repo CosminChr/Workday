@@ -57,7 +57,7 @@ public class AddressService {
         address.getAddressType().setId(addressTypeOptional.get().getId());
         Optional<CountyReferential> countyOptional = countyReferentialRepository.findByLabel(address.getLocality().getCounty().getLabel());
         Optional<CountryReferential> countryOptional = countryReferentialRepository.findByLabel(address.getLocality().getCountry().getLabel());
-        Optional<LocalityReferential> localityReferentialOptional = localityReferentialRepository.findByCountyAndCountry(countyOptional.get(), countryOptional.get());
+        Optional<LocalityReferential> localityReferentialOptional = localityReferentialRepository.findByLabelAndCountyAndCountry(address.getLocality().getLabel(), countyOptional.get(), countryOptional.get());
         address.setLocality(localityReferentialMapper.entityToDomain(localityReferentialOptional.get()));
         addressRepository.save(addressMapper.domainToEntity(address));
         return address;

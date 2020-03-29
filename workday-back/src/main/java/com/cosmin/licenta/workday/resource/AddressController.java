@@ -19,7 +19,7 @@ public class AddressController {
     }
 
     @GetMapping("/{employeeId}")
-    public ResponseEntity<List<AddressDTO>> getAddress(@PathVariable(name = "employeeId") final Long employeeId) {
+    public ResponseEntity<List<AddressDTO>> getAddresses(@PathVariable(name = "employeeId") final Long employeeId) {
         return ResponseEntity.ok(addressService.getAddresses(employeeId));
     }
 

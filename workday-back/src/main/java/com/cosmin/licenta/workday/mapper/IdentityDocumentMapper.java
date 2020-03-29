@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {IdentityDocumentTypeReferentialMapper.class})
+@Mapper(componentModel = "spring", uses = {IdentityDocumentTypeReferentialMapper.class, EmployeeMapper.class})
 public interface IdentityDocumentMapper {
 
     IdentityDocument domainToEntity(final IdentityDocumentDTO source);

@@ -48,7 +48,6 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
       this.bankAccountService.getBankAccounts(this.employee.id)
     ])
       .subscribe(data => {
-        console.log(data);
         this.currencyReferentials = data[0];
         this.bankAccounts = data[1];
         this.createBankAccountForms();
@@ -66,7 +65,7 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
 
   formatExpirationDate(date: Date): string {
     return new Date(date).getMonth() < 10 ? '0'
-      + new Date(date).getMonth() + '/' + new Date(date).getFullYear().toString().substring(2)
+      + (new Date(date).getMonth() + 1) + '/' + new Date(date).getFullYear().toString().substring(2)
       : new Date(date).getMonth() + '/' + new Date(date).getFullYear().toString().substring(2);
   }
 
@@ -119,8 +118,6 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
   }
 
   putNewBankAccount() {
-    this.newBankAccount.currency = new Referential();
-    console.log(this.bankAccountFormGroup.controls.agency.value);
     this.newBankAccount.bank = this.bankAccountFormGroup.controls.bank.value;
     this.newBankAccount.agency = this.bankAccountFormGroup.controls.agency.value;
     this.newBankAccount.iban = this.bankAccountFormGroup.controls.IBAN.value;

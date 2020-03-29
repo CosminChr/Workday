@@ -10,6 +10,8 @@ public class IdentityDocumentDTO {
 
     private Long id;
 
+    private EmployeeDTO employee;
+
     private ReferentialDTO identityDocumentType;
 
     private String seriesAndNumber;
@@ -22,9 +24,9 @@ public class IdentityDocumentDTO {
 
     private ReferentialDTO country;
 
-    private byte [] attestingDocument;
-
     private String description;
+
+    private byte [] attestingDocument;
 
     public Long getId() {
         return id;
@@ -32,6 +34,14 @@ public class IdentityDocumentDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     public ReferentialDTO getIdentityDocumentType() {
@@ -102,14 +112,15 @@ public class IdentityDocumentDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("identityDocumentType", identityDocumentType)
                 .add("seriesAndNumber", seriesAndNumber)
                 .add("issueDate", issueDate)
                 .add("expirationDate", expirationDate)
                 .add("issuer", issuer)
                 .add("country", country)
-                .add("attestingDocument", attestingDocument)
                 .add("description", description)
+                .add("attestingDocument", attestingDocument)
                 .toString();
     }
 }
