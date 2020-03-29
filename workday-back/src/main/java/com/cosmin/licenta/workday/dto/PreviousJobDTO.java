@@ -1,12 +1,18 @@
 package com.cosmin.licenta.workday.dto;
 
+import com.cosmin.licenta.workday.entity.Employee;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.common.base.MoreObjects;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 public class PreviousJobDTO {
 
     private Long id;
+
+    private EmployeeDTO employee;
 
     private String employer;
 
@@ -26,6 +32,14 @@ public class PreviousJobDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     public String getEmployer() {
@@ -80,6 +94,7 @@ public class PreviousJobDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("employer", employer)
                 .add("jobDomain", jobDomain)
                 .add("position", position)

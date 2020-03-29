@@ -10,11 +10,13 @@ public class MaritalStatusDTO {
 
     private Long id;
 
-    private MaritalStatusReferential maritalStatus;
+    private EmployeeDTO employee;
+
+    private ReferentialDTO maritalStatus;
 
     private LocalDate startingDate;
 
-    private Partner partner;
+    private PartnerDTO partner;
 
     private byte [] attestingDocument;
 
@@ -26,11 +28,19 @@ public class MaritalStatusDTO {
         this.id = id;
     }
 
-    public MaritalStatusReferential getMaritalStatus() {
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
+    }
+
+    public ReferentialDTO getMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(MaritalStatusReferential maritalStatus) {
+    public void setMaritalStatus(ReferentialDTO maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
@@ -42,11 +52,11 @@ public class MaritalStatusDTO {
         this.startingDate = startingDate;
     }
 
-    public Partner getPartner() {
+    public PartnerDTO getPartner() {
         return partner;
     }
 
-    public void setPartner(Partner partner) {
+    public void setPartner(PartnerDTO partner) {
         this.partner = partner;
     }
 
@@ -62,6 +72,7 @@ public class MaritalStatusDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("maritalStatus", maritalStatus)
                 .add("startingDate", startingDate)
                 .add("partner", partner)

@@ -9,7 +9,6 @@ import {IdentityDocumentService} from "./identity-document.service";
 import {IdentityDocumentReferentialService} from "./identity-document-referential.service";
 import {CountryReferentialService} from "./country-referential.service";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
-import {BankAccount} from "../../../shared/models/bank-account.model";
 
 declare var $: any;
 
@@ -53,7 +52,6 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
       this.countryReferentialService.getCountryReferentials(),
     ])
       .subscribe(data => {
-        console.log(data);
         this.identityDocumentTypeReferentials = data[0] as Array<Referential>;
         this.identityDocuments = data[1] as Array<IdentityDocument>;
         this.countryReferentials = data[2] as Array<Referential>;

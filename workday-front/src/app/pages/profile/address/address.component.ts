@@ -5,7 +5,7 @@ import {LocalityReferential} from "../../../shared/models/locality.model";
 import {forkJoin} from "rxjs";
 import {AddressService} from "./address.service";
 import {AddressTypeReferentialService} from "./address-type.referential.service";
-import {LocalityService} from "./locality.service";
+import {LocalityReferentialService} from "./locality-referential.service";
 import {Employee} from "../../../shared/models/employee.model";
 import {EmployeeService} from "../../../shared/services/employee/employee.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -39,7 +39,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
   constructor(private addressService: AddressService,
               private addressTypeReferentialService: AddressTypeReferentialService,
-              private localityService: LocalityService,
+              private localityService: LocalityReferentialService,
               private employeeService: EmployeeService,
               private formBuilder: FormBuilder) {
   }
@@ -56,7 +56,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
         this.addressReferentials = data[0];
         this.addresses = data[1];
         this.createAddressForms();
-        this.createnewAddressForm();
+        this.createNewAddressForm();
       });
 
     this.localityService.getLocalityReferentials().subscribe(data => {
@@ -88,7 +88,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
     return this.addressFormGroups;
   }
 
-  createnewAddressForm(): FormGroup {
+  createNewAddressForm(): FormGroup {
 
     this.newAddress.addressType = new Referential();
     this.newAddress.locality = new LocalityReferential();

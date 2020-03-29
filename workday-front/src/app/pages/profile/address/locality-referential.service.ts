@@ -9,7 +9,7 @@ const LOCALITY_REFERENTIAL_API = 'localityReferential/';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalityService {
+export class LocalityReferentialService {
 
   constructor(private http: HttpClient) {
   }
