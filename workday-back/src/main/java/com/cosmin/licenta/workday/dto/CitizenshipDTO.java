@@ -8,8 +8,6 @@ public class CitizenshipDTO {
 
     private ReferentialDTO citizenship;
 
-    private ReferentialDTO nationality;
-
     private byte[] attestingDocument;
 
     public Long getId() {
@@ -28,14 +26,6 @@ public class CitizenshipDTO {
         this.citizenship = citizenship;
     }
 
-    public ReferentialDTO getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(ReferentialDTO nationality) {
-        this.nationality = nationality;
-    }
-
     public byte[] getAttestingDocument() {
         return attestingDocument;
     }
@@ -49,7 +39,6 @@ public class CitizenshipDTO {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("citizenship", citizenship)
-                .add("nationality", nationality)
                 .add("attestingDocument", attestingDocument)
                 .toString();
     }

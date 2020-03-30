@@ -78,6 +78,10 @@ public class Employee extends User implements Serializable {
     @Column(name = "current_position_starting_date")
     private LocalDate currentPositionStartingDate;
 
+    @OneToOne
+    @JoinColumn(name = "nationality_id")
+    private NationalityReferential nationality;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "workday_employee_role",
             joinColumns = @JoinColumn(name = "employee_id"),
@@ -261,6 +265,14 @@ public class Employee extends User implements Serializable {
 
     public void setCurrentPositionStartingDate(LocalDate currentPositionStartingDate) {
         this.currentPositionStartingDate = currentPositionStartingDate;
+    }
+
+    public NationalityReferential getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(NationalityReferential nationality) {
+        this.nationality = nationality;
     }
 
     @Override

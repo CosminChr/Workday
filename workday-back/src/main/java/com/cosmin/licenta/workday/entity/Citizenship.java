@@ -21,10 +21,6 @@ public class Citizenship {
     @JoinColumn(name = "citizenship_id")
     private CitizenshipReferential citizenship;
 
-    @OneToOne
-    @JoinColumn(name = "nationality_id")
-    private NationalityReferential nationality;
-
     @Column(name = "attesting_document")
     private byte [] attestingDocument;
 
@@ -50,14 +46,6 @@ public class Citizenship {
 
     public void setCitizenship(CitizenshipReferential citizenship) {
         this.citizenship = citizenship;
-    }
-
-    public NationalityReferential getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(NationalityReferential nationality) {
-        this.nationality = nationality;
     }
 
     public byte[] getAttestingDocument() {
