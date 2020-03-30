@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {LanguageReferentialMapper.class, LanguageLevelReferentialMapper.class})
+@Mapper(componentModel = "spring", uses = {LanguageReferentialMapper.class, LanguageLevelReferentialMapper.class, EmployeeMapper.class})
 public interface LanguageMapper {
 
     Language domainToEntity(final LanguageDTO source);

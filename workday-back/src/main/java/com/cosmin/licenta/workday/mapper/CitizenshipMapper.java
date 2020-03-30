@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {CitizenshipReferentialMapper.class})
+@Mapper(componentModel = "spring", uses = {CitizenshipReferentialMapper.class, EmployeeMapper.class})
 public interface CitizenshipMapper {
 
     Citizenship domainToEntity(final CitizenshipDTO source);

@@ -4,6 +4,10 @@ import com.cosmin.licenta.workday.entity.LanguageLevelReferential;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface LanguageLevelRepository extends JpaRepository<LanguageLevelReferential, Long> {
+public interface LanguageLevelReferentialRepository extends JpaRepository<LanguageLevelReferential, Long> {
+
+    Optional<LanguageLevelReferential> findByLabel(String label);
 }

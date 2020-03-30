@@ -1,0 +1,2 @@
+employee_id;study_level_id;educational_institution;study_field_id;specialization;country_id;from_date;to_date;finalized
+1;5;Academia de Studii Economice;6;Informatică Economică;188;2016-09-15;2019-07-22;true
