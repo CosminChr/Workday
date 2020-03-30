@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {GenderReferentialMapper.class, Employee.class})
+@Mapper(componentModel = "spring", uses = {GenderReferentialMapper.class, EmployeeMapper.class})
 public interface ChildMapper {
 
     Child domainToEntity(final ChildDTO source);

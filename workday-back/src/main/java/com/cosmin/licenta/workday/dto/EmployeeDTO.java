@@ -3,6 +3,7 @@ package com.cosmin.licenta.workday.dto;
 import com.cosmin.licenta.workday.entity.*;
 import com.google.common.base.MoreObjects;
 
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
@@ -34,7 +35,6 @@ public class EmployeeDTO {
     @Size(max = 40)
     private String firstName;
 
-
     private ReferentialDTO gender;
 
     @Size(max = 40)
@@ -62,7 +62,6 @@ public class EmployeeDTO {
     @Size(max = 30)
     private String location;
 
-
     private ReferentialDTO department;
 
     private Boolean ITDeduction;
@@ -70,6 +69,8 @@ public class EmployeeDTO {
     private LocalDate joiningDate;
 
     private LocalDate currentPositionStartingDate;
+
+    private ReferentialDTO nationality;
 
     private Set<ReferentialDTO> roles = new HashSet<>();
 
@@ -255,6 +256,14 @@ public class EmployeeDTO {
         this.currentPositionStartingDate = currentPositionStartingDate;
     }
 
+    public ReferentialDTO getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(ReferentialDTO nationality) {
+        this.nationality = nationality;
+    }
+
     public Set<ReferentialDTO> getRoles() {
         return roles;
     }
@@ -375,6 +384,7 @@ public class EmployeeDTO {
                 .add("ITDeduction", ITDeduction)
                 .add("joiningDate", joiningDate)
                 .add("currentPositionStartingDate", currentPositionStartingDate)
+                .add("nationality", nationality)
                 .add("roles", roles)
                 .add("academicStudies", academicStudies)
                 .add("addresses", addresses)
