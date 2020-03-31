@@ -1,5 +1,9 @@
 package com.cosmin.licenta.workday.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 import javax.persistence.*;
@@ -7,6 +11,9 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "workday_marital_status")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class MaritalStatus {
 
     @Id
@@ -23,10 +30,6 @@ public class MaritalStatus {
 
     @Column(name = "starting_date")
     private LocalDate startingDate;
-
-    @OneToOne
-    @JoinColumn(name = "partner_id")
-    private Partner partner;
 
     @Column(name = "attesting_document")
     private byte [] attestingDocument;
@@ -61,14 +64,6 @@ public class MaritalStatus {
 
     public void setStartingDate(LocalDate startingDate) {
         this.startingDate = startingDate;
-    }
-
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public void setPartner(Partner partner) {
-        this.partner = partner;
     }
 
     public byte[] getAttestingDocument() {
