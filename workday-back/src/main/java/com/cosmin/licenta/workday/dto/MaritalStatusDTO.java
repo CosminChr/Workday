@@ -16,8 +16,6 @@ public class MaritalStatusDTO {
 
     private LocalDate startingDate;
 
-    private PartnerDTO partner;
-
     private byte [] attestingDocument;
 
     public Long getId() {
@@ -52,14 +50,6 @@ public class MaritalStatusDTO {
         this.startingDate = startingDate;
     }
 
-    public PartnerDTO getPartner() {
-        return partner;
-    }
-
-    public void setPartner(PartnerDTO partner) {
-        this.partner = partner;
-    }
-
     public byte[] getAttestingDocument() {
         return attestingDocument;
     }
@@ -75,7 +65,6 @@ public class MaritalStatusDTO {
                 .add("employee", employee)
                 .add("maritalStatus", maritalStatus)
                 .add("startingDate", startingDate)
-                .add("partner", partner)
                 .add("attestingDocument", attestingDocument)
                 .toString();
     }

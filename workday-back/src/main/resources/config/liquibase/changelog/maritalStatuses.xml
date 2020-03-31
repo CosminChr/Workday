@@ -12,7 +12,6 @@
             <column name="employee_id" type="bigint"/>
             <column name="marital_status_id" type="bigint"/>
             <column name="starting_date" type="date"/>
-            <column name="partner_id" type="bigint"/>
             <column name="attesting_document" type="blob"/>
         </createTable>
     </changeSet>
