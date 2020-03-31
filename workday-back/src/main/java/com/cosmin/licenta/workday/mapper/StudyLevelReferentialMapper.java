@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface StudyLevelMapper {
+public interface StudyLevelReferentialMapper {
 
     StudyLevelReferential domainToEntity(final ReferentialDTO source);
 
