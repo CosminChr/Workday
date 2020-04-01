@@ -81,11 +81,12 @@ export class NavbarComponent implements OnInit {
           .map(p => p.children)[1]
           .map(p => p.routeConfig)
           .map(p => p.path)[0];
-      }).name;
-
-      if (!this.pageTitle) {
-        this.pageTitle = "Date Personale";
-      }
+      }) ? find(this.menuItems, (menuItem: MenuItem) => {
+        return menuItem.path.slice(1) === this.activatedRoute.snapshot.pathFromRoot
+          .map(p => p.children)[1]
+          .map(p => p.routeConfig)
+          .map(p => p.path)[0];
+      }).name : "Date Personale";
     }
   }
 
