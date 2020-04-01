@@ -34,7 +34,7 @@ public class CompanyJobService {
         this.requiredExperienceReferentialRepository = requiredExperienceReferentialRepository;
     }
 
-    public List<CompanyJobDTO> getCompanyJobs(final Long employeeId) {
+    public List<CompanyJobDTO> getCompanyJobs() {
             List<CompanyJob> companyJobs = companyJobRepository.findAll();
             return companyJobMapper.entitiesToDomains(companyJobs);
     }

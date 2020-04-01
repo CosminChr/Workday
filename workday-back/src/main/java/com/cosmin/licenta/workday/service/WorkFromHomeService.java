@@ -44,7 +44,7 @@ public class WorkFromHomeService {
         return null;
     }
 
-    public WorkFromHomeDTO putOvertime(final WorkFromHomeDTO workFromHomeDTO) {
+    public WorkFromHomeDTO putWorkFromHome(final WorkFromHomeDTO workFromHomeDTO) {
         Optional<DayOfWeekReferential> dayOfWeek1ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getDayOfWeekDay1().getLabel());
         workFromHomeDTO.getDayOfWeekDay1().setId(dayOfWeek1ReferentialOptional.get().getId());
 
