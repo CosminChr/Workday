@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="create_table_workday_medical_service" author="cosminchiriac">
+        <createTable tableName="workday_medical_service">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="employee_id" type="bigint"/>
+            <column name="medical_service_provider_id" type="bigint"/>
+            <column name="initiation_date" type="date"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="users" author="cosminchiriac">
+        <loadData  encoding="UTF-8"
+                   file="config/liquibase/loaddata/medicalServices.csv"
+                   separator=";"
+                   tableName="workday_medical_service">
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
