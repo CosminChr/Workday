@@ -22,7 +22,7 @@ public class DayOfWeekReferentialController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ReferentialDTO>> getGetMedicalService() {
+    public ResponseEntity<List<ReferentialDTO>> getDayOfWeekRefs() {
         return ResponseEntity.ok(dayOfWeekReferentialService.getDayOfWeekReferentials());
     }
 }

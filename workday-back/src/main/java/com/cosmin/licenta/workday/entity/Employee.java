@@ -1,18 +1,12 @@
 package com.cosmin.licenta.workday.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,7 +15,6 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
         })
-
 public class Employee extends User implements Serializable {
 
     @Size(max = 40)
@@ -93,21 +86,27 @@ public class Employee extends User implements Serializable {
     private Set<RoleReferential> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
     private Set<AcademicStudy> academicStudies;
 
     @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
     private Set<Address> addresses;
 
     @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
     private Set<BankAccount> bankAccounts;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<Child> children;
 
     @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
     private Set<Citizenship> citizenships;
 
     @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
     private Set<Holiday> holidays;
 
     @OneToMany(mappedBy = "employee")
@@ -115,16 +114,21 @@ public class Employee extends User implements Serializable {
     private Set<IdentityDocument> identityDocuments;
 
     @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
     private Set<Language> languages;
 
     @OneToOne(mappedBy = "employee")
+    @JsonManagedReference
     private MaritalStatus maritalStatus;
 
     @OneToOne(mappedBy = "employee")
+    @JsonManagedReference
     private Partner partner;
 
     @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
     private Set<PreviousJob> previousJobs;
+
 
     public Employee() {
     }

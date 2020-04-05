@@ -13,6 +13,7 @@
             <column name="last_name" type="varchar(60)"/>
             <column name="first_name" type="varchar(60)"/>
             <column name="person_identifier" type="varchar(13)"/>
+            <column name="birth_date" type="date"/>
             <column name="gender_id" type="bigint"/>
             <column name="works_in_company" type="boolean"/>
         </createTable>

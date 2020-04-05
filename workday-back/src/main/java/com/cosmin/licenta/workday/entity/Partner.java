@@ -1,5 +1,7 @@
 package com.cosmin.licenta.workday.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -13,6 +15,7 @@ public class Partner {
     private Long id;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "employee_id")
     private Employee employee;
 

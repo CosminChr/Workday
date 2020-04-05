@@ -23,9 +23,9 @@
     </changeSet>
     <changeSet id="users" author="cosminchiriac">
         <loadData  encoding="UTF-8"
-                   file="config/liquibase/loaddata/children.csv"
+                   file="config/liquibase/loaddata/academicStudies.csv"
                    separator=";"
-                   tableName="workday_child">
+                   tableName="workday_academic_study">
         </loadData>
     </changeSet>
 </databaseChangeLog>

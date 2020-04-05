@@ -41,7 +41,7 @@ public class IdentityDocument {
 
     @Lob
     @Column(name = "attesting_document")
-    private byte [] attestingDocument;
+    private byte[] attestingDocument;
 
     public Long getId() {
         return id;

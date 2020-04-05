@@ -1,12 +1,13 @@
 package com.cosmin.licenta.workday.service;
 
 import com.cosmin.licenta.workday.dto.ChildDTO;
-import com.cosmin.licenta.workday.dto.HolidayDTO;
 import com.cosmin.licenta.workday.entity.Child;
 import com.cosmin.licenta.workday.entity.Employee;
+import com.cosmin.licenta.workday.entity.GenderReferential;
 import com.cosmin.licenta.workday.mapper.ChildMapper;
 import com.cosmin.licenta.workday.repository.ChildRepository;
 import com.cosmin.licenta.workday.repository.EmployeeRepository;
+import com.cosmin.licenta.workday.repository.GenderReferentialRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +22,13 @@ public class ChildService {
 
     private final ChildMapper childMapper;
 
-    public ChildService(EmployeeRepository employeeRepository, ChildRepository childRepository, ChildMapper childMapper) {
+    private final GenderReferentialRepository genderReferentialRepository;
+
+    public ChildService(EmployeeRepository employeeRepository, ChildRepository childRepository, ChildMapper childMapper, GenderReferentialRepository genderReferentialRepository) {
         this.employeeRepository = employeeRepository;
         this.childRepository = childRepository;
         this.childMapper = childMapper;
+        this.genderReferentialRepository = genderReferentialRepository;
     }
 
     public List<ChildDTO> getChildren(final Long employeeId) {
@@ -40,6 +44,9 @@ public class ChildService {
     }
 
     public ChildDTO putChild(final ChildDTO childDTO) {
+        Optional<GenderReferential> genderOptional = genderReferentialRepository.findByLabel(childDTO.getGender().getLabel());
+        childDTO.getGender().setId(genderOptional.get().getId());
+
         childRepository.save(childMapper.domainToEntity(childDTO));
         return childDTO;
     }

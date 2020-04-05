@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {MaritalStatusReferentialMapper.class, PartnerMapper.class, EmployeeMapper.class})
+@Mapper(componentModel = "spring", uses = {MaritalStatusReferentialMapper.class, EmployeeMapper.class})
 public interface MaritalStatusMapper {
 
     MaritalStatus domainToEntity(final MaritalStatusDTO source);

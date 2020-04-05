@@ -1,17 +1,12 @@
 package com.cosmin.licenta.workday.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "workday_academic_study")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class AcademicStudy {
 
     @Id
@@ -48,7 +43,7 @@ public class AcademicStudy {
 
     private boolean finalized;
 
-    private byte [] diploma;
+    private byte[] diploma;
 
     public Long getId() {
         return id;

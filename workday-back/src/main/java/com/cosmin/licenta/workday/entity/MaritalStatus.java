@@ -21,6 +21,7 @@ public class MaritalStatus {
     private Long id;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
@@ -31,6 +32,7 @@ public class MaritalStatus {
     @Column(name = "starting_date")
     private LocalDate startingDate;
 
+    @Lob
     @Column(name = "attesting_document")
     private byte [] attestingDocument;
 

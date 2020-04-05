@@ -1,8 +1,6 @@
 package com.cosmin.licenta.workday.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -10,9 +8,6 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "workday_holiday")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Holiday {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +37,7 @@ public class Holiday {
 
     @Lob
     @Column(name = "attesting_document")
-    private byte [] attestingDocument;
+    private byte[] attestingDocument;
 
     public Long getId() {
         return id;

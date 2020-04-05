@@ -1,16 +1,11 @@
 package com.cosmin.licenta.workday.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "workday_language")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Language {
 
     @Id
@@ -42,7 +37,7 @@ public class Language {
     @JoinColumn(name = "overall_level_id")
     private LanguageLevelReferential overallLevel;
 
-    private byte [] certification;
+    private byte[] certification;
 
     public Long getId() {
         return id;
