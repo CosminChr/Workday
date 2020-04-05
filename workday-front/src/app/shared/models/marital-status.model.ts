@@ -12,7 +12,5 @@ export class MaritalStatus {
 
   startingDate: Date;
 
-  partner: Partner;
-
 }
 

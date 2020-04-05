@@ -106,7 +106,6 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
 
 
     this.newIdentityDocument.employee = this.employee;
-    console.log(this.newIdentityDocument);
     this.identityDocumentService.putIdentityDocument(this.newIdentityDocument).subscribe(data => {
       this.identityDocuments.push(data as IdentityDocument);
     });

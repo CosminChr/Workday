@@ -1,16 +1,11 @@
 package com.cosmin.licenta.workday.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "workday_citizenship")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Citizenship {
 
     @Id
@@ -26,8 +21,9 @@ public class Citizenship {
     @JoinColumn(name = "citizenship_id")
     private CitizenshipReferential citizenship;
 
+    @Lob
     @Column(name = "attesting_document")
-    private byte [] attestingDocument;
+    private byte[] attestingDocument;
 
     public Long getId() {
         return id;

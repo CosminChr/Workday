@@ -8,6 +8,8 @@ public class PartnerDTO {
 
     private Long id;
 
+    private EmployeeDTO employee;
+
     private String lastName;
 
     private String firstName;
@@ -24,6 +26,14 @@ public class PartnerDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     public String getLastName() {
@@ -70,6 +80,7 @@ public class PartnerDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("lastName", lastName)
                 .add("firstName", firstName)
                 .add("personIdentifier", personIdentifier)
