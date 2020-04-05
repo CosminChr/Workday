@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="create_table_workday_academic_study" author="cosminchiriac">
+        <createTable tableName="workday_academic_study">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="employee_id" type="bigint"/>
+            <column name="study_level_id" type="bigint"/>
+            <column name="educational_institution" type="varchar(60)"/>
+            <column name="study_field_id" type="bigint"/>
+            <column name="specialization" type="varchar(60)"/>
+            <column name="country_id" type="bigint"/>
+            <column name="from_date" type="date"/>
+            <column name="to_date" type="date"/>
+            <column name="finalized" type="boolean"/>
+            <column name="diploma" type="blob"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="users" author="cosminchiriac">
+        <loadData  encoding="UTF-8"
+                   file="config/liquibase/loaddata/academicStudies.csv"
+                   separator=";"
+                   tableName="workday_academic_study">
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="create_table_workday_work_from_home" author="cosminchiriac">
+        <createTable tableName="workday_work_from_home">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="employee_id" type="bigint"/>
+            <column name="start_date_day_1" type="date"/>
+            <column name="start_date_day_2" type="date"/>
+            <column name="day_of_week_1_id" type="bigint"/>
+            <column name="day_of_week_2_id" type="bigint"/>
+            <column name="last_initiation_date" type="date"/>
+            <column name="last_approval_date" type="date"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="users" author="cosminchiriac">
+        <loadData  encoding="UTF-8"
+                   file="config/liquibase/loaddata/workFromHome.csv"
+                   separator=";"
+                   tableName="workday_work_from_home">
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

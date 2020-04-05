@@ -3,6 +3,7 @@ import {TokenStorageService} from "./core/services/security/token-storage.servic
 import {Router} from "@angular/router";
 import {EmployeeService} from "./shared/services/employee/employee.service";
 import {WorkdayService} from "./workday.service";
+import {Employee} from "./shared/models/employee.model";
 
 @Component({
   selector: 'workday-root',
@@ -10,6 +11,8 @@ import {WorkdayService} from "./workday.service";
   styleUrls: ['./workday.component.scss'],
 })
 export class WorkdayComponent implements OnInit {
+
+  employee: Employee;
 
   @Output()
   isConnected = false;
@@ -21,7 +24,7 @@ export class WorkdayComponent implements OnInit {
   }
 
   ngOnInit() {
-    //  localStorage.clear();
+
 
     this.workdayService.getStoredIsConnected().asObservable()
       .subscribe(
@@ -31,7 +34,11 @@ export class WorkdayComponent implements OnInit {
     this.isConnected = !!this.tokenStorageService.getToken();
 
     if (this.isConnected) {
-      this.router.navigate(['/profile/personalData']);
+     // this.router.navigate(['/profile/personalData']);
+      this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe( data => {
+        this.employee = data;
+        this.employeeService.setStoredEmployee(this.employee);
+      });
     } else {
       this.router.navigate(['/login']);
     }

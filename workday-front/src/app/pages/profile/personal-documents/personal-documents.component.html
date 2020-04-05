@@ -1,0 +1,192 @@
+<div class="main-content">
+  <div class="alert alert-warning fade show" *ngIf="!isDoesAnyIdentityDocumentExist">
+    <span>Nu a fost adăugat încă niciun document"</span>
+  </div>
+
+
+  <div class="row" *ngFor="let identityDocument of identityDocuments; let i = index">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div id="accordion{{i}}" role="tablist" aria-multiselectable="true" class="card-collapse">
+            <h4 class="card-title">{{ identityDocument.identityDocumentType?.label}} </h4>
+            <div class="card card-plain">
+              <div class="card-header" role="tab" id="headingOne">
+                <a data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapseOne{{i}}" aria-expanded="false"
+                   aria-controls="collapseOne{{i}}">
+                  {{identityDocument?.identityDocumentType.label + ' ' + identityDocument.seriesAndNumber}}
+                  <i class="nc-icon nc-minimal-down"></i>
+                </a>
+              </div>
+              <div id="collapseOne{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                  <form [formGroup]="identityDocumentFormGroups[i]" *ngIf="identityDocumentFormGroups">
+                    <div class="row">
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Tip document</label>
+                          <input formControlName="identityDocumentType" type="text" class="form-control"
+                                 placeholder="Tip document">
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Serie și număr</label>
+                          <input formControlName="seriesAndNumber" type="text" class="form-control"
+                                 placeholder="Serie și număr">
+                        </div>
+                      </div>
+                    </div>
+
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Data emiterii</label>
+                            <input formControlName="issueDate" type="text" class="form-control"
+                                   placeholder="Data emiterii">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Data expirării</label>
+                            <input formControlName="expirationDate" type="text" class="form-control"
+                                   placeholder="Data expirării">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Emis de</label>
+                            <input formControlName="issuer" type="text" class="form-control"
+                                   placeholder="Emis de">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Țară</label>
+                            <input formControlName="country" type="text" class="form-control"
+                                   placeholder="Țară">
+                          </div>
+                        </div>
+                      </div>
+
+
+                <div class="card-footer text-right">
+                  <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="text-right">
+  <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
+          data-target="#newIdentityDocumentModal" (click)="reinitializePicker()">Adaugă document nou
+  </button>
+</div>
+
+<div class="modal fade" id="newIdentityDocumentModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="nc-icon nc-simple-remove"></i>
+        </button>
+        <h4 class="title">Document nou pentru {{employee.lastName + ' ' + employee.firstName}}</h4>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="identityDocumentFormGroup" *ngIf="identityDocumentFormGroup">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+              <select formControlName="identityDocumentType" class="selectpicker form-control" data-size="7"
+                      data-style="btn btn-outline-success btn-round"
+                      title="Tip document">
+                <option *ngFor="let referential of identityDocumentTypeReferentials">
+                  {{referential.label}}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+
+                <input formControlName="seriesAndNumber" type="text" class="form-control  text-center mt-sm-2"
+                       placeholder="Serie și număr">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+
+              <div class="col-md-5">
+                <div class="form-group">
+
+                  <input formControlName="issueDate" type="text" class="form-control  text-center mt-sm-2"
+                         placeholder="Data emiterii">
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+
+                  <input formControlName="expirationDate" type="text" class="form-control  text-center mt-sm-2"
+                         placeholder="Data expirării">
+                </div>
+              </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+
+                <input formControlName="issuer" type="text" class="form-control text-center mt-sm-2"
+                       placeholder="Emis de">
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+              <select formControlName="country" class="selectpicker form-control" data-size="7"
+                      data-style="btn btn-outline-success btn-round"
+                      title="Țară">
+                <option *ngFor="let referential of countryReferentials">
+                  {{referential.label}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+
+        </form>
+        <div class="modal-footer">
+          <div class="left-side">
+            <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewIdentityDocument()">
+              Salvează documentul
+            </button>
+          </div>
+          <div class="divider"></div>
+          <div class="right-side">
+            <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+

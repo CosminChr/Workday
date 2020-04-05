@@ -1,18 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {EmployeeService} from "../../../shared/services/employee/employee.service";
 import {TokenStorageService} from "../../../core/services/security/token-storage.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Employee} from "../../../shared/models/employee.model";
 import {Referential} from "../../../shared/models/referential.model";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
+import {DepartmentReferentialService} from "./department-referential.service";
+import {forkJoin} from "rxjs";
 
+declare var $: any;
 
 @Component({
   selector: 'workday-personal-data',
   templateUrl: './personal-data.component.html',
   styleUrls: ['./personal-data.component.scss']
 })
-export class PersonalDataComponent implements OnInit {
+export class PersonalDataComponent implements OnInit, AfterViewInit {
 
   personalDataForm: FormGroup;
 
@@ -20,23 +23,41 @@ export class PersonalDataComponent implements OnInit {
 
   employee: Employee;
 
+  departmentReferentials: Array<Referential>;
+
   constructor(private employeeService: EmployeeService,
               private tokenStorageService: TokenStorageService,
+              private departmentReferentialService: DepartmentReferentialService,
               private formBuilder: FormBuilder) {
   }
 
 
   ngOnInit() {
-    this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe(
-      data => {
-        this.employeeService.setStoredEmployee(data);
-        this.employee = data as Employee;
+
+    forkJoin([
+      this.employeeService.getEmployee(this.tokenStorageService.getUser().username),
+      this.departmentReferentialService.getDepartmentReferentials()
+    ])
+      .subscribe( data =>{
+        this.employee = data[0] as Employee;
+        this.employeeService.setStoredEmployee(this.employee);
+        this.departmentReferentials = data[1] as Array<Referential>;
         this.personalDataForm = this.createPersonalDataForm();
         this.employeeDataForm = this.createEmployeeDataForm();
         this.employeeDataForm = this.populateEmployeeDataForm();
       });
+
   }
 
+  ngAfterViewInit(): void {
+    this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe( data =>{
+      setTimeout(function () {
+        $('.selectpicker').selectpicker();
+        $('.selectpicker').selectpicker('val', data.department?.label);
+        $('.selectpicker').selectpicker('refresh');
+      }, 100);
+    });
+  }
 
   createPersonalDataForm(): FormGroup {
     this.personalDataForm = this.formBuilder.group({

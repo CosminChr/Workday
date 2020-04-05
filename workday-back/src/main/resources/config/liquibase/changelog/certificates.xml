@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="create_table_workday_certificate" author="cosminchiriac">
+        <createTable tableName="workday_certificate">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="employee_id" type="bigint"/>
+            <column name="certificate_type_id" type="bigint"/>
+            <column name="generation_date" type="date"/>
+            <column name="certificate" type="blob"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="users" author="cosminchiriac">
+        <loadData  encoding="UTF-8"
+                   file="config/liquibase/loaddata/certificates.csv"
+                   separator=";"
+                   tableName="workday_certificate">
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

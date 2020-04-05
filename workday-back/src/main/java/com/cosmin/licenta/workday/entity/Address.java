@@ -1,5 +1,7 @@
 package com.cosmin.licenta.workday.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +12,12 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @OneToOne
     @JoinColumn(name = "address_type_id")
     private AddressTypeReferential addressType;
 
@@ -24,10 +31,14 @@ public class Address {
 
     private Integer floor;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id")
-    private City city;
+    @Column(name = "apartment_number")
+    private Integer apartmentNumber;
 
+    @OneToOne
+    @JoinColumn(name = "locality_id")
+    private LocalityReferential locality;
+
+    @Column(name = "postal_code")
     private String postalCode;
 
     public Long getId() {
@@ -38,7 +49,15 @@ public class Address {
         this.id = id;
     }
 
-    public AddressTypeReferential getAddressTypeReferential() {
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public AddressTypeReferential getAddressType() {
         return addressType;
     }
 
@@ -86,12 +105,20 @@ public class Address {
         this.floor = floor;
     }
 
-    public City getCity() {
-        return city;
+    public Integer getApartmentNumber() {
+        return apartmentNumber;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setApartmentNumber(Integer apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
+    }
+
+    public LocalityReferential getLocality() {
+        return locality;
+    }
+
+    public void setLocality(LocalityReferential locality) {
+        this.locality = locality;
     }
 
     public String getPostalCode() {

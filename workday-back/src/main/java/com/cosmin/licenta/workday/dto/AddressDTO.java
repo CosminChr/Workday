@@ -6,6 +6,8 @@ public class AddressDTO {
 
     private Long id;
 
+    private EmployeeDTO employee;
+
     private ReferentialDTO addressType;
 
     private String street;
@@ -18,7 +20,9 @@ public class AddressDTO {
 
     private Integer floor;
 
-    private CityDTO city;
+    private Integer apartmentNumber;
+
+    private LocalityReferentialDTO locality;
 
     private String postalCode;
 
@@ -28,6 +32,14 @@ public class AddressDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     public ReferentialDTO getAddressType() {
@@ -78,12 +90,20 @@ public class AddressDTO {
         this.floor = floor;
     }
 
-    public CityDTO getCity() {
-        return city;
+    public Integer getApartmentNumber() {
+        return apartmentNumber;
     }
 
-    public void setCity(CityDTO city) {
-        this.city = city;
+    public void setApartmentNumber(Integer apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
+    }
+
+    public LocalityReferentialDTO getLocality() {
+        return locality;
+    }
+
+    public void setLocality(LocalityReferentialDTO locality) {
+        this.locality = locality;
     }
 
     public String getPostalCode() {
@@ -98,13 +118,15 @@ public class AddressDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("addressType", addressType)
                 .add("street", street)
                 .add("number", number)
                 .add("block", block)
                 .add("stairwell", stairwell)
                 .add("floor", floor)
-                .add("city", city)
+                .add("apartmentNumber", apartmentNumber)
+                .add("locality", locality)
                 .add("postalCode", postalCode)
                 .toString();
     }

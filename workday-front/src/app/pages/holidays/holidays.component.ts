@@ -4,12 +4,12 @@ import {EmployeeService} from "../../shared/services/employee/employee.service";
 import {HolidaysService} from "./holiday.service";
 import {Holiday} from "../../shared/models/holiday.model";
 import {dateDifference, formatDate, parseDate} from "../../shared/utils/utils";
-import {range, reduce, find} from "lodash";
+import {find, range, reduce} from "lodash";
 import {HolidayTypeEnum} from "../../shared/enums/holiday-type.enum";
 import {HolidaysReferentialService} from "./holiday-referential.service";
 import {Referential} from "../../shared/models/referential.model";
 import {forkJoin} from "rxjs";
-import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 declare var $: any;
 
@@ -53,7 +53,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
       this.holidayService.getHolidays(this.employee.id),
       this.holidayReferentialService.getHolidayReferentials()
     ])
-      .subscribe( data => {
+      .subscribe(data => {
         this.holidays = data[0] as Array<Holiday>;
         this.populateHolidayMapsByMonth();
         this.holidayReferentials = data[1] as Array<Referential>;
@@ -72,9 +72,11 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
 
   populateYearsInCompany() {
-    let i = Number(this.employee.joiningDate.toString().substring(0, 4));
-    for (i; i <= new Date().getFullYear(); i++) {
-      this.yearsInCompany.push(i);
+    if (this.employee.joiningDate) {
+      let i = Number(this.employee.joiningDate.toString().substring(0, 4));
+      for (i; i <= new Date().getFullYear(); i++) {
+        this.yearsInCompany.push(i);
+      }
     }
     return this.yearsInCompany;
   }
@@ -96,9 +98,9 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
     for (let index of range(11)) {
       this.currentYearHolidaysByMonth.set(index, 0);
-      this.currentYearHolidaysByMonth.set(index+ 1, 0);
+      this.currentYearHolidaysByMonth.set(index + 1, 0);
       this.sickDaysHolidaysByMonth.set(index, 0);
-      this.sickDaysHolidaysByMonth.set(index+ 1, 0);
+      this.sickDaysHolidaysByMonth.set(index + 1, 0);
     }
 
     this.holidays.forEach(holiday => {
@@ -120,7 +122,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
           }
 
           if (holiday.holidayType.label === HolidayTypeEnum.CURRENT_LEAVE && holiday.approved && holiday.validated) {
-            this.currentYearHolidaysByMonth.set(index+1, this.currentYearHolidaysByMonth.get(index+1) + numberOfDaysFirstMonth);
+            this.currentYearHolidaysByMonth.set(index + 1, this.currentYearHolidaysByMonth.get(index + 1) + numberOfDaysFirstMonth);
             this.currentYearHolidaysByMonth.set(index + 2, this.currentYearHolidaysByMonth.get(index + 2) + numberOfDaysSecondMonth);
 
           } else if (holiday.holidayType.label === HolidayTypeEnum.SICK_DAYS && holiday.approved && holiday.validated) {
@@ -133,9 +135,9 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   }
 
   getDaysUsedFromCurrentLeave(): number {
-      return reduce(Array.from(this.currentYearHolidaysByMonth.values()), (sum, numberOfDays) => {
-        return sum + numberOfDays;
-      }, 0);
+    return reduce(Array.from(this.currentYearHolidaysByMonth.values()), (sum, numberOfDays) => {
+      return sum + numberOfDays;
+    }, 0);
   }
 
   getDaysUsedFromSickDaysLeave(): number {
@@ -160,7 +162,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
 
     let referential: Referential = find(this.holidayReferentials, (ref) => {
-        return ref.label = holidayType.label;
+      return ref.label = holidayType.label;
     });
 
     holidayType.id = referential.id;
@@ -171,8 +173,8 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     this.plannedHoliday.employee = this.employee;
     this.plannedHoliday.approved = false;
     this.plannedHoliday.validated = false;
-    this.holidayService.putHoliday(this.plannedHoliday).subscribe( () => {
-      this.holidayService.getHolidays(this.employee.id).subscribe( data => {
+    this.holidayService.putHoliday(this.plannedHoliday).subscribe(() => {
+      this.holidayService.getHolidays(this.employee.id).subscribe(data => {
         this.holidays = data as Array<Holiday>;
         this.populateHolidayMapsByMonth();
       });

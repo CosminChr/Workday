@@ -1,5 +1,7 @@
 package com.cosmin.licenta.workday.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -11,11 +13,12 @@ public class Holiday {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "holiday_type_id")
     private HolidayReferential holidayType;
 
@@ -34,7 +37,7 @@ public class Holiday {
 
     @Lob
     @Column(name = "attesting_document")
-    private byte [] attestingDocument;
+    private byte[] attestingDocument;
 
     public Long getId() {
         return id;

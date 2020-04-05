@@ -9,11 +9,11 @@ import javax.validation.constraints.Size;
 public class ReferentialDTO {
 
     @NotBlank
-    Long id;
+    private Long id;
 
     @NotBlank
     @Size(max = 100)
-    String label;
+    private String label;
 
     public Long getId() {
         return id;

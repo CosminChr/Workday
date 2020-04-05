@@ -11,7 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {RoleReferentialMapper.class,
         GenderReferentialMapper.class,
         JobPositionReferentialMapper.class,
-        DepartmentReferentialMapper.class})
+        DepartmentReferentialMapper.class,
+        NationalityReferentialMapper.class})
 public interface EmployeeMapper {
 
     Employee domainToEntity(final EmployeeDTO source);

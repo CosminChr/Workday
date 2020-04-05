@@ -13,4 +13,37 @@
     <include file="classpath:config/liquibase/changelog/jobPositions.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/holidays_refs.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/holidays.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/countries.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/counties.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/localities.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/addressTypes.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/addresses.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/currencies.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/bankAccounts.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/identityDocument_refs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/identityDocuments.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/jobDomain_refs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/previousJobs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/maritalStatuses_refs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/partners.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/maritalStatuses.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/children.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/nationalities.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/citizenships.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/language_refs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/languageLevel_refs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/languages.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/studyLevel_refs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/studyField_refs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/academicStudies.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/certificateTypes.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/certificates.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/requiredExperiences.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/contractTypes.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/companyJobs.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/daysOfWeek.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/medicalServiceProviders.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/medicalServices.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/overtime.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/workFromHome.xml" relativeToChangelogFile="false"></include>
 </databaseChangeLog>

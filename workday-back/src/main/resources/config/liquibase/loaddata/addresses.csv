@@ -1,0 +1,3 @@
+employee_id;address_type_id;street;number;block;stairwell;floor;apartment_number;locality_id;postal_code
+1;1;Calea București;34;A8;6;1;2;5510;200484
+1;3;Sibiu;7;T9;1;7;86;13220;061533

@@ -1,0 +1,237 @@
+<div class="main-content">
+  <div class="alert alert-warning fade show" *ngIf="!isDoesAnyPreviousJobExist">
+    <span>Nu există niciun job anterior"</span>
+  </div>
+
+  <div class="row" *ngFor="let previousJob of previousJobs; let i = index">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div id="accordion{{i}}" role="tablist" aria-multiselectable="true" class="card-collapse">
+            <h4 class="card-title">{{previousJob.employer}}</h4>
+            <div class="card card-plain">
+              <div class="card-header" role="tab" id="headingOne">
+                <a data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapseOne{{i}}" aria-expanded="false"
+                   aria-controls="collapseOne{{i}}">
+                  {{previousJob.position + ', ' + previousJob.fromDate + ' - ' + previousJob.toDate}}
+                  <i class="nc-icon nc-minimal-down"></i>
+                </a>
+              </div>
+              <div id="collapseOne{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                  <form [formGroup]="previousJobFormGroups[i]" *ngIf="previousJobFormGroups">
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Angajator</label>
+                              <input formControlName="employer" type="text" class="form-control"
+                                     placeholder="Angajator">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Domeniu</label>
+                              <input formControlName="jobDomain" type="text" class="form-control" placeholder="Domeniu">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Poziție</label>
+                              <input formControlName="position" type="text" class="form-control" placeholder="Poziție">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Localitate</label>
+                              <input formControlName="locality" type="text" class="form-control" placeholder="Localitate">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Data început</label>
+                              <input formControlName="fromDate" type="text" class="form-control" placeholder="Data start">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Data sfârșit</label>
+                              <input formControlName="toDate" type="text" class="form-control" placeholder="Data sfârșit">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="card-footer text-right">
+                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="text-right">
+    <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
+            data-target="#newPreviousJobModal" (click)="reinitializePicker()">Adaugă job anterior
+    </button>
+  </div>
+
+  <div class="modal fade" id="newPreviousJobModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Job anterior pentru {{employee.lastName + ' ' + employee.firstName}}</h4>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="previousJobFormGroup" *ngIf="previousJobFormGroup">
+            <div class="row">
+
+              <div class="col-md-4 text-center">
+                <div class="form-group">
+                  <!--                  <label >De la</label>-->
+                  <input formControlName="employer" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Angajator">
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-3">
+                <select formControlName="jobDomain" class="selectpicker" data-size="7"
+                        data-style="btn btn-outline-success btn-round"
+                        title="Domeniu">
+                  <option *ngFor="let referential of jobDomainReferentials">
+                    {{referential.label}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <input formControlName="position" type="text" class="form-control  text-center mt-sm-2" placeholder="Poziție">
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <!--                  <label>Bloc</label>-->
+                  <button type="button" class="btn btn-outline-info btn-round mb-3" data-toggle="modal"
+                          data-target="#citiesModal">{{setLocality()}}
+                  </button>
+                  <!--                  <input formControlName="locality" type="text" class="form-control" placeholder="Localitate">-->
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <!--                  <label>Scara</label>-->
+                  <input formControlName="fromDate" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Data început">
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <!--                  <label>Scara</label>-->
+                  <input formControlName="toDate" type="text" class="form-control text-center mt-sm-2"
+                         placeholder="Data sfârșit">
+                </div>
+              </div>
+            </div>
+
+
+          </form>
+          <div class="modal-footer">
+            <div class="left-side">
+              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewPreviousJob()">Salvează jobul anterior
+              </button>
+            </div>
+            <div class="divider"></div>
+            <div class="right-side">
+              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="citiesModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-bg">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Listă orașe</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar              -->
+            </div>
+            <table id="datatable" class="table table-bordered" cellspacing="0" width="100%">
+              <thead>
+              <tr>
+                <th class="text-capitalize">Oraș</th>
+                <th class="text-capitalize">Județ</th>
+                <th class="text-capitalize">Țară</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class = "locality" *ngFor="let localityReferential of localityReferentials" (click)="selectRow($event)"
+                  [class.selected]="localityReferential.label === selectedLocality[0] &&
+                                                     localityReferential.county.label === selectedLocality[1] &&
+                                                     localityReferential.country.label === selectedLocality[2]">
+                <td >{{localityReferential.label}}</td>
+                <td>{{localityReferential.county.label}}</td>
+                <td>{{localityReferential.country.label}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- end content-->
+        </div>
+
+        <div class="modal-footer">
+          <div class="left-side">
+            <button type="button" class="btn btn-default btn-link" data-dismiss="modal"
+                    [disabled]="!isALocalitySelected()">Confirmă
+            </button>
+          </div>
+          <div class="divider"></div>
+          <div class="right-side">
+            <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+          </div>
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+  </div>
+</div>
+
+

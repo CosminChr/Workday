@@ -1,4 +1,5 @@
 import {Referential} from "./referential.model";
+import {PreviousJob} from "./previous-job.model";
 
 export class Employee {
 
@@ -41,5 +42,4 @@ export class Employee {
   joiningDate: Date;
 
   currentPositionStartingDate: Date;
-
 }
