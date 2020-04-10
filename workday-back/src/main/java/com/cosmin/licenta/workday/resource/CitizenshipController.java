@@ -1,8 +1,6 @@
 package com.cosmin.licenta.workday.resource;
 
-import com.cosmin.licenta.workday.dto.AddressDTO;
 import com.cosmin.licenta.workday.dto.CitizenshipDTO;
-import com.cosmin.licenta.workday.entity.Citizenship;
 import com.cosmin.licenta.workday.service.CitizenshipService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

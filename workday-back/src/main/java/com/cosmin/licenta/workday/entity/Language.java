@@ -37,6 +37,7 @@ public class Language {
     @JoinColumn(name = "overall_level_id")
     private LanguageLevelReferential overallLevel;
 
+    @Lob
     private byte[] certification;
 
     public Long getId() {
