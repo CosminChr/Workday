@@ -5,12 +5,12 @@
       <div class="card">
         <div class="card-body">
           <div id="accordion{{i}}" role="tablist" aria-multiselectable="true" class="card-collapse">
-            <h4 class="card-title">Studii academice nivel  {{ academicStudy.studyLevel.label }} </h4>
+            <h4 class="card-title">Studii academice   {{ academicStudy.studyLevel.label }} </h4>
             <div class="card card-plain">
               <div class="card-header" role="tab" id="headingOne">
                 <a data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapseOne{{i}}" aria-expanded="false"
                    aria-controls="collapseOne{{i}}">
-                  {{academicStudy.specialization + ' ' + academicStudy.educationalInstitution }}
+                  {{academicStudy.specialization + ', ' + academicStudy.educationalInstitution }}
                   <i class="nc-icon nc-minimal-down"></i>
                 </a>
               </div>
@@ -127,7 +127,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="nc-icon nc-simple-remove"></i>
           </button>
-          <h4 class="title">Studiu nou pentru:  {{employee.lastName + ' ' + employee.firstName}}</h4>
+          <h4 class="title">Studiu nou pentru  {{employee.lastName + ' ' + employee.firstName}}</h4>
         </div>
         <div class="modal-body">
           <form [formGroup]="academicStudyFormGroup" *ngIf="academicStudyFormGroup">
@@ -136,7 +136,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <input formControlName="educationalInstitution" type="text" class="form-control"
+                      <input formControlName="educationalInstitution" type="text" class="form-control   mt-sm-2"
                              placeholder="Instituția">
                     </div>
                   </div>
@@ -151,7 +151,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <input formControlName="specialization" type="text" class="form-control"
+                      <input formControlName="specialization" type="text" class="form-control mt-sm-2"
                              placeholder="Specializarea">
                     </div>
                   </div>
@@ -169,13 +169,13 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <input formControlName="fromDate" type="text" class="form-control"
+                      <input formControlName="fromDate" type="text" class="form-control mt-sm-2"
                              placeholder="Data început">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <input formControlName="toDate" type="text" class="form-control"
+                      <input formControlName="toDate" type="text" class="form-control mt-sm-2"
                              placeholder="Data sfârșit">
                     </div>
                   </div>
