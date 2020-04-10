@@ -55,13 +55,13 @@ public class LanguageService {
         Optional<LanguageLevelReferential> readingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getReading().getLabel());
         languageDTO.getReading().setId(readingLevelReferentialOptional.get().getId());
 
-        Optional<LanguageLevelReferential> writingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getReading().getLabel());
+        Optional<LanguageLevelReferential> writingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getWriting().getLabel());
         languageDTO.getWriting().setId(writingLevelReferentialOptional.get().getId());
 
-        Optional<LanguageLevelReferential> speakingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getReading().getLabel());
+        Optional<LanguageLevelReferential> speakingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getSpeaking().getLabel());
         languageDTO.getSpeaking().setId(speakingLevelReferentialOptional.get().getId());
 
-        Optional<LanguageLevelReferential> overallLevelOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getReading().getLabel());
+        Optional<LanguageLevelReferential> overallLevelOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getOverallLevel().getLabel());
         languageDTO.getOverallLevel().setId(overallLevelOptional.get().getId());
 
 

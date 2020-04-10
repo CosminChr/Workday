@@ -29,6 +29,7 @@
     <include file="classpath:config/liquibase/changelog/maritalStatuses.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/children.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/nationalities.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/citizenship_refs.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/citizenships.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/language_refs.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/languageLevel_refs.xml" relativeToChangelogFile="false"></include>

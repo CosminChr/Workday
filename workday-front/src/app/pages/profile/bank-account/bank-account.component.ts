@@ -4,7 +4,7 @@ import {Referential} from "../../../shared/models/referential.model";
 import {BankAccount} from "../../../shared/models/bank-account.model";
 import {EmployeeService} from "../../../shared/services/employee/employee.service";
 import {BankAccountService} from "./bank-account.service";
-import {CurrencyReferentialService} from "./currency.service";
+import {CurrencyReferentialService} from "./currency-referential.service";
 import {forkJoin} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
