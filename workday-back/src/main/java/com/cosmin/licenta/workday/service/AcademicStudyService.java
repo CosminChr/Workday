@@ -1,10 +1,8 @@
 package com.cosmin.licenta.workday.service;
 
 import com.cosmin.licenta.workday.dto.AcademicStudyDTO;
-import com.cosmin.licenta.workday.dto.BankAccountDTO;
 import com.cosmin.licenta.workday.entity.*;
 import com.cosmin.licenta.workday.mapper.AcademicStudyMapper;
-import com.cosmin.licenta.workday.mapper.BankAccountMapper;
 import com.cosmin.licenta.workday.repository.*;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +22,16 @@ public class AcademicStudyService {
 
     private final StudyFieldReferentialRepository studyFieldReferentialRepository;
 
-    public AcademicStudyService(EmployeeRepository employeeRepository, AcademicStudyRepository academicStudyRepository, AcademicStudyMapper academicStudyMapper, StudyLevelReferentialRepository studyLevelReferentialRepository, StudyFieldReferentialRepository studyFieldReferentialRepository) {
+    private final CountryReferentialRepository countryReferentialRepository;
+
+
+    public AcademicStudyService(EmployeeRepository employeeRepository, AcademicStudyRepository academicStudyRepository, AcademicStudyMapper academicStudyMapper, StudyLevelReferentialRepository studyLevelReferentialRepository, StudyFieldReferentialRepository studyFieldReferentialRepository, CountryReferentialRepository countryReferentialRepository) {
         this.employeeRepository = employeeRepository;
         this.academicStudyRepository = academicStudyRepository;
         this.academicStudyMapper = academicStudyMapper;
         this.studyLevelReferentialRepository = studyLevelReferentialRepository;
         this.studyFieldReferentialRepository = studyFieldReferentialRepository;
+        this.countryReferentialRepository = countryReferentialRepository;
     }
 
     public List<AcademicStudyDTO> getAcademicStudies(final Long employeeId) {
@@ -51,6 +53,9 @@ public class AcademicStudyService {
 
         Optional<StudyFieldReferential> studyFieldReferentialOptional = studyFieldReferentialRepository.findByLabel(academicStudyDTO.getStudyField().getLabel());
         academicStudyDTO.getStudyField().setId(studyFieldReferentialOptional.get().getId());
+
+        Optional<CountryReferential> countryReferentialOptional = countryReferentialRepository.findByLabel(academicStudyDTO.getCountry().getLabel());
+        academicStudyDTO.getCountry().setId(countryReferentialOptional.get().getId());
 
 
        academicStudyRepository.save(academicStudyMapper.domainToEntity(academicStudyDTO));

@@ -43,6 +43,7 @@ public class AcademicStudy {
 
     private boolean finalized;
 
+    @Lob
     private byte[] diploma;
 
     public Long getId() {

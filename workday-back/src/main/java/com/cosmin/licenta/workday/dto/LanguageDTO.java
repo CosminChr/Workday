@@ -10,6 +10,8 @@ public class LanguageDTO {
 
     private Long id;
 
+    private EmployeeDTO employee;
+
     private LanguageReferential language;
 
     private LanguageLevelReferential reading;
@@ -28,6 +30,15 @@ public class LanguageDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     public LanguageReferential getLanguage() {
@@ -82,6 +93,7 @@ public class LanguageDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("language", language)
                 .add("reading", reading)
                 .add("writing", writing)
