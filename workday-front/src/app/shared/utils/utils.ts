@@ -6,7 +6,7 @@ export function parseDate(theDate: any): Date {
   return new Date(year, Number(month - 1), Number(day) + 1);
 }
 
-export function formatDate(theDate: any): String {
+export function formatDate(theDate: any): string {
   const day = theDate.toString().substring(8, 10);
   const month = theDate.toString().substring(5, 7);
   const year = theDate.toString().substring(0, 4);

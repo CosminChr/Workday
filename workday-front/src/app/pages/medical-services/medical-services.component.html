@@ -1,0 +1,65 @@
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="card-title">Alege furnizor servicii medicale</h4>
+        </div>
+        <div class="card-body ">
+          <form [formGroup]="medicalServiceFormGroup" class="form-horizontal"
+                *ngIf="medicalServiceFormGroup">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-lg-4" >
+                    <select formControlName="medicalServiceProvider" id ="medicalServiceProvider" class="form-control selectpicker mt-sm-3" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Furnizor servicii medicale">
+                      <option *ngFor="let referential of medicalServiceProviderReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Dată inițiere</label>
+                      <input formControlName="initiationDate" type="text" class="form-control"  disabled
+                             placeholder="Dată inițiere">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class ="row" *ngIf="!medicalService.id">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label></label>
+
+                  <div class="col-sm-12 checkbox-radios">
+                    <div class="form-check">
+                      <label class="form-check-label ">
+                        <input formControlName="userAcceptance" class="form-check-input" type="checkbox" (click)="onHasUserAcceptedTermsChange($event)">
+                        <span class="form-check-sign"></span>
+                        Înțeleg și sunt de acord că alegerea mea pentru acest furnizor este valabilă până la data de {{validityDate}}, perioadă în care nu voi reveni asupra alegerii făcute în favoarea alturi furnizor
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <p class="text-warning mt-3 " *ngIf="medicalService.id">
+                Furnizorul de servicii medicale a fost ales deja și este valabil până la  {{validityDate}}. </p>
+            </div>
+
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putMedicalService()" [disabled] = "medicalService.id || !isHasUserAcceptedTerms">Salvează</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

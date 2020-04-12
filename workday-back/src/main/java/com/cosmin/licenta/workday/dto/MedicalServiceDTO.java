@@ -10,7 +10,7 @@ public class MedicalServiceDTO {
 
     private Long id;
 
-    private Employee employee;
+    private EmployeeDTO employee;
 
     private MedicalServiceProviderReferential medicalServiceProvider;
 
@@ -24,11 +24,11 @@ public class MedicalServiceDTO {
         this.id = id;
     }
 
-    public Employee getEmployee() {
+    public EmployeeDTO getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(EmployeeDTO employee) {
         this.employee = employee;
     }
 
