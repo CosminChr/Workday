@@ -1,7 +1,7 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CertificatesComponent} from "./certificates.component";
 import {CertificatesRoutes} from "./certificates.routing";
 
@@ -10,7 +10,8 @@ import {CertificatesRoutes} from "./certificates.routing";
   imports: [
     CommonModule,
     RouterModule.forChild(CertificatesRoutes),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [RouterModule],
   declarations: [CertificatesComponent],

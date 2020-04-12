@@ -1,7 +1,7 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MedicalServicesRoutes} from "./medical-services.routing";
 import {MedicalServicesComponent} from "./medical-services.component";
 
@@ -10,7 +10,8 @@ import {MedicalServicesComponent} from "./medical-services.component";
   imports: [
     CommonModule,
     RouterModule.forChild(MedicalServicesRoutes),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [RouterModule],
   declarations: [MedicalServicesComponent],
