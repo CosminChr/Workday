@@ -29,11 +29,21 @@ public class WorkFromHome {
     @Column(name = "start_date_day_2")
     private LocalDate startDateDay2;
 
+    @OneToOne
     @JoinColumn(name = "day_of_week_1_id")
     private DayOfWeekReferential dayOfWeekDay1;
 
+    @OneToOne
     @JoinColumn(name = "day_of_week_2_id")
     private DayOfWeekReferential dayOfWeekDay2;
+
+    @OneToOne
+    @JoinColumn(name = "potential_day_of_week_1_id")
+    private DayOfWeekReferential potentialDayOfWeekDay1;
+
+    @OneToOne
+    @JoinColumn(name = "potential_day_of_week_2_id")
+    private DayOfWeekReferential potentialDayOfWeekDay2;
 
     @Column(name = "last_initiation_date")
     private LocalDate lastInitiationDate;
@@ -87,6 +97,22 @@ public class WorkFromHome {
 
     public void setDayOfWeekDay2(DayOfWeekReferential dayOfWeekDay2) {
         this.dayOfWeekDay2 = dayOfWeekDay2;
+    }
+
+    public DayOfWeekReferential getPotentialDayOfWeekDay1() {
+        return potentialDayOfWeekDay1;
+    }
+
+    public void setPotentialDayOfWeekDay1(DayOfWeekReferential potentialDayOfWeekDay1) {
+        this.potentialDayOfWeekDay1 = potentialDayOfWeekDay1;
+    }
+
+    public DayOfWeekReferential getPotentialDayOfWeekDay2() {
+        return potentialDayOfWeekDay2;
+    }
+
+    public void setPotentialDayOfWeekDay2(DayOfWeekReferential potentialDayOfWeekDay2) {
+        this.potentialDayOfWeekDay2 = potentialDayOfWeekDay2;
     }
 
     public LocalDate getLastInitiationDate() {

@@ -1,7 +1,7 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {OvertimeRoutes} from "./overtime.routing";
 import {OvertimeComponent} from "./overtime.component";
 
@@ -10,7 +10,8 @@ import {OvertimeComponent} from "./overtime.component";
   imports: [
     CommonModule,
     RouterModule.forChild(OvertimeRoutes),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [RouterModule],
   declarations: [OvertimeComponent],

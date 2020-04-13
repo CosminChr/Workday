@@ -29,6 +29,7 @@
             <column name="joining_date" type="date"/>
             <column name="current_position_starting_date" type="date"/>
             <column name="nationality_id" type="bigint"/>
+            <column name="manager_id" type="bigint"/>
         </createTable>
     </changeSet>
 

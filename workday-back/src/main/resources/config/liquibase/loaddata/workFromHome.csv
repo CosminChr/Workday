@@ -1,2 +1,2 @@
-employee_id;start_date_day_1;start_date_day_2;day_of_week_1_id;day_of_week_2_id;last_initiation_date;last_approval_date
-1;2020-04-01;2020-010-01;2;5;2020-010-01;2020-010-03
+employee_id;start_date_day_1;start_date_day_2;day_of_week_1_id;last_initiation_date;last_approval_date
+1;2020-04-01;2;5;2020-04-01;2020-08-03
