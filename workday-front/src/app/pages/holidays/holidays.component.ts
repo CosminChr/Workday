@@ -174,4 +174,8 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
       });
     });
   }
+
+  formatDate(date: Date): string {
+    return formatDate(date);
+  }
 }

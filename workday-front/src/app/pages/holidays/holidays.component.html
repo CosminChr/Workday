@@ -54,10 +54,10 @@
             <tbody>
             <tr *ngFor="let holiday of holidays">
               <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
-                {{holiday.fromDate}}
+                {{formatDate(holiday.fromDate)}}
               </td>
               <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
-                {{holiday.toDate}}
+                {{formatDate(holiday.toDate)}}
               </td>
               <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
                 {{holiday.holidayType.label}}
