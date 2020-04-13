@@ -1,0 +1,103 @@
+<div class="main-content">
+  <div class="row">
+
+
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="card-title">Cerere ore suplimentare</h4>
+        </div>
+        <div class="card-body ">
+          <form [formGroup]="overtimeFormGroup" class="form-horizontal"
+                *ngIf="overtimeFormGroup">
+
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Număr ore suplimentare</label>
+                  <input formControlName="numberOfHours" type="text" class="form-control" placeholder="Număr ore suplimentare">
+                </div>
+              </div>
+
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Data efectuării orelor suplimentare</label>
+                      <input formControlName="effectuationDate" type="text" class="form-control" placeholder="Data efectuării orelor suplimentare">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Data cererii</label>
+                      <input formControlName="initiationDate" type="text" class="form-control" placeholder="Data cererii" disabled>
+                    </div>
+                  </div>
+                </div>
+
+
+
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putOvertime()">Trimite spre Validare</button>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Istoric overtime</h4>
+        </div>
+
+
+
+        <div class="card-body">
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+               Data
+              </th>
+              <th>
+                Număr ore
+              </th>
+              <th>
+                Aprobat
+              </th>
+              <th>
+                Validat
+              </th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let overtime of overtimeList">
+                <td>
+                  {{overtime.effectuationDate}}
+                </td>
+                <td>
+                  {{overtime.numberOfHours}}
+                </td>
+                <td>
+                  {{overtime.approved ? 'Aprobat' : 'În așteptare'}}
+                </td>
+                <td>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" [checked]="overtime.approved"  disabled>
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

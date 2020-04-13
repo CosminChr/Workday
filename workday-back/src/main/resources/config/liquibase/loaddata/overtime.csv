@@ -1,2 +1,2 @@
-employee_id;number_of_hours;effectuation_date;initiation_date
-1;2;2020-04-01;2020-04-01
+employee_id;number_of_hours;effectuation_date;initiation_date;approved;validated
+1;2;2020-04-01;2020-04-01;false;false

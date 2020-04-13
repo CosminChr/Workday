@@ -72,6 +72,8 @@ public class EmployeeDTO {
 
     private ReferentialDTO nationality;
 
+    private EmployeeDTO manager;
+
     private Set<ReferentialDTO> roles = new HashSet<>();
 
     private Set<AcademicStudy> academicStudies;
@@ -264,6 +266,14 @@ public class EmployeeDTO {
         this.nationality = nationality;
     }
 
+    public EmployeeDTO getManager() {
+        return manager;
+    }
+
+    public void setManager(EmployeeDTO manager) {
+        this.manager = manager;
+    }
+
     public Set<ReferentialDTO> getRoles() {
         return roles;
     }
@@ -385,6 +395,7 @@ public class EmployeeDTO {
                 .add("joiningDate", joiningDate)
                 .add("currentPositionStartingDate", currentPositionStartingDate)
                 .add("nationality", nationality)
+                .add("manager", manager)
                 .add("roles", roles)
                 .add("academicStudies", academicStudies)
                 .add("addresses", addresses)

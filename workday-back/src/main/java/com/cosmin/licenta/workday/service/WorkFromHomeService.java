@@ -45,11 +45,28 @@ public class WorkFromHomeService {
     }
 
     public WorkFromHomeDTO putWorkFromHome(final WorkFromHomeDTO workFromHomeDTO) {
-        Optional<DayOfWeekReferential> dayOfWeek1ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getDayOfWeekDay1().getLabel());
-        workFromHomeDTO.getDayOfWeekDay1().setId(dayOfWeek1ReferentialOptional.get().getId());
 
-        Optional<DayOfWeekReferential> dayOfWeek2ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getDayOfWeekDay2().getLabel());
-        workFromHomeDTO.getDayOfWeekDay1().setId(dayOfWeek2ReferentialOptional.get().getId());
+
+        if (workFromHomeDTO.getDayOfWeekDay1() != null) {
+            Optional<DayOfWeekReferential> dayOfWeek1ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getDayOfWeekDay1().getLabel());
+            workFromHomeDTO.getDayOfWeekDay1().setId(dayOfWeek1ReferentialOptional.get().getId());
+        }
+
+        if (workFromHomeDTO.getDayOfWeekDay2() != null) {
+            Optional<DayOfWeekReferential> dayOfWeek2ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getDayOfWeekDay2().getLabel());
+            workFromHomeDTO.getDayOfWeekDay1().setId(dayOfWeek2ReferentialOptional.get().getId());
+        }
+
+
+        if (workFromHomeDTO.getPotentialDayOfWeekDay1() != null) {
+            Optional<DayOfWeekReferential> potentialDayOfWeek1ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getPotentialDayOfWeekDay1().getLabel());
+            workFromHomeDTO.getPotentialDayOfWeekDay1().setId(potentialDayOfWeek1ReferentialOptional.get().getId());
+        }
+
+        if (workFromHomeDTO.getPotentialDayOfWeekDay2() != null) {
+            Optional<DayOfWeekReferential> potentialDayOfWeek2ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getPotentialDayOfWeekDay2().getLabel());
+            workFromHomeDTO.getPotentialDayOfWeekDay2().setId(potentialDayOfWeek2ReferentialOptional.get().getId());
+        }
 
         workFromHomeRepository.save(workFromHomeMapper.domainToEntity(workFromHomeDTO));
         return workFromHomeDTO;

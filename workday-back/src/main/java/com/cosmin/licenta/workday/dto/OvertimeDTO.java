@@ -18,6 +18,10 @@ public class OvertimeDTO {
 
     private LocalDate initiationDate;
 
+    private boolean approved;
+
+    private boolean validated;
+
     public Long getId() {
         return id;
     }
@@ -58,6 +62,22 @@ public class OvertimeDTO {
         this.initiationDate = initiationDate;
     }
 
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public void setValidated(boolean validated) {
+        this.validated = validated;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -66,6 +86,8 @@ public class OvertimeDTO {
                 .add("numberOfHours", numberOfHours)
                 .add("effectuationDate", effectuationDate)
                 .add("initiationDate", initiationDate)
+                .add("approved", approved)
+                .add("validated", validated)
                 .toString();
     }
 }

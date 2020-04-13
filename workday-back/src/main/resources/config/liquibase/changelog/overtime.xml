@@ -13,6 +13,8 @@
             <column name="number_of_hours" type="bigint"/>
             <column name="effectuation_date" type="date"/>
             <column name="initiation_date" type="date"/>
+            <column name="approved" type="boolean"/>
+            <column name="validated" type="boolean"/>
         </createTable>
     </changeSet>
 
