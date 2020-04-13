@@ -75,7 +75,7 @@
               <tbody>
               <tr *ngFor="let overtime of overtimeList">
                 <td>
-                  {{overtime.effectuationDate}}
+                  {{formatDate(overtime.effectuationDate)}}
                 </td>
                 <td>
                   {{overtime.numberOfHours}}
@@ -98,6 +98,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

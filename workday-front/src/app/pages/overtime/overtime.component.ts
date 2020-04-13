@@ -61,6 +61,10 @@ export class OvertimeComponent implements OnInit {
       this.overtimeList.push(data);
     });
   }
+
+  formatDate(date: Date): string {
+    return formatDate(date);
+  }
 }
 
 
