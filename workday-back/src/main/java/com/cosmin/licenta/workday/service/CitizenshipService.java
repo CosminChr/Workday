@@ -11,6 +11,7 @@ import com.cosmin.licenta.workday.repository.CitizenshipRepository;
 import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class CitizenshipService {
         this.citizenshipMapper = citizenshipMapper;
     }
 
+    @Transactional
     public List<CitizenshipDTO> getCitizenships(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);

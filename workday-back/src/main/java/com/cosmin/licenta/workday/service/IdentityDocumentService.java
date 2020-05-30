@@ -12,6 +12,7 @@ import com.cosmin.licenta.workday.repository.IdentityDocumentRepository;
 import com.cosmin.licenta.workday.repository.IdentityDocumentTypeReferentialRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class IdentityDocumentService {
         this.countryReferentialRepository = countryReferentialRepository;
     }
 
+    @Transactional
     public List<IdentityDocumentDTO> getIdentityDocuments(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);

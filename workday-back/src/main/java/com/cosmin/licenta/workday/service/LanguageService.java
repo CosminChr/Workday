@@ -12,6 +12,7 @@ import com.cosmin.licenta.workday.repository.LanguageReferentialRepository;
 import com.cosmin.licenta.workday.repository.LanguageRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class LanguageService {
         this.languageLevelReferentialRepository = languageLevelReferentialRepository;
     }
 
+    @Transactional
     public List<LanguageDTO> getLanguages(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -63,7 +65,6 @@ public class LanguageService {
 
         Optional<LanguageLevelReferential> overallLevelOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getOverallLevel().getLabel());
         languageDTO.getOverallLevel().setId(overallLevelOptional.get().getId());
-
 
         languageRepository.save(languageMapper.domainToEntity(languageDTO));
         return languageDTO;

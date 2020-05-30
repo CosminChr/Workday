@@ -20,22 +20,19 @@ public class CompanyJobService {
 
     private final CompanyJobMapper companyJobMapper;
 
-    private final EmployeeRepository employeeRepository;
-
     private final ContractTypeReferentialRepository contractTypeReferentialRepository;
 
     private final RequiredExperienceReferentialRepository requiredExperienceReferentialRepository;
 
-    public CompanyJobService(CompanyJobRepository companyJobRepository, CompanyJobMapper companyJobMapper, EmployeeRepository employeeRepository, ContractTypeReferentialRepository contractTypeReferentialRepository, RequiredExperienceReferentialRepository requiredExperienceReferentialRepository) {
+    public CompanyJobService(CompanyJobRepository companyJobRepository, CompanyJobMapper companyJobMapper, ContractTypeReferentialRepository contractTypeReferentialRepository, RequiredExperienceReferentialRepository requiredExperienceReferentialRepository) {
         this.companyJobRepository = companyJobRepository;
         this.companyJobMapper = companyJobMapper;
-        this.employeeRepository = employeeRepository;
         this.contractTypeReferentialRepository = contractTypeReferentialRepository;
         this.requiredExperienceReferentialRepository = requiredExperienceReferentialRepository;
     }
 
     public List<CompanyJobDTO> getCompanyJobs() {
-            List<CompanyJob> companyJobs = companyJobRepository.findAll();
+            final List<CompanyJob> companyJobs = companyJobRepository.findAll();
             return companyJobMapper.entitiesToDomains(companyJobs);
     }
 
@@ -43,7 +40,7 @@ public class CompanyJobService {
         Optional<ContractTypeReferential> contractTypeOptional = contractTypeReferentialRepository.findByLabel(companyJobDTO.getContractType().getLabel());
         companyJobDTO.getContractType().setId(contractTypeOptional.get().getId());
         Optional<RequiredExperienceReferential> requiredExperienceOptional = requiredExperienceReferentialRepository.findByLabel(companyJobDTO.getRequiredExperience().getLabel());
-        companyJobDTO.getContractType().setId(contractTypeOptional.get().getId());
+        companyJobDTO.getRequiredExperience().setId(requiredExperienceOptional.get().getId());
 
         companyJobRepository.save(companyJobMapper.domainToEntity(companyJobDTO));
         return companyJobDTO;

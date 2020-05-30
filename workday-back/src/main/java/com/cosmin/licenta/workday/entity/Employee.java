@@ -86,7 +86,7 @@ public class Employee extends User implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "workday_employee_role",
             joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+            inverseJoinColumns =  @JoinColumn(name = "role_id"))
     private Set<RoleReferential> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "employee")
@@ -101,7 +101,7 @@ public class Employee extends User implements Serializable {
     @JsonManagedReference
     private Set<BankAccount> bankAccounts;
 
-    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employee")
     @JsonManagedReference
     private Set<Child> children;
 

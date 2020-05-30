@@ -10,6 +10,7 @@ import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import com.cosmin.licenta.workday.repository.GenderReferentialRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,7 @@ public class ChildService {
         this.genderReferentialRepository = genderReferentialRepository;
     }
 
+    @Transactional
     public List<ChildDTO> getChildren(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);

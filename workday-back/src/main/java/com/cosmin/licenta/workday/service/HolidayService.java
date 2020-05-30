@@ -10,6 +10,11 @@ import com.cosmin.licenta.workday.repository.HolidayReferentialRepository;
 import com.cosmin.licenta.workday.repository.HolidayRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +36,7 @@ public class HolidayService {
         this.holidayReferentialRepository = holidayReferentialRepository;
     }
 
+    @Transactional
     public List<HolidayDTO> getHolidays(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -43,10 +49,9 @@ public class HolidayService {
         return null;
     }
 
-    public HolidayDTO putHoliday(final HolidayDTO holiday) {
+    public HolidayDTO putHoliday(final HolidayDTO holiday)  {
         Optional<HolidayReferential> holidayReferential = holidayReferentialRepository.findByLabel(holiday.getHolidayType().getLabel());
         holiday.getHolidayType().setId(holidayReferential.get().getId());
-
         holidayRepository.save(holidayMapper.domainToEntity(holiday));
         return holiday;
     }

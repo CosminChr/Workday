@@ -12,6 +12,7 @@ import com.cosmin.licenta.workday.repository.GenderReferentialRepository;
 import com.cosmin.licenta.workday.repository.JobPositionReferentialRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,7 @@ public class EmployeeService {
         this.departmentReferentialRepository = departmentReferentialRepository;
     }
 
+    @Transactional
     public EmployeeDTO getEmployee(final String username) {
         if (employeeRepository.findByUsername(username).isPresent()) {
             return employeeMapper.entityToDomain(employeeRepository.findByUsername(username).get());

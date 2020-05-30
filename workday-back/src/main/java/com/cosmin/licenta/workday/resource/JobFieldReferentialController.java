@@ -1,7 +1,7 @@
 package com.cosmin.licenta.workday.resource;
 
 import com.cosmin.licenta.workday.dto.ReferentialDTO;
-import com.cosmin.licenta.workday.service.JobDomainReferentialService;
+import com.cosmin.licenta.workday.service.JobFieldReferentialService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,17 +12,17 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/jobDomainReferential")
-public class JobDomainReferentialController {
+@RequestMapping("/api/jobFieldReferential")
+public class JobFieldReferentialController {
 
-    private final JobDomainReferentialService jobDomainReferentialService;
+    private final JobFieldReferentialService jobFieldReferentialService;
 
-    public JobDomainReferentialController(JobDomainReferentialService jobDomainReferentialService) {
-        this.jobDomainReferentialService = jobDomainReferentialService;
+    public JobFieldReferentialController(JobFieldReferentialService jobFieldReferentialService) {
+        this.jobFieldReferentialService = jobFieldReferentialService;
     }
 
     @GetMapping("/")
     public ResponseEntity<List<ReferentialDTO>> getLocalityRefs() {
-        return ResponseEntity.ok(jobDomainReferentialService.getJobDomainReferentials());
+        return ResponseEntity.ok(jobFieldReferentialService.getJobFieldReferentials());
     }
 }

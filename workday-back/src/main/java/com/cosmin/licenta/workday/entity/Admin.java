@@ -19,7 +19,7 @@ public class Admin extends User implements Serializable {
         this.setPassword(password);
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private RoleReferential role;
 

@@ -6,6 +6,7 @@ import com.cosmin.licenta.workday.mapper.AcademicStudyMapper;
 import com.cosmin.licenta.workday.repository.*;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,7 @@ public class AcademicStudyService {
         this.countryReferentialRepository = countryReferentialRepository;
     }
 
+    @Transactional
     public List<AcademicStudyDTO> getAcademicStudies(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);

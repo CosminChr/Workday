@@ -8,6 +8,7 @@ import com.cosmin.licenta.workday.repository.MaritalStatusReferentialRepository;
 import com.cosmin.licenta.workday.repository.MaritalStatusRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -28,8 +29,8 @@ public class MaritalStatusService {
         this.maritalStatusMapper = maritalStatusMapper;
     }
 
+    @Transactional
     public MaritalStatusDTO getMaritalStatus(final Long employeeId) {
-
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
         if (employeeOptional.isPresent()) {

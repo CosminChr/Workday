@@ -17,7 +17,7 @@ public class Citizenship {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "citizenship_id")
     private CitizenshipReferential citizenship;
 

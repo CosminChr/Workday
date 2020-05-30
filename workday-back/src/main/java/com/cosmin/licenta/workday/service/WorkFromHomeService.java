@@ -11,6 +11,7 @@ import com.cosmin.licenta.workday.repository.OvertimeRepository;
 import com.cosmin.licenta.workday.repository.WorkFromHomeRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class WorkFromHomeService {
         this.dayOfWeekReferentialRepository = dayOfWeekReferentialRepository;
     }
 
+    @Transactional
     public WorkFromHomeDTO getWorkFromHome(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -45,7 +47,6 @@ public class WorkFromHomeService {
     }
 
     public WorkFromHomeDTO putWorkFromHome(final WorkFromHomeDTO workFromHomeDTO) {
-
 
         if (workFromHomeDTO.getDayOfWeekDay1() != null) {
             Optional<DayOfWeekReferential> dayOfWeek1ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getDayOfWeekDay1().getLabel());

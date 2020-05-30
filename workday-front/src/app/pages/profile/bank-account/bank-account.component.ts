@@ -32,6 +32,8 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
 
   bankAccountFormGroup: FormGroup;
 
+  bankStatement: any;
+
 
   constructor(private employeeService: EmployeeService,
               private bankAccountService: BankAccountService,
@@ -124,9 +126,15 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
     this.newBankAccount.expirationDate = parseDate(this.bankAccountFormGroup.controls.expirationDate.value);
     this.newBankAccount.currency.label = this.bankAccountFormGroup.controls.currency.value;
     this.newBankAccount.primaryAccount = this.bankAccountFormGroup.controls.primaryAccount.value;
-
     this.newBankAccount.employee = this.employee;
-    this.bankAccountService.putBankAccount(this.newBankAccount).subscribe(data => {
+
+    const data = new FormData();
+    data.append("bankStatement", this.bankStatement, this.bankStatement.name);
+    data.append('bankAccount', new Blob([JSON.stringify(this.newBankAccount)], {
+      type: "application/json"
+    }));
+
+    this.bankAccountService.putBankAccount(data).subscribe(data => {
       this.bankAccounts.push(data as BankAccount);
     });
 
@@ -134,5 +142,9 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
 
   reinitializePicker() {
     $('.selectpicker').selectpicker('refresh');
+  }
+
+  uploadFile(event) {
+      this.bankStatement = event.target.files[0];
   }
 }

@@ -23,7 +23,7 @@ public class PreviousJobController {
     }
 
     @GetMapping("/{employeeId}")
-    public ResponseEntity<List<PreviousJobDTO>> getPreviousJob(@PathVariable(name = "employeeId") final Long employeeId) {
+    public ResponseEntity<List<PreviousJobDTO>> getPreviousJobs(@PathVariable(name = "employeeId") final Long employeeId) {
         return ResponseEntity.ok(previousJobService.getPreviousJobs(employeeId));
     }
 

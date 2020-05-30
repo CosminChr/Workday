@@ -74,7 +74,6 @@ export class MaritalStatusComponent implements OnInit, AfterViewInit {
         this.maritalStatusReferentials = data[1] as Array<Referential>;
         this.partner = data[2] as Partner;
         this.children = data[3] as Array<Child>;
-        console.log(this.children);
         this.genderReferentials = data[4] as Array<Referential>;
         if (!this.partner) {
           this.partner = new Partner();

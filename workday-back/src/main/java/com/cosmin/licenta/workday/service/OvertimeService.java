@@ -8,6 +8,7 @@ import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import com.cosmin.licenta.workday.repository.OvertimeRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,7 @@ public class OvertimeService {
         this.employeeRepository = employeeRepository;
     }
 
+    @Transactional
     public List<OvertimeDTO> getOvertimeHistory(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);

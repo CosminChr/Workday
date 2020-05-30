@@ -1,2 +1,3 @@
-job_title;required_experience_id;contract_type_id;posting_date
-FullStack Java Developer;3;1;2020-04-01
+job_title;job_field_id;locality;country;required_experience_id;contract_type_id;posting_date
+FullStack Java Developer;20;București;Romania;3;1;2020-04-01
+FullStack Java Developer;20;București;Romania;4;1;2020-04-01
