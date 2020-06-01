@@ -56,7 +56,7 @@ public class JobApplicationService {
     }
 
     @Transactional
-    public JobApplicationDTO putJobApplication(final JobApplicationDTO jobApplicationDTO, MultipartFile cv) throws IOException {
+    public JobApplicationDTO putJobApplication(final JobApplicationDTO jobApplicationDTO, final MultipartFile cv) throws IOException {
 
         jobApplicationDTO.setCv(cv.getBytes());
 

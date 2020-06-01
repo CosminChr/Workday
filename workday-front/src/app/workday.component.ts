@@ -29,7 +29,6 @@ export class WorkdayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-
     this.workdayService.getStoredIsConnected().asObservable()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -39,7 +38,6 @@ export class WorkdayComponent implements OnInit, OnDestroy {
     this.isConnected = !!this.tokenStorageService.getToken();
 
     if (this.isConnected) {
-      // this.router.navigate(['/profile/personalData']);
       this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe(data => {
         this.employee = data;
         this.employeeService.setStoredEmployee(this.employee);

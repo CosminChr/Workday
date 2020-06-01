@@ -84,10 +84,10 @@
                               </option>
                             </select>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-2">
                             <div class="form-group">
                               <label></label>
-                              <div class="col-sm-10 checkbox-radios">
+                              <div class="col-sm-2 checkbox-radios mt-sm-3">
                                 <div class="form-check">
                                   <label class="form-check-label ">
                                     <input formControlName="finalized" class="form-check-input" type="checkbox">
@@ -97,6 +97,12 @@
                                 </div>
                               </div>
                             </div>
+                          </div>
+                          <div class="col-md-4 mt-sm-3">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadDiplomaFile($event, i)">
+                             Atașează diplomă de absolvire
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -204,6 +210,12 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="col-md-6 mt-sm-3">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadNewDiplomaFile($event)">
+                             Atașează diplomă de absolvire
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
                   </div>
                 </div>
               </div>

@@ -10,5 +10,4 @@ export class JobApplication {
   submittedBy: Employee;
 
   cv: any;
-
 }

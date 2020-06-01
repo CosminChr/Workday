@@ -39,7 +39,8 @@ public class EmployeeService {
     @Transactional
     public EmployeeDTO getEmployee(final String username) {
         if (employeeRepository.findByUsername(username).isPresent()) {
-            return employeeMapper.entityToDomain(employeeRepository.findByUsername(username).get());
+            final Employee employee = employeeRepository.findByUsername(username).get();
+            return employeeMapper.entityToDomain(employee);
         }
         return null;
     }

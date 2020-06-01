@@ -40,6 +40,10 @@ export class StudiesComponent implements OnInit, AfterViewInit {
 
   academicStudyFormGroup: FormGroup;
 
+  diplomas: Array<any>;
+
+  diploma: any;
+
   constructor(private studyLevelReferentialService: StudyLevelReferentialService,
               private academicStudyService: AcademicStudyService,
               private countryReferentialService: CountryReferentialService,
@@ -145,9 +149,23 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     this.newAcademicStudy.finalized = this.academicStudyFormGroup.controls.finalized.value;
     this.newAcademicStudy.employee=this.employee;
 
-    this.academicStudyService.putStudy(this.newAcademicStudy).subscribe( (data: AcademicStudy) => {
+    const data = new FormData();
+    data.append("diploma", this.diploma, this.diploma.name);
+    data.append('academicStudy', new Blob([JSON.stringify(this.newAcademicStudy)], {
+      type: "application/json"
+    }));
+
+    this.academicStudyService.putStudy(data).subscribe( (data: AcademicStudy) => {
       this.academicStudies.push(data);
     });
+  }
+
+  uploadDiplomaFile(event, index) {
+    this.diplomas[index] = event.target.files[0];
+  }
+
+  uploadNewDiplomaFile(event) {
+    this.diploma = event.target.files[0];
   }
 
 }

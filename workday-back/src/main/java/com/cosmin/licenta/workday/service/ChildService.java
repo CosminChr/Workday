@@ -9,8 +9,10 @@ import com.cosmin.licenta.workday.repository.ChildRepository;
 import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import com.cosmin.licenta.workday.repository.GenderReferentialRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +47,9 @@ public class ChildService {
         return null;
     }
 
-    public ChildDTO putChild(final ChildDTO childDTO) {
+    public ChildDTO putChild(final ChildDTO childDTO, final MultipartFile document) throws IOException {
+
+        childDTO.setAttestingDocument(document.getBytes());
         Optional<GenderReferential> genderOptional = genderReferentialRepository.findByLabel(childDTO.getGender().getLabel());
         childDTO.getGender().setId(genderOptional.get().getId());
 

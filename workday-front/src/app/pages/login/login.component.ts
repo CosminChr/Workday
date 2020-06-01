@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
         this.workDayService.setIsConnected(true);
       },
       err => {
-        // console.log(err);
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
         this.notificationService.showNotification('top','center', 'danger', 'Ai introdus greșit usernameul sau parola. Te rugăm reîncearcă !');

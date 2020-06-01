@@ -57,6 +57,14 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
 
   languageReferentials: Array<Referential>;
 
+  citizenshipDocuments: Array<any>;
+
+  citizenshipDocument: any;
+
+  languageCertifications: Array<any>;
+
+  languageCertification: any;
+
 
   constructor(private employeeService: EmployeeService,
               private citizenshipService: CitizenshipService,
@@ -83,6 +91,7 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
       this.languageLevelReferentialService.getLanguageLevelReferentials()
     ]).subscribe(data => {
       this.citizenships = data[0] as Array<Citizenship>;
+      console.log(data[0]);
       this.nationality = data[1] as Referential;
       this.citizenshipReferentials = data[2] as Array<Referential>;
       this.nationalityReferentials = data[3] as Array<Referential>;
@@ -94,6 +103,8 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
       this.createNewCitizenshipForm();
       this.createLanguageFormGroups();
       this.createNewLanguageForm();
+      this.citizenshipDocuments = new Array<any>(this.citizenships.length);
+      this.languageCertifications = new Array<any>(this.languages.length);
     });
   }
 
@@ -164,8 +175,15 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
 
   putNewCitizenship(){
     this.newCitizenship.citizenship.label = this.citizenshipFormGroup.controls.citizenship.value;
-      this.newCitizenship.employee = this.employee;
-    this.citizenshipService.putCitizenship(this.newCitizenship).subscribe( (data: Citizenship) => {
+    this.newCitizenship.employee = this.employee;
+
+    const data = new FormData();
+    data.append("citizenshipCertificate", this.citizenshipDocument, this.citizenshipDocument.name);
+    data.append('citizenship', new Blob([JSON.stringify(this.newCitizenship)], {
+      type: "application/json"
+    }));
+
+    this.citizenshipService.putCitizenship(data).subscribe( (data: Citizenship) => {
         this.citizenships.push(data);
     });
   }
@@ -213,9 +231,31 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
     this.newLanguage.overallLevel.label = this.languageFormGroup.controls.overallLevel.value;
     this.newLanguage.employee = this.employee;
 
-    this.languageService.putLanguage(this.newLanguage).subscribe( (data: Language) => {
+    const data = new FormData();
+    data.append("languageCertification", this.languageCertification, this.languageCertification.name);
+    data.append('language', new Blob([JSON.stringify(this.newLanguage)], {
+      type: "application/json"
+    }));
+
+    this.languageService.putLanguage(data).subscribe( (data: Language) => {
       this.languages.push(data);
     });
+  }
+
+  uploadCitizenshipFile(event, index) {
+    this.citizenshipDocuments[index] = event.target.files[0];
+  }
+
+  uploadNewCitizenshipFile(event) {
+    this.citizenshipDocument = event.target.files[0];
+  }
+
+  uploadLanguageCertificateFile(event, index) {
+    this.languageCertifications[index] = event.target.files[0];
+  }
+
+  uploadNewLanguageCertificateFile(event) {
+    this.languageCertification = event.target.files[0];
   }
 }
 

@@ -48,7 +48,7 @@ public class BankAccountService {
         return null;
     }
 
-    public BankAccountDTO putBankAccount(final BankAccountDTO bankAccount,  MultipartFile bankStatement) throws IOException {
+    public BankAccountDTO putBankAccount(final BankAccountDTO bankAccount, final  MultipartFile bankStatement) throws IOException {
         bankAccount.setAttestingDocument(bankStatement.getBytes());
         Optional<CurrencyReferential> currencyOptional = currencyReferentialRepository.findByLabel(bankAccount.getCurrency().getLabel());
         bankAccount.getCurrency().setId(currencyOptional.get().getId());

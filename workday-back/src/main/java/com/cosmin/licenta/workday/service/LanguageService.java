@@ -11,8 +11,10 @@ import com.cosmin.licenta.workday.repository.LanguageLevelReferentialRepository;
 import com.cosmin.licenta.workday.repository.LanguageReferentialRepository;
 import com.cosmin.licenta.workday.repository.LanguageRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +52,9 @@ public class LanguageService {
         return null;
     }
 
-    public LanguageDTO putLanguage(final LanguageDTO languageDTO) {
+    public LanguageDTO putLanguage(final LanguageDTO languageDTO, final MultipartFile document) throws IOException {
+
+        languageDTO.setCertification(document.getBytes());
         Optional<LanguageReferential> languageReferentialOptional = languageReferentialRepository.findByLabel(languageDTO.getLanguage().getLabel());
         languageDTO.getLanguage().setId(languageReferentialOptional.get().getId());
 

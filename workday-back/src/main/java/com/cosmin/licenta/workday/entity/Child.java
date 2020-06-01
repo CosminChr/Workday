@@ -39,6 +39,10 @@ public class Child {
     @Column(name = "works_in_company")
     private boolean worksInCompany;
 
+    @Lob
+    @Column(name = "attesting_document")
+    private byte [] attestingDocument;
+
     public Long getId() {
         return id;
     }
@@ -101,5 +105,13 @@ public class Child {
 
     public void setWorksInCompany(boolean worksInCompany) {
         this.worksInCompany = worksInCompany;
+    }
+
+    public byte[] getAttestingDocument() {
+        return attestingDocument;
+    }
+
+    public void setAttestingDocument(byte[] attestingDocument) {
+        this.attestingDocument = attestingDocument;
     }
 }

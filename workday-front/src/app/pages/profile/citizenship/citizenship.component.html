@@ -41,6 +41,12 @@
                   </option>
                 </select>
               </div>
+              <div class="col-md-4">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadCitizenshipFile($event, i)">
+                             Atașează certificat de cetățenie
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+              </div>
             </div>
 
             <div class="card-footer text-right">
@@ -75,13 +81,19 @@
           <form [formGroup]="citizenshipFormGroup" *ngIf="citizenshipFormGroup">
             <div class="row">
               <div class="col-lg-4 col-md-4 col-sm-6">
-                <select formControlName="citizenship"  class="selectpicker form-control" data-size="7" disabled
+                <select formControlName="citizenship"  class="selectpicker form-control" data-size="7"
                         data-style="btn btn-outline-success btn-round"
                         title="Cetățenie">
                   <option *ngFor="let referential of citizenshipReferentials">
                     {{referential.label}}
                   </option>
                 </select>
+              </div>
+              <div class="col-md-8">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadNewCitizenshipFile($event)">
+                             Atașează certificat de cetățenie
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
               </div>
             </div>
 
@@ -177,6 +189,12 @@
                               </option>
                             </select>
                           </div>
+                          <div class="col-md-4 mt-sm-4">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadLanguageCertificateFile($event, i)">
+                             Atașează certificare
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -202,7 +220,7 @@
   </div>
 
   <div class="modal fade" id="newLanguageModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-bg">
       <div class="modal-content">
         <div class="modal-header justify-content-center">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -215,7 +233,7 @@
             <div class="row">
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
                     <select formControlName="language"  class="selectpicker form-control" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="Limba">
@@ -227,7 +245,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
                     <select formControlName="reading"  class="selectpicker form-control" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="Citit">
@@ -236,7 +254,7 @@
                       </option>
                     </select>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
                     <select formControlName="writing"  class="selectpicker form-control" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="Scris">
@@ -248,7 +266,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
                     <select formControlName="speaking" class="selectpicker form-control" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="Vorbit">
@@ -257,7 +275,7 @@
                       </option>
                     </select>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="col-lg-3">
                     <select formControlName="overallLevel"  class="selectpicker form-control" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="General">
@@ -265,6 +283,12 @@
                         {{referential.label}}
                       </option>
                     </select>
+                  </div>
+                  <div class="col-md-5">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadNewLanguageCertificateFile($event)">
+                             Atașează certificare
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
                   </div>
                 </div>
               </div>

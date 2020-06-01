@@ -3,6 +3,8 @@ package com.cosmin.licenta.workday.dto;
 import com.cosmin.licenta.workday.entity.GenderReferential;
 import com.google.common.base.MoreObjects;
 
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import java.time.LocalDate;
 
 public class ChildDTO {
@@ -22,6 +24,8 @@ public class ChildDTO {
     private GenderReferential gender;
 
     private boolean worksInCompany;
+
+    private byte [] attestingDocument;
 
     public Long getId() {
         return id;
@@ -87,6 +91,14 @@ public class ChildDTO {
         this.worksInCompany = worksInCompany;
     }
 
+    public byte[] getAttestingDocument() {
+        return attestingDocument;
+    }
+
+    public void setAttestingDocument(byte[] attestingDocument) {
+        this.attestingDocument = attestingDocument;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -98,6 +110,7 @@ public class ChildDTO {
                 .add("birthDate", birthDate)
                 .add("gender", gender)
                 .add("worksInCompany", worksInCompany)
+                .add("attestingDocument", attestingDocument)
                 .toString();
     }
 }

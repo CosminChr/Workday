@@ -4,7 +4,9 @@ import com.cosmin.licenta.workday.dto.IdentityDocumentDTO;
 import com.cosmin.licenta.workday.service.IdentityDocumentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -23,8 +25,10 @@ public class IdentityDocumentController {
         return ResponseEntity.ok(identityDocumentService.getIdentityDocuments(employeeId));
     }
 
-    @PutMapping("/")
-    public ResponseEntity<IdentityDocumentDTO> putIdentityDocument(@RequestBody final IdentityDocumentDTO identityDocumentDTO) {
-        return ResponseEntity.ok(identityDocumentService.putIdentityDocument(identityDocumentDTO));
+    @PutMapping("/multipart/document")
+    public ResponseEntity<IdentityDocumentDTO> putIdentityDocument(@RequestPart (value = "identityDocument") final IdentityDocumentDTO identityDocumentDTO,
+                                                                   @RequestPart (value = "document") final MultipartFile document) throws IOException {
+        identityDocumentService.putIdentityDocument(identityDocumentDTO, document);
+        return ResponseEntity.ok(identityDocumentDTO);
     }
 }

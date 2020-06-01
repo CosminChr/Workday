@@ -32,8 +32,6 @@ export class MaritalStatusComponent implements OnInit, AfterViewInit {
 
   maritalStatusReferentials: Array<Referential>;
 
-  identityDocuments: Array<IdentityDocument>;
-
   maritalStatus: MaritalStatus;
 
   maritalStatusFormGroup: FormGroup;
@@ -49,6 +47,12 @@ export class MaritalStatusComponent implements OnInit, AfterViewInit {
   isDoesAnyChildExist = true;
 
   genderReferentials: Array<Referential>;
+
+  marriageCertificate: any;
+
+  birthCertificates: Array<any>;
+
+  birthCertificate: any;
 
   constructor(private employeeService: EmployeeService,
               private maritalStatusService: MaritalStatusService,
@@ -82,6 +86,7 @@ export class MaritalStatusComponent implements OnInit, AfterViewInit {
         this.createChildForms();
         this.createNewChildForm();
         this.onMaritalStatusChange();
+        this.birthCertificates = new Array<any>(this.children.length);
       });
   }
 
@@ -178,8 +183,14 @@ export class MaritalStatusComponent implements OnInit, AfterViewInit {
      this.partner.employee = this.employee;
     }
 
+    const data = new FormData();
+    data.append("marriageCertificate", this.marriageCertificate, this.marriageCertificate.name);
+    data.append('maritalStatus', new Blob([JSON.stringify(this.maritalStatus)], {
+      type: "application/json"
+    }));
+
     forkJoin([
-      this.maritalStatusService.putMaritalStatus(this.maritalStatus),
+      this.maritalStatusService.putMaritalStatus(data),
       this.partnerService.putPartner(this.partner)
     ])
       .subscribe( data => {
@@ -291,11 +302,28 @@ export class MaritalStatusComponent implements OnInit, AfterViewInit {
     this.newChild.birthDate = parseDate(this.newChildFormGroup.controls.birthDate.value);
     this.newChild.gender.label = this.newChildFormGroup.controls.gender.value;
     this.newChild.worksInCompany = this.newChildFormGroup.controls.worksInCompany.value;
-
-
     this.newChild.employee = this.employee;
-    this.childService.putChild(this.newChild).subscribe( data => {
+
+    const data = new FormData();
+    data.append("birthCertificate", this.birthCertificate, this.birthCertificate.name);
+    data.append('child', new Blob([JSON.stringify(this.newChild)], {
+      type: "application/json"
+    }));
+
+    this.childService.putChild(data).subscribe( data => {
       this.children.push(data as Child);
     });
+  }
+
+  uploadMarriageCertificateFile(event) {
+    this.marriageCertificate = event.target.files[0];
+  }
+
+  uploadBirthCertificateFile(event, index) {
+    this.birthCertificates[index] = event.target.files[0];
+  }
+
+  uploadNewBirthCertificateFile(event) {
+    this.birthCertificate = event.target.files[0];
   }
 }

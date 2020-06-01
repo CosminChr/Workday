@@ -42,20 +42,18 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
-    this.employee = this.employeeService.getSavedEmployee();
-
-    forkJoin([
-      this.currencyReferentialService.getCurrencyReferentials(),
-      this.bankAccountService.getBankAccounts(this.employee.id)
-    ])
-      .subscribe(data => {
-        this.currencyReferentials = data[0];
-        this.bankAccounts = data[1];
-        this.createBankAccountForms();
-        this.populateBankAccountForms();
-        this.createNewBankAccountForm();
-      });
+      this.employee = this.employeeService.getSavedEmployee();
+      forkJoin([
+        this.currencyReferentialService.getCurrencyReferentials(),
+        this.bankAccountService.getBankAccounts(this.employeeService.getSavedEmployee().id)
+      ])
+        .subscribe(data => {
+          this.currencyReferentials = data[0];
+          this.bankAccounts = data[1];
+          this.createBankAccountForms();
+          this.populateBankAccountForms();
+          this.createNewBankAccountForm();
+        });
   }
 
 
