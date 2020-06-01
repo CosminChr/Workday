@@ -160,24 +160,22 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     let holidayType = new Referential();
     holidayType.label = this.holidayForm.controls.holidayType.value;
 
-
-    let referential: Referential = find(this.holidayReferentials, (ref) => {
-      return ref.label = holidayType.label;
-    });
-
-    holidayType.id = referential.id;
-
     this.plannedHoliday.holidayType = holidayType;
     this.plannedHoliday.fromDate = parseDate(this.holidayForm.controls.fromDate.value);
     this.plannedHoliday.toDate = parseDate(this.holidayForm.controls.toDate.value);
     this.plannedHoliday.employee = this.employee;
     this.plannedHoliday.approved = false;
     this.plannedHoliday.validated = false;
+
     this.holidayService.putHoliday(this.plannedHoliday).subscribe(() => {
       this.holidayService.getHolidays(this.employee.id).subscribe(data => {
         this.holidays = data as Array<Holiday>;
         this.populateHolidayMapsByMonth();
       });
     });
+  }
+
+  formatDate(date: Date): string {
+    return formatDate(date);
   }
 }

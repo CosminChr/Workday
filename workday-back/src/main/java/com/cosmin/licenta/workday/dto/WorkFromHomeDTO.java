@@ -17,9 +17,13 @@ public class WorkFromHomeDTO {
 
     private LocalDate startDateDay2;
 
-    private DayOfWeekReferential dayOfWeekDay1;
+    private ReferentialDTO dayOfWeekDay1;
 
-    private DayOfWeekReferential dayOfWeekDay2;
+    private ReferentialDTO dayOfWeekDay2;
+
+    private ReferentialDTO  potentialDayOfWeekDay1;
+
+    private ReferentialDTO  potentialDayOfWeekDay2;
 
     private LocalDate lastInitiationDate;
 
@@ -57,20 +61,36 @@ public class WorkFromHomeDTO {
         this.startDateDay2 = startDateDay2;
     }
 
-    public DayOfWeekReferential getDayOfWeekDay1() {
+    public ReferentialDTO getDayOfWeekDay1() {
         return dayOfWeekDay1;
     }
 
-    public void setDayOfWeekDay1(DayOfWeekReferential dayOfWeekDay1) {
+    public void setDayOfWeekDay1(ReferentialDTO dayOfWeekDay1) {
         this.dayOfWeekDay1 = dayOfWeekDay1;
     }
 
-    public DayOfWeekReferential getDayOfWeekDay2() {
+    public ReferentialDTO getDayOfWeekDay2() {
         return dayOfWeekDay2;
     }
 
-    public void setDayOfWeekDay2(DayOfWeekReferential dayOfWeekDay2) {
+    public void setDayOfWeekDay2(ReferentialDTO dayOfWeekDay2) {
         this.dayOfWeekDay2 = dayOfWeekDay2;
+    }
+
+    public ReferentialDTO getPotentialDayOfWeekDay1() {
+        return potentialDayOfWeekDay1;
+    }
+
+    public void setPotentialDayOfWeekDay1(ReferentialDTO potentialDayOfWeekDay1) {
+        this.potentialDayOfWeekDay1 = potentialDayOfWeekDay1;
+    }
+
+    public ReferentialDTO getPotentialDayOfWeekDay2() {
+        return potentialDayOfWeekDay2;
+    }
+
+    public void setPotentialDayOfWeekDay2(ReferentialDTO potentialDayOfWeekDay2) {
+        this.potentialDayOfWeekDay2 = potentialDayOfWeekDay2;
     }
 
     public LocalDate getLastInitiationDate() {
@@ -98,6 +118,8 @@ public class WorkFromHomeDTO {
                 .add("startDateDay2", startDateDay2)
                 .add("dayOfWeekDay1", dayOfWeekDay1)
                 .add("dayOfWeekDay2", dayOfWeekDay2)
+                .add("potentialDayOfWeekDay1", potentialDayOfWeekDay1)
+                .add("potentialDayOfWeekDay2", potentialDayOfWeekDay2)
                 .add("lastInitiationDate", lastInitiationDate)
                 .add("lastApprovalDate", lastApprovalDate)
                 .toString();

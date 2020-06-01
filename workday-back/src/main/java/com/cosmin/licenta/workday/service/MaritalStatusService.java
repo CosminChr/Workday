@@ -7,7 +7,10 @@ import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import com.cosmin.licenta.workday.repository.MaritalStatusReferentialRepository;
 import com.cosmin.licenta.workday.repository.MaritalStatusRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -28,8 +31,8 @@ public class MaritalStatusService {
         this.maritalStatusMapper = maritalStatusMapper;
     }
 
+    @Transactional
     public MaritalStatusDTO getMaritalStatus(final Long employeeId) {
-
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
         if (employeeOptional.isPresent()) {
@@ -41,8 +44,9 @@ public class MaritalStatusService {
         return null;
     }
 
-    public MaritalStatusDTO putMaritalStatus(final MaritalStatusDTO maritalStatusDTO) {
+    public MaritalStatusDTO putMaritalStatus(final MaritalStatusDTO maritalStatusDTO, MultipartFile document) throws IOException {
 
+        maritalStatusDTO.setAttestingDocument(document.getBytes());
         Optional<MaritalStatusReferential> maritalStatusReferentialOptional = maritalStatusReferentialRepository.findByLabel(maritalStatusDTO.getMaritalStatus().getLabel());
         maritalStatusDTO.getMaritalStatus().setId(maritalStatusReferentialOptional.get().getId());
 

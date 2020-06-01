@@ -1,0 +1,65 @@
+<div class="main-content">
+  <form enctype='multipart/form-data'>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="card-title">Joburile companiei</h4>
+        </div>
+        <div class="card-body ">
+          <!--        Here you can write extra buttons/actions for the toolbar              -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="toolbar">
+                <!--        Here you can write extra buttons/actions for the toolbar              -->
+              </div>
+              <table id="datatable" class="table table-bordered" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                  <th class="text-capitalize">Id Job</th>
+                  <th class="text-capitalize">Poziție</th>
+                  <th class="text-capitalize">Domeniu</th>
+                  <th class="text-capitalize">Localitate</th>
+                  <th class="text-capitalize">Țară</th>
+                  <th class="text-capitalize">Tip contract</th>
+                  <th class="text-capitalize">Experiență</th>
+                  <th class="text-capitalize">Data</th>
+                  <th class="text-capitalize">încarcă CV   </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="companyJob" *ngFor="let companyJob of companyJobs; let i = index"
+                    [class.selected]="companyJob.selected">
+                  <td>{{companyJob.id}}</td>
+                  <td>{{companyJob.jobTitle}}</td>
+                  <td>{{companyJob.jobField.label}}</td>
+                  <td>{{companyJob.locality}}</td>
+                  <td>{{companyJob.country}}</td>
+                  <td>{{companyJob.contractType.label}}</td>
+                  <td>{{companyJob.requiredExperience.label}}</td>
+                  <td>{{companyJob.postingDate}}</td>
+                  <td><span  id = "uploadBtn-{{i}}" [ngClass]="{'btn-success': isTheCVUploaded(companyJob, i), 'btn-danger': !isTheCVUploaded(companyJob, i)}"  class="btn btn-file btn-sm" (change) =" uploadFile($event, companyJob, i)">
+                    <i id = "uploadBtnIcon-{{i}}" class = "fa fa-upload"></i>
+                    <input  type="file"  accept="application/pdf"  [title]="isTheCVUploaded(companyJob, i) ? 'Reîncarcă CV' : 'Încarcă CV'">
+                  </span>
+                    <span *ngIf="isTheCVUploaded(companyJob, i)" id = "viewFileBtn" class="btn btn-info btn-sm btn-file" (click)="openFile(companyJob)"  title="Vizualizează CV">
+                  <i class = "fa fa-file-text"></i>
+                    <input type="button"  accept="application/pdf">
+                  </span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-right">
+          <button type="submit" class="btn btn-outline-danger btn-round mb-3"  [disabled]=" !newCVRowIsSelected" (click)="putNewJobApplication()">Trimite CV</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>
+

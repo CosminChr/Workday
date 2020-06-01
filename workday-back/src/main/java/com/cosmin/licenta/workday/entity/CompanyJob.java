@@ -1,16 +1,14 @@
 package com.cosmin.licenta.workday.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "workday_company_job")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class CompanyJob {
 
     @Id
@@ -20,14 +18,30 @@ public class CompanyJob {
     @Column(name = "job_title")
     private String jobTitle;
 
-    @Column(name = "required_experience_id")
+    @OneToOne
+    @JoinColumn(name = "job_field_id")
+    private JobFieldReferential jobField;
+
+    @Column(name = "locality")
+    private String locality;
+
+    @Column(name = "country")
+    private String country;
+
+    @OneToOne
+    @JoinColumn(name = "required_experience_id")
     private RequiredExperienceReferential requiredExperience;
 
-    @Column(name = "contract_type_id")
+    @OneToOne
+    @JoinColumn(name = "contract_type_id")
     private ContractTypeReferential contractType;
 
     @Column(name = "posting_date")
     private LocalDate postingDate;
+
+    @OneToMany(mappedBy = "companyJob")
+    @JsonManagedReference
+    private Set<JobApplication> jobApplications;
 
     public Long getId() {
         return id;
@@ -43,6 +57,30 @@ public class CompanyJob {
 
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
+    }
+
+    public JobFieldReferential getJobField() {
+        return jobField;
+    }
+
+    public void setJobField(JobFieldReferential jobField) {
+        this.jobField = jobField;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public RequiredExperienceReferential getRequiredExperience() {
@@ -67,5 +105,13 @@ public class CompanyJob {
 
     public void setPostingDate(LocalDate postingDate) {
         this.postingDate = postingDate;
+    }
+
+    public Set<JobApplication> getJobApplications() {
+        return jobApplications;
+    }
+
+    public void setJobApplications(Set<JobApplication> jobApplications) {
+        this.jobApplications = jobApplications;
     }
 }

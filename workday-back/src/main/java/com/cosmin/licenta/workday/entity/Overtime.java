@@ -30,6 +30,10 @@ public class Overtime {
     @Column(name = "initiation_date")
     private LocalDate initiationDate;
 
+    private boolean approved;
+
+    private boolean validated;
+
     public Long getId() {
         return id;
     }
@@ -68,5 +72,21 @@ public class Overtime {
 
     public void setInitiationDate(LocalDate initiationDate) {
         this.initiationDate = initiationDate;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public void setValidated(boolean validated) {
+        this.validated = validated;
     }
 }

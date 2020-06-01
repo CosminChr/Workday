@@ -4,7 +4,7 @@ import {Referential} from "../../../shared/models/referential.model";
 import {BankAccount} from "../../../shared/models/bank-account.model";
 import {EmployeeService} from "../../../shared/services/employee/employee.service";
 import {BankAccountService} from "./bank-account.service";
-import {CurrencyReferentialService} from "./currency.service";
+import {CurrencyReferentialService} from "./currency-referential.service";
 import {forkJoin} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
@@ -32,6 +32,8 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
 
   bankAccountFormGroup: FormGroup;
 
+  bankStatement: any;
+
 
   constructor(private employeeService: EmployeeService,
               private bankAccountService: BankAccountService,
@@ -40,20 +42,18 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
-    this.employee = this.employeeService.getSavedEmployee();
-
-    forkJoin([
-      this.currencyReferentialService.getCurrencyReferentials(),
-      this.bankAccountService.getBankAccounts(this.employee.id)
-    ])
-      .subscribe(data => {
-        this.currencyReferentials = data[0];
-        this.bankAccounts = data[1];
-        this.createBankAccountForms();
-        this.populateBankAccountForms();
-        this.createNewBankAccountForm();
-      });
+      this.employee = this.employeeService.getSavedEmployee();
+      forkJoin([
+        this.currencyReferentialService.getCurrencyReferentials(),
+        this.bankAccountService.getBankAccounts(this.employeeService.getSavedEmployee().id)
+      ])
+        .subscribe(data => {
+          this.currencyReferentials = data[0];
+          this.bankAccounts = data[1];
+          this.createBankAccountForms();
+          this.populateBankAccountForms();
+          this.createNewBankAccountForm();
+        });
   }
 
 
@@ -124,9 +124,15 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
     this.newBankAccount.expirationDate = parseDate(this.bankAccountFormGroup.controls.expirationDate.value);
     this.newBankAccount.currency.label = this.bankAccountFormGroup.controls.currency.value;
     this.newBankAccount.primaryAccount = this.bankAccountFormGroup.controls.primaryAccount.value;
-
     this.newBankAccount.employee = this.employee;
-    this.bankAccountService.putBankAccount(this.newBankAccount).subscribe(data => {
+
+    const data = new FormData();
+    data.append("bankStatement", this.bankStatement, this.bankStatement.name);
+    data.append('bankAccount', new Blob([JSON.stringify(this.newBankAccount)], {
+      type: "application/json"
+    }));
+
+    this.bankAccountService.putBankAccount(data).subscribe(data => {
       this.bankAccounts.push(data as BankAccount);
     });
 
@@ -134,5 +140,9 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
 
   reinitializePicker() {
     $('.selectpicker').selectpicker('refresh');
+  }
+
+  uploadFile(event) {
+      this.bankStatement = event.target.files[0];
   }
 }

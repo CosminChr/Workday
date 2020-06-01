@@ -11,7 +11,10 @@ import com.cosmin.licenta.workday.repository.LanguageLevelReferentialRepository;
 import com.cosmin.licenta.workday.repository.LanguageReferentialRepository;
 import com.cosmin.licenta.workday.repository.LanguageRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +39,7 @@ public class LanguageService {
         this.languageLevelReferentialRepository = languageLevelReferentialRepository;
     }
 
+    @Transactional
     public List<LanguageDTO> getLanguages(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -48,22 +52,23 @@ public class LanguageService {
         return null;
     }
 
-    public LanguageDTO putLanguage(final LanguageDTO languageDTO) {
+    public LanguageDTO putLanguage(final LanguageDTO languageDTO, final MultipartFile document) throws IOException {
+
+        languageDTO.setCertification(document.getBytes());
         Optional<LanguageReferential> languageReferentialOptional = languageReferentialRepository.findByLabel(languageDTO.getLanguage().getLabel());
         languageDTO.getLanguage().setId(languageReferentialOptional.get().getId());
 
         Optional<LanguageLevelReferential> readingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getReading().getLabel());
         languageDTO.getReading().setId(readingLevelReferentialOptional.get().getId());
 
-        Optional<LanguageLevelReferential> writingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getReading().getLabel());
+        Optional<LanguageLevelReferential> writingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getWriting().getLabel());
         languageDTO.getWriting().setId(writingLevelReferentialOptional.get().getId());
 
-        Optional<LanguageLevelReferential> speakingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getReading().getLabel());
+        Optional<LanguageLevelReferential> speakingLevelReferentialOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getSpeaking().getLabel());
         languageDTO.getSpeaking().setId(speakingLevelReferentialOptional.get().getId());
 
-        Optional<LanguageLevelReferential> overallLevelOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getReading().getLabel());
+        Optional<LanguageLevelReferential> overallLevelOptional = languageLevelReferentialRepository.findByLabel(languageDTO.getOverallLevel().getLabel());
         languageDTO.getOverallLevel().setId(overallLevelOptional.get().getId());
-
 
         languageRepository.save(languageMapper.domainToEntity(languageDTO));
         return languageDTO;

@@ -85,6 +85,7 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
       'ITDeduction': [this.employee.ITDeduction, [Validators.required]],
       'joiningDate': [this.employee.joiningDate ? formatDate(this.employee.joiningDate) : '', [Validators.required]],
       'currentPositionStartingDate': [this.employee.currentPositionStartingDate ? formatDate(this.employee.currentPositionStartingDate) : '', [Validators.required]],
+      'manager': [this.employee.manager?.lastName + ' '  + this.employee.manager?.firstName , [Validators.required]],
     });
     return this.employeeDataForm;
   }

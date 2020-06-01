@@ -8,7 +8,7 @@
           <h4 class="card-title">Date Personale</h4>
         </div>
         <div class="card-body ">
-          <form [formGroup]="personalDataForm" method="get" action="/" class="form-horizontal"
+          <form [formGroup]="personalDataForm" class="form-horizontal"
                 *ngIf="personalDataForm">
             <div class="row">
               <div class="col-sm-10">
@@ -163,6 +163,12 @@
                     <div class="form-group">
                       <label>Data ultimei modificări de poziție</label>
                       <input formControlName="currentPositionStartingDate" type="text" class="form-control" placeholder="Data ultimei modificări de poziție">
+                    </div>
+                  </div>
+                  <div class="col-md-3"  *ngIf="employee.manager">
+                    <div class="form-group">
+                      <label>Manager</label>
+                      <input formControlName="manager" type="text" class="form-control" placeholder="Manager" disabled>
                     </div>
                   </div>
                 </div>

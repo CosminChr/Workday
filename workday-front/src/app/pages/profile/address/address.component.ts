@@ -129,7 +129,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
         responsive: true,
         language: {
           search: "_INPUT_",
-          searchPlaceholder: "Caută oraș",
+          searchPlaceholder: "Caută job",
           paginate: {
             first: "Prima pagină",
             previous: "Înapoi",

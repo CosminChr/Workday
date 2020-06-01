@@ -28,6 +28,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
   main:
     allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 app:
   jwtSecret: licentaSecretKey

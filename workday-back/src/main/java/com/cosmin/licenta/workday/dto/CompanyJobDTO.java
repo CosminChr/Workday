@@ -4,7 +4,9 @@ import com.cosmin.licenta.workday.entity.ContractTypeReferential;
 import com.cosmin.licenta.workday.entity.RequiredExperienceReferential;
 import com.google.common.base.MoreObjects;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
+import java.util.StringJoiner;
 
 public class CompanyJobDTO {
 
@@ -12,7 +14,13 @@ public class CompanyJobDTO {
 
     private String jobTitle;
 
-    private RequiredExperienceReferential requiredExperience;
+    private ReferentialDTO jobField;
+
+    private String locality;
+
+    private String country;
+
+    private ReferentialDTO requiredExperience;
 
     private ContractTypeReferential contractType;
 
@@ -34,11 +42,35 @@ public class CompanyJobDTO {
         this.jobTitle = jobTitle;
     }
 
-    public RequiredExperienceReferential getRequiredExperience() {
+    public ReferentialDTO getJobField() {
+        return jobField;
+    }
+
+    public void setJobField(ReferentialDTO jobField) {
+        this.jobField = jobField;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public ReferentialDTO getRequiredExperience() {
         return requiredExperience;
     }
 
-    public void setRequiredExperience(RequiredExperienceReferential requiredExperience) {
+    public void setRequiredExperience(ReferentialDTO requiredExperience) {
         this.requiredExperience = requiredExperience;
     }
 
@@ -63,6 +95,9 @@ public class CompanyJobDTO {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("jobTitle", jobTitle)
+                .add("jobField", jobField)
+                .add("locality", locality)
+                .add("country", country)
                 .add("requiredExperience", requiredExperience)
                 .add("contractType", contractType)
                 .add("postingDate", postingDate)

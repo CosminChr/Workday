@@ -1,18 +1,22 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnDestroy, OnInit, Output} from '@angular/core';
 import {TokenStorageService} from "./core/services/security/token-storage.service";
 import {Router} from "@angular/router";
 import {EmployeeService} from "./shared/services/employee/employee.service";
 import {WorkdayService} from "./workday.service";
 import {Employee} from "./shared/models/employee.model";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'workday-root',
   templateUrl: './workday.component.html',
   styleUrls: ['./workday.component.scss'],
 })
-export class WorkdayComponent implements OnInit {
+export class WorkdayComponent implements OnInit, OnDestroy {
 
   employee: Employee;
+
+  unsubscribe$ = new Subject<void>();
 
   @Output()
   isConnected = false;
@@ -25,8 +29,8 @@ export class WorkdayComponent implements OnInit {
 
   ngOnInit() {
 
-
     this.workdayService.getStoredIsConnected().asObservable()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
           this.isConnected = data;
@@ -34,13 +38,17 @@ export class WorkdayComponent implements OnInit {
     this.isConnected = !!this.tokenStorageService.getToken();
 
     if (this.isConnected) {
-     // this.router.navigate(['/profile/personalData']);
-      this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe( data => {
+      this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe(data => {
         this.employee = data;
         this.employeeService.setStoredEmployee(this.employee);
       });
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

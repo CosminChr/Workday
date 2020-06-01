@@ -16,6 +16,7 @@
             <column name="birth_date" type="date"/>
             <column name="gender_id" type="bigint"/>
             <column name="works_in_company" type="boolean"/>
+            <column name="attesting_document" type="blob"/>
         </createTable>
     </changeSet>
     <changeSet id="users" author="cosminchiriac">

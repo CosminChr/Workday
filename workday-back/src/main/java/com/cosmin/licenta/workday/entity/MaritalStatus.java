@@ -11,9 +11,6 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "workday_marital_status")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class MaritalStatus {
 
     @Id

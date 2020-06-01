@@ -1,0 +1,312 @@
+<div class="main-content">
+  <div class="row">
+
+
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="card-title">Naționalitate</h4>
+        </div>
+        <div class="card-body ">
+          <form [formGroup]="nationalityFormGroup" method="get" action="/" class="form-horizontal"
+                *ngIf="nationalityFormGroup">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Naționalitate</label>
+                  <input formControlName="nationality" type="text" class="form-control" placeholder="Naționalitate">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12" *ngFor="let citizenship of citizenships; let i = index">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="card-title">Cetățenie {{i+1}}</h4>
+        </div>
+        <div class="card-body ">
+          <form [formGroup]="citizenshipFormGroups[i]" method="get" action="/" class="form-horizontal"
+                *ngIf="citizenshipFormGroups">
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-6">
+                <select formControlName="citizenship" id ="{{i}}" class="selectpicker form-control" data-size="7"
+                        data-style="btn btn-outline-success btn-round"
+                        title="Cetățenie">
+                  <option *ngFor="let referential of citizenshipReferentials">
+                    {{referential.label}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadCitizenshipFile($event, i)">
+                             Atașează certificat de cetățenie
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+              </div>
+            </div>
+
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-outline-danger btn-round mb-3" >Salvează</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+  <div class="text-right">
+    <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
+            data-target="#newCitizenshipModal" (click)="reinitializePicker()">Adaugă cetățenie nouă
+    </button>
+  </div>
+
+  <div class="modal fade" id="newCitizenshipModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Cetățenie nouă pentru {{employee.lastName + ' ' + employee.firstName}}</h4>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="citizenshipFormGroup" *ngIf="citizenshipFormGroup">
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-6">
+                <select formControlName="citizenship"  class="selectpicker form-control" data-size="7"
+                        data-style="btn btn-outline-success btn-round"
+                        title="Cetățenie">
+                  <option *ngFor="let referential of citizenshipReferentials">
+                    {{referential.label}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-8">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadNewCitizenshipFile($event)">
+                             Atașează certificat de cetățenie
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+              </div>
+            </div>
+
+          </form>
+          <div class="modal-footer">
+            <div class="left-side">
+              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewCitizenship()">Salvează cetățenia
+              </button>
+            </div>
+            <div class="divider"></div>
+            <div class="right-side">
+              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngFor="let language of languages; let i = index">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div id="accordion{{i}}" role="tablist" aria-multiselectable="true" class="card-collapse">
+            <h4 class="card-title">Limbă străină  </h4>
+            <div class="card card-plain">
+              <div class="card-header" role="tab" id="headingOne">
+                <a data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapseOne{{i}}" aria-expanded="false"
+                   aria-controls="collapseOne{{i}}">
+                  {{language.language.label }}
+                  <i class="nc-icon nc-minimal-down"></i>
+                </a>
+              </div>
+              <div id="collapseOne{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                  <form [formGroup]="languageFormGroups[i]" *ngIf="languageFormGroups">
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label>Limba</label>
+                            <select formControlName="language" id ="language-{{i}}"  class="selectpicker form-control" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Limba">
+                              <option *ngFor="let referential of languageReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label>Citit</label>
+                            <select formControlName="reading"  id ="reading-{{i}}" class="selectpicker form-control" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Citit">
+                              <option *ngFor="let referential of languageLevelReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label>Scris</label>
+                            <select formControlName="writing" id ="writing-{{i}}" class="selectpicker form-control" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Scris">
+                              <option *ngFor="let referential of languageLevelReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label>Vorbit</label>
+                            <select formControlName="speaking" id ="speaking-{{i}}" class="selectpicker form-control" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Vorbit">
+                              <option *ngFor="let referential of languageLevelReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label>General</label>
+                            <select formControlName="overallLevel" id ="overallLevel-{{i}}" class="selectpicker form-control" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="General">
+                              <option *ngFor="let referential of languageLevelReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-4 mt-sm-4">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadLanguageCertificateFile($event, i)">
+                             Atașează certificare
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer text-right">
+                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="text-right">
+    <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
+            data-target="#newLanguageModal" (click)="reinitializePicker()">Adaugă limbă străină
+    </button>
+  </div>
+
+  <div class="modal fade" id="newLanguageModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-bg">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Limbă străină nouă pentru {{employee.lastName + ' ' + employee.firstName}}</h4>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="languageFormGroup" *ngIf="languageFormGroup">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
+                    <select formControlName="language"  class="selectpicker form-control" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Limba">
+                      <option *ngFor="let referential of languageReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
+                    <select formControlName="reading"  class="selectpicker form-control" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Citit">
+                      <option *ngFor="let referential of languageLevelReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6">
+                    <select formControlName="writing"  class="selectpicker form-control" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Scris">
+                      <option *ngFor="let referential of languageLevelReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
+                    <select formControlName="speaking" class="selectpicker form-control" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Vorbit">
+                      <option *ngFor="let referential of languageLevelReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-lg-3">
+                    <select formControlName="overallLevel"  class="selectpicker form-control" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="General">
+                      <option *ngFor="let referential of languageLevelReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-5">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadNewLanguageCertificateFile($event)">
+                             Atașează certificare
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+          <div class="modal-footer">
+            <div class="left-side">
+              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewLanguage()">Salvează limba
+              </button>
+            </div>
+            <div class="divider"></div>
+            <div class="right-side">
+              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

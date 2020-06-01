@@ -1,13 +1,14 @@
 package com.cosmin.licenta.workday.service;
 
 import com.cosmin.licenta.workday.dto.AcademicStudyDTO;
-import com.cosmin.licenta.workday.dto.BankAccountDTO;
 import com.cosmin.licenta.workday.entity.*;
 import com.cosmin.licenta.workday.mapper.AcademicStudyMapper;
-import com.cosmin.licenta.workday.mapper.BankAccountMapper;
 import com.cosmin.licenta.workday.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +25,19 @@ public class AcademicStudyService {
 
     private final StudyFieldReferentialRepository studyFieldReferentialRepository;
 
-    public AcademicStudyService(EmployeeRepository employeeRepository, AcademicStudyRepository academicStudyRepository, AcademicStudyMapper academicStudyMapper, StudyLevelReferentialRepository studyLevelReferentialRepository, StudyFieldReferentialRepository studyFieldReferentialRepository) {
+    private final CountryReferentialRepository countryReferentialRepository;
+
+
+    public AcademicStudyService(EmployeeRepository employeeRepository, AcademicStudyRepository academicStudyRepository, AcademicStudyMapper academicStudyMapper, StudyLevelReferentialRepository studyLevelReferentialRepository, StudyFieldReferentialRepository studyFieldReferentialRepository, CountryReferentialRepository countryReferentialRepository) {
         this.employeeRepository = employeeRepository;
         this.academicStudyRepository = academicStudyRepository;
         this.academicStudyMapper = academicStudyMapper;
         this.studyLevelReferentialRepository = studyLevelReferentialRepository;
         this.studyFieldReferentialRepository = studyFieldReferentialRepository;
+        this.countryReferentialRepository = countryReferentialRepository;
     }
 
+    @Transactional
     public List<AcademicStudyDTO> getAcademicStudies(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -45,12 +51,17 @@ public class AcademicStudyService {
         return null;
     }
 
-    public AcademicStudyDTO putAcademicStudy(final AcademicStudyDTO academicStudyDTO) {
+    public AcademicStudyDTO putAcademicStudy(final AcademicStudyDTO academicStudyDTO, final MultipartFile document) throws IOException {
+
+        academicStudyDTO.setDiploma(document.getBytes());
         Optional<StudyLevelReferential> studyLevelReferentialOptional = studyLevelReferentialRepository.findByLabel(academicStudyDTO.getStudyLevel().getLabel());
         academicStudyDTO.getStudyLevel().setId(studyLevelReferentialOptional.get().getId());
 
         Optional<StudyFieldReferential> studyFieldReferentialOptional = studyFieldReferentialRepository.findByLabel(academicStudyDTO.getStudyField().getLabel());
         academicStudyDTO.getStudyField().setId(studyFieldReferentialOptional.get().getId());
+
+        Optional<CountryReferential> countryReferentialOptional = countryReferentialRepository.findByLabel(academicStudyDTO.getCountry().getLabel());
+        academicStudyDTO.getCountry().setId(countryReferentialOptional.get().getId());
 
 
        academicStudyRepository.save(academicStudyMapper.domainToEntity(academicStudyDTO));

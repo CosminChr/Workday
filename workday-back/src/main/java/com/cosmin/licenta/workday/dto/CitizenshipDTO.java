@@ -6,6 +6,8 @@ public class CitizenshipDTO {
 
     private Long id;
 
+    private EmployeeDTO employee;
+
     private ReferentialDTO citizenship;
 
     private byte[] attestingDocument;
@@ -16,6 +18,14 @@ public class CitizenshipDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     public ReferentialDTO getCitizenship() {
@@ -38,6 +48,7 @@ public class CitizenshipDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("citizenship", citizenship)
                 .add("attestingDocument", attestingDocument)
                 .toString();

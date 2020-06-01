@@ -9,7 +9,10 @@ import com.cosmin.licenta.workday.repository.BankAccountRepository;
 import com.cosmin.licenta.workday.repository.CurrencyReferentialRepository;
 import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +34,7 @@ public class BankAccountService {
         this.currencyReferentialRepository = currencyReferentialRepository;
     }
 
+    @Transactional
     public List<BankAccountDTO> getBankAccounts(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -44,7 +48,8 @@ public class BankAccountService {
         return null;
     }
 
-    public BankAccountDTO putBankAccount(final BankAccountDTO bankAccount) {
+    public BankAccountDTO putBankAccount(final BankAccountDTO bankAccount, final  MultipartFile bankStatement) throws IOException {
+        bankAccount.setAttestingDocument(bankStatement.getBytes());
         Optional<CurrencyReferential> currencyOptional = currencyReferentialRepository.findByLabel(bankAccount.getCurrency().getLabel());
         bankAccount.getCurrency().setId(currencyOptional.get().getId());
         bankAccountRepository.save(bankAccountMapper.domainToEntity(bankAccount));

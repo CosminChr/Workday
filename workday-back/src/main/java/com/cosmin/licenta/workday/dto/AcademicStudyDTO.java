@@ -11,21 +11,23 @@ public class AcademicStudyDTO {
 
     private Long id;
 
-    private StudyLevelReferential studyLevel;
+    private EmployeeDTO employee;
 
-    private String educationalInstitution;
+    private StudyLevelReferential studyLevel;//2
 
-    private StudyFieldReferential studyField;
+    private String educationalInstitution;//1
 
-    private String specialization;
+    private StudyFieldReferential studyField;//1
 
-    private CountryReferential country;
+    private String specialization;//1
 
-    private LocalDate fromDate;
+    private CountryReferential country;//3
 
-    private LocalDate toDate;
+    private LocalDate fromDate;//2
 
-    private boolean finalized;
+    private LocalDate toDate;//2
+
+    private boolean finalized;//3
 
     private byte[] diploma;
 
@@ -35,6 +37,14 @@ public class AcademicStudyDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     public StudyLevelReferential getStudyLevel() {
@@ -113,6 +123,7 @@ public class AcademicStudyDTO {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("employee", employee)
                 .add("studyLevel", studyLevel)
                 .add("educationalInstitution", educationalInstitution)
                 .add("studyField", studyField)

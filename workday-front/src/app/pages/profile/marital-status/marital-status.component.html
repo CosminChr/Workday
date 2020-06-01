@@ -1,7 +1,5 @@
 <div class="main-content">
   <div class="row">
-
-
     <div class="col-md-12">
       <div class="card ">
         <div class="card-header ">
@@ -29,7 +27,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="row">
                   <div class="col-md-3">
                     <div class="form-group">
@@ -44,7 +41,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
@@ -61,7 +57,6 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label></label>
-
                       <div class="col-sm-10 checkbox-radios">
                         <div class="form-check">
                           <label class="form-check-label ">
@@ -74,24 +69,27 @@
                     </div>
                   </div>
                 </div>
+                <div class = "row">
+                <div class="col-md-4">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadMarriageCertificateFile($event)">
+                             Atașează certificat de căsătorie
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+                </div>
               </div>
             </div>
-
-
+            </div>
             <div class="card-footer text-right">
               <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putMaritalStatusAndPartner()">Salvează</button>
             </div>
-
           </form>
         </div>
       </div>
     </div>
 </div>
-
   <div class="alert alert-warning fade show" *ngIf="!isDoesAnyChildExist">
     <span>Nu există copii prezenți</span>
   </div>
-
   <div class="row" *ngFor="let child of children; let i = index">
     <div class="col-md-12">
       <div class="card">
@@ -111,7 +109,6 @@
                   <form [formGroup]="childrenFormGroups[i]" *ngIf="childrenFormGroups">
                     <div class="row">
                       <div class="col-sm-10">
-
                         <div class="row">
                           <div class="col-md-3">
                             <div class="form-group">
@@ -126,7 +123,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="row">
                           <div class="col-md-4">
                             <div class="form-group">
@@ -141,7 +137,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="row">
                           <div class="col-lg-2" >
                             <select formControlName="gender" id ='{{i}}' class="selectpicker form-control mt-sm-3" data-size="7"
@@ -155,8 +150,7 @@
                           <div class="col-md-4">
                             <div class="form-group">
                               <label></label>
-
-                              <div class="col-sm-10 checkbox-radios">
+                              <div class="col-sm-8 checkbox-radios mt-sm-2">
                                 <div class="form-check">
                                   <label class="form-check-label ">
                                     <input formControlName="worksInCompany" class="form-check-input" type="checkbox">
@@ -167,37 +161,32 @@
                               </div>
                             </div>
                           </div>
+                            <div class="col-md-4 mt-sm-2">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadBirthCertificateFile($event, i)">
+                             Atașează certificat de naștere
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+                            </div>
                         </div>
-
-
                       </div>
                     </div>
-
-
                     <div class="card-footer text-right">
                       <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
-
                   </form>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-
-
   </div>
-
-
 <div class="text-right">
   <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
           data-target="#newChildModal" (click)="reinitializePicker()">Adaugă copil
   </button>
 </div>
-
   <div class="modal fade" id="newChildModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
@@ -223,7 +212,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -236,7 +224,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="row">
                   <div class="col-lg-4" >
                     <select formControlName="gender" class="selectpicker form-control mt-sm-2" data-size="7"
@@ -250,8 +237,7 @@
                   <div class="col-md-7">
                     <div class="form-group">
                       <label></label>
-
-                      <div class="col-sm-10 checkbox-radios">
+                      <div class="col-sm-10 checkbox-radios mt-sm-2">
                         <div class="form-check">
                           <label class="form-check-label ">
                             <input formControlName="worksInCompany" class="form-check-input" type="checkbox">
@@ -263,11 +249,16 @@
                     </div>
                   </div>
                 </div>
-
-
+                <div class = "row">
+                  <div class="col-md-8">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadNewBirthCertificateFile($event)">
+                             Atașează certificat de naștere
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+                  </div>
+                </div>
               </div>
             </div>
-
           </form>
           <div class="modal-footer">
             <div class="left-side">
@@ -283,7 +274,4 @@
       </div>
     </div>
   </div>
-
-
-
 </div>

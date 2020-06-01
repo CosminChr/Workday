@@ -42,4 +42,8 @@ export class Employee {
   joiningDate: Date;
 
   currentPositionStartingDate: Date;
+
+  nationality: Referential;
+
+  manager: Employee;
 }

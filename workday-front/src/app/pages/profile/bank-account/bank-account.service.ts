@@ -5,6 +5,7 @@ import {BankAccount} from "../../../shared/models/bank-account.model";
 
 const BANK_ACCOUNT_API = 'bankAccount/';
 
+const BANK_ACCOUNT_API_MULTIPART = 'bankAccount/multipart/bankStatement/';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class BankAccountService {
     return this.http.get<Array<BankAccount>>(BANK_ACCOUNT_API + employeeId);
   }
 
-  putBankAccount(bankAccount: BankAccount): Observable<BankAccount> {
-    return this.http.put<BankAccount>(BANK_ACCOUNT_API, bankAccount);
+  putBankAccount(formData: FormData): Observable<BankAccount> {
+    return this.http.put<BankAccount>(BANK_ACCOUNT_API_MULTIPART, formData);
   }
 }

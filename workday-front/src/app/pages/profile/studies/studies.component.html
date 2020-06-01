@@ -1,0 +1,240 @@
+<div class="main-content">
+
+  <div class="row" *ngFor="let academicStudy of academicStudies; let i = index">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div id="accordion{{i}}" role="tablist" aria-multiselectable="true" class="card-collapse">
+            <h4 class="card-title">Studii academice   {{ academicStudy.studyLevel.label }} </h4>
+            <div class="card card-plain">
+              <div class="card-header" role="tab" id="headingOne">
+                <a data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapseOne{{i}}" aria-expanded="false"
+                   aria-controls="collapseOne{{i}}">
+                  {{academicStudy.specialization + ', ' + academicStudy.educationalInstitution }}
+                  <i class="nc-icon nc-minimal-down"></i>
+                </a>
+              </div>
+              <div id="collapseOne{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                  <form [formGroup]="academicStudyFormGroups[i]" *ngIf="academicStudyFormGroups">
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Instituția</label>
+                              <input formControlName="educationalInstitution" type="text" class="form-control"
+                                     placeholder="Instituția">
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label>Domeniu de studiu</label>
+                            <select formControlName="studyField" id ="studyField-{{i}}" class="selectpicker form-control" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Domeniu de studiu">
+                              <option *ngFor="let referential of studyFieldReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Specializarea</label>
+                              <input formControlName="specialization" type="text" class="form-control"
+                                     placeholder="Specializarea">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label>Nivelul de studiu</label>
+                            <select formControlName="studyLevel" id ="studyLevel-{{i}}" class="selectpicker form-control" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Nivelul de studiu">
+                              <option *ngFor="let referential of studyLevelReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Data început</label>
+                              <input formControlName="fromDate" type="text" class="form-control"
+                                     placeholder="Data început">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Data sfârșit</label>
+                              <input formControlName="toDate" type="text" class="form-control"
+                                     placeholder="Data sfârșit">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label>Țara</label>
+                            <select formControlName="country" id ="country-{{i}}" class="selectpicker form-control" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Țara">
+                              <option *ngFor="let referential of countryReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              <label></label>
+                              <div class="col-sm-2 checkbox-radios mt-sm-3">
+                                <div class="form-check">
+                                  <label class="form-check-label ">
+                                    <input formControlName="finalized" class="form-check-input" type="checkbox">
+                                    <span class="form-check-sign"></span>
+                                    Finalizat
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4 mt-sm-3">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadDiplomaFile($event, i)">
+                             Atașează diplomă de absolvire
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer text-right">
+                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="text-right">
+  <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
+          data-target="#newStudyModal" (click)="reinitializePicker()">Adaugă studiu
+  </button>
+</div>
+
+  <div class="modal fade" id="newStudyModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-bg">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h4 class="title">Studiu nou pentru  {{employee.lastName + ' ' + employee.firstName}}</h4>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="academicStudyFormGroup" *ngIf="academicStudyFormGroup">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input formControlName="educationalInstitution" type="text" class="form-control   mt-sm-2"
+                             placeholder="Instituția">
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-6">
+                    <select formControlName="studyField" class="selectpicker form-control" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Domeniu de studiu">
+                      <option *ngFor="let referential of studyFieldReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input formControlName="specialization" type="text" class="form-control mt-sm-2"
+                             placeholder="Specializarea">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 col-sm-6">
+                    <select formControlName="studyLevel"  class="selectpicker form-control" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Nivelul de studiu">
+                      <option *ngFor="let referential of studyLevelReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input formControlName="fromDate" type="text" class="form-control mt-sm-2"
+                             placeholder="Data început">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input formControlName="toDate" type="text" class="form-control mt-sm-2"
+                             placeholder="Data sfârșit">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 col-sm-6">
+                    <select formControlName="country"  class="selectpicker form-control" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Țara">
+                      <option *ngFor="let referential of countryReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label></label>
+                      <div class="col-sm-10 checkbox-radios">
+                        <div class="form-check">
+                          <label class="form-check-label ">
+                            <input formControlName="finalized" class="form-check-input" type="checkbox">
+                            <span class="form-check-sign"></span>
+                            Finalizat
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mt-sm-3">
+                           <span class="btn btn-file btn-outline-info btn-round" (change) =" uploadNewDiplomaFile($event)">
+                             Atașează diplomă de absolvire
+                               <input type="file" accept="application/pdf" title="">
+                            </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+          <div class="modal-footer">
+            <div class="left-side">
+              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewStudy()">Salvează studiul
+              </button>
+            </div>
+            <div class="divider"></div>
+            <div class="right-side">
+              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Închide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

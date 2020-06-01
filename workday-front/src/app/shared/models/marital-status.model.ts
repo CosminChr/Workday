@@ -11,6 +11,5 @@ export class MaritalStatus {
   maritalStatus: Referential;
 
   startingDate: Date;
-
 }
 

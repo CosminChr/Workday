@@ -1,7 +1,7 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {WorkFromHomeRoutes} from "./work-from-home.routing";
 import {WorkFromHomeComponent} from "./work-from-home.component";
 
@@ -10,7 +10,8 @@ import {WorkFromHomeComponent} from "./work-from-home.component";
   imports: [
     CommonModule,
     RouterModule.forChild(WorkFromHomeRoutes),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [RouterModule],
   declarations: [WorkFromHomeComponent],

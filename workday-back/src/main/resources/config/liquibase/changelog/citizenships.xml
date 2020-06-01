@@ -4,12 +4,14 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet id="create_table_workday_citizenship_ref" author="cosminchiriac">
-        <createTable tableName="workday_citizenship_ref">
+    <changeSet id="create_table_workday_citizenship" author="cosminchiriac">
+        <createTable tableName="workday_citizenship">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"></constraints>
             </column>
-            <column name="label" type="varchar(100)"/>
+            <column name="employee_id" type="bigint"/>
+            <column name="citizenship_id" type="bigint"/>
+            <column name="attesting_document" type="blob"/>
         </createTable>
     </changeSet>
 
@@ -17,7 +19,7 @@
         <loadData  encoding="UTF-8"
                    file="config/liquibase/loaddata/citizenships.csv"
                    separator=";"
-                   tableName="workday_citizenship_ref">
+                   tableName="workday_citizenship">
         </loadData>
     </changeSet>
 </databaseChangeLog>
