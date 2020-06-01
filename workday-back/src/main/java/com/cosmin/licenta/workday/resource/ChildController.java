@@ -4,7 +4,9 @@ import com.cosmin.licenta.workday.dto.ChildDTO;
 import com.cosmin.licenta.workday.service.ChildService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -23,8 +25,9 @@ public class ChildController {
         return ResponseEntity.ok(childService.getChildren(employeeId));
     }
 
-    @PutMapping("/")
-    public ResponseEntity<ChildDTO> putChild(@RequestBody final ChildDTO childDTO) {
-        return ResponseEntity.ok(childService.putChild(childDTO));
+    @PutMapping("/multipart/birthCertificate")
+    public ResponseEntity<ChildDTO> putChild(@RequestPart(value = "child") final ChildDTO childDTO,
+                                             @RequestPart(value = "birthCertificate") final MultipartFile document) throws IOException {
+        return ResponseEntity.ok(childService.putChild(childDTO, document));
     }
 }

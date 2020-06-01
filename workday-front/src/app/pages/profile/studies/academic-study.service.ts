@@ -6,6 +6,8 @@ import {AcademicStudy} from "../../../shared/models/academic-study.model";
 
 const ACADEMIC_STUDY_API = 'academicStudy/';
 
+const ACADEMIC_STUDY_API_MULTIPART = 'academicStudy/multipart/diploma';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,8 @@ export class AcademicStudyService {
     return this.http.get<Array<AcademicStudy>>(ACADEMIC_STUDY_API + employeeId);
   }
 
-  putStudy(academicStudy: AcademicStudy): Observable<AcademicStudy> {
-    return this.http.put<AcademicStudy>(ACADEMIC_STUDY_API, academicStudy);
+  putStudy(formData: FormData): Observable<AcademicStudy> {
+    return this.http.put<AcademicStudy>(ACADEMIC_STUDY_API_MULTIPART, formData);
   }
 
 }

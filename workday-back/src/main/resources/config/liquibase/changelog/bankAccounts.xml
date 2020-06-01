@@ -16,7 +16,7 @@
             <column name="expiration_date" type="date"/>
             <column name="currency_id" type="bigint"/>
             <column name="primary_account" type="boolean"/>
-
+            <column name="attesting_document" type="blob"/>
         </createTable>
     </changeSet>
 

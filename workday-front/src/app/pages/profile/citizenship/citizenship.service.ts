@@ -5,6 +5,8 @@ import {Citizenship} from "../../../shared/models/citizenship.model";
 
 const CITIZENSHIP_API = 'citizenship/';
 
+const CITIZENSHIP_API_MULTIPART = 'citizenship/multipart/citizenshipCertificate/';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +20,8 @@ export class CitizenshipService {
     return this.http.get<Array<Citizenship>>(CITIZENSHIP_API + employeeId);
   }
 
-  putCitizenship(citizenhsip: Citizenship): Observable<Citizenship> {
-    return this.http.put<Citizenship>(CITIZENSHIP_API, citizenhsip);
+  putCitizenship(formData: FormData): Observable<Citizenship> {
+    return this.http.put<Citizenship>(CITIZENSHIP_API_MULTIPART, formData);
   }
 
 }

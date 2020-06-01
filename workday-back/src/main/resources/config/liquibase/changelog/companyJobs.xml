@@ -10,13 +10,16 @@
                 <constraints primaryKey="true" nullable="false"></constraints>
             </column>
             <column name="job_title" type="varchar(60)"/>
+            <column name="job_field_id" type="bigint"/>
+            <column name="locality" type="varchar(60)"/>
+            <column name="country" type="varchar(60)"/>
             <column name="required_experience_id" type="bigint"/>
             <column name="contract_type_id" type="bigint"/>
             <column name="posting_date" type="date"/>
         </createTable>
     </changeSet>
 
-    <changeSet id="users" author="cosminchiriac">
+    <changeSet id="companyJobs" author="cosminchiriac">
         <loadData  encoding="UTF-8"
                    file="config/liquibase/loaddata/companyJobs.csv"
                    separator=";"

@@ -35,6 +35,8 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
 
   identityDocumentFormGroup: FormGroup;
 
+  identityDocument: any;
+
   constructor(private employeeService: EmployeeService,
               private identityDocumentReferentialService: IdentityDocumentReferentialService,
               private identityDocumentService: IdentityDocumentService,
@@ -103,10 +105,15 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
     this.newIdentityDocument.expirationDate = parseDate(this.identityDocumentFormGroup.controls.expirationDate.value);
     this.newIdentityDocument.issuer = this.identityDocumentFormGroup.controls.issuer.value;
     this.newIdentityDocument.country.label = this.identityDocumentFormGroup.controls.country.value;
-
-
     this.newIdentityDocument.employee = this.employee;
-    this.identityDocumentService.putIdentityDocument(this.newIdentityDocument).subscribe(data => {
+
+    const data = new FormData();
+    data.append("document", this.identityDocument, this.identityDocument.name);
+    data.append('identityDocument', new Blob([JSON.stringify(this.newIdentityDocument)], {
+      type: "application/json"
+    }));
+
+    this.identityDocumentService.putIdentityDocument(data).subscribe(data => {
       this.identityDocuments.push(data as IdentityDocument);
     });
 
@@ -122,4 +129,7 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
     $('.selectpicker').selectpicker('refresh');
   }
 
+  uploadFile(event) {
+    this.identityDocument = event.target.files[0];
+  }
 }

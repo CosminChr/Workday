@@ -26,9 +26,8 @@ public class PartnerService {
         this.partnerMapper = partnerMapper;
     }
 
-
+    @Transactional
     public PartnerDTO getPartner(final Long employeeId) {
-
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
         if (employeeOptional.isPresent()) {

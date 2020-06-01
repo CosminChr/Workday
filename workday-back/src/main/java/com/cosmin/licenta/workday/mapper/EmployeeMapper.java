@@ -3,6 +3,7 @@ package com.cosmin.licenta.workday.mapper;
 import com.cosmin.licenta.workday.dto.EmployeeDTO;
 import com.cosmin.licenta.workday.entity.Employee;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
@@ -23,9 +24,5 @@ public interface EmployeeMapper {
 
     List<EmployeeDTO> entitiesToDomains(final List<Employee> sourceList);
 
-    @Mappings({
-            @org.mapstruct.Mapping(target = "username", ignore = true),
-            @org.mapstruct.Mapping(target = "password", ignore = true)
-    })
     Employee mergeEntity(@MappingTarget Employee employeeFromDatabase, EmployeeDTO employeeFromClient);
 }

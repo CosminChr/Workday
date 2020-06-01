@@ -41,6 +41,8 @@
     <include file="classpath:config/liquibase/changelog/certificates.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/requiredExperiences.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/contractTypes.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/jobFields.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/jobApplications.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/companyJobs.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/daysOfWeek.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/medicalServiceProviders.xml" relativeToChangelogFile="false"></include>

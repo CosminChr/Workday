@@ -20,4 +20,6 @@ export class BankAccount {
 
   primaryAccount: boolean;
 
+  attestingDocument: any;
+
 }

@@ -20,5 +20,4 @@ export class IdentityDocument {
   country: Referential;
 
   description: string;
-
 }

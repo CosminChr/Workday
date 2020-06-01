@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="create_table_workday_job_application" author="cosminchiriac">
+        <createTable tableName="workday_job_application">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="company_job_id" type="bigint"/>
+            <column name="submitted_by_id" type="bigint"/>
+            <column name="cv" type="blob"/>
+        </createTable>
+    </changeSet>
+<!--    <changeSet id="jobApplications" author="cosminchiriac">-->
+<!--        <loadData  encoding="UTF-8"-->
+<!--                   file="config/liquibase/loaddata/jobApplications.csv"-->
+<!--                   separator=";"-->
+<!--                   tableName="workday_job_application">-->
+<!--        </loadData>-->
+<!--    </changeSet>-->
+</databaseChangeLog>

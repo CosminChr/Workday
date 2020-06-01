@@ -7,6 +7,7 @@ import com.cosmin.licenta.workday.mapper.LocalityReferentialMapper;
 import com.cosmin.licenta.workday.repository.*;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ public class AddressService {
         this.localityReferentialMapper = localityReferentialMapper;
     }
 
+    @Transactional
     public List<AddressDTO> getAddresses(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);

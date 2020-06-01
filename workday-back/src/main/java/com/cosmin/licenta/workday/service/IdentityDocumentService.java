@@ -11,7 +11,10 @@ import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import com.cosmin.licenta.workday.repository.IdentityDocumentRepository;
 import com.cosmin.licenta.workday.repository.IdentityDocumentTypeReferentialRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +39,7 @@ public class IdentityDocumentService {
         this.countryReferentialRepository = countryReferentialRepository;
     }
 
+    @Transactional
     public List<IdentityDocumentDTO> getIdentityDocuments(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -48,7 +52,8 @@ public class IdentityDocumentService {
         return null;
     }
 
-    public IdentityDocumentDTO putIdentityDocument(final IdentityDocumentDTO identityDocument) {
+    public IdentityDocumentDTO putIdentityDocument(final IdentityDocumentDTO identityDocument, final MultipartFile document) throws IOException {
+        identityDocument.setAttestingDocument(document.getBytes());
         Optional<IdentityDocumentTypeReferential> identityDocumentTypeReferentialOptional = identityDocumentTypeReferentialRepository.findByLabel(identityDocument.getIdentityDocumentType().getLabel());
         Optional<CountryReferential> countryReferentialOptional = countryReferentialRepository.findByLabel(identityDocument.getCountry().getLabel());
 
@@ -58,5 +63,4 @@ public class IdentityDocumentService {
         identityDocumentRepository.save(identityDocumentMapper.domainToEntity(identityDocument));
         return identityDocument;
     }
-
 }

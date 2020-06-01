@@ -1,12 +1,12 @@
 package com.cosmin.licenta.workday.resource;
 
-import com.cosmin.licenta.workday.dto.LocalityReferentialDTO;
 import com.cosmin.licenta.workday.dto.ReferentialDTO;
-import com.cosmin.licenta.workday.entity.JobDomainReferential;
 import com.cosmin.licenta.workday.service.JobDomainReferentialService;
-import com.cosmin.licenta.workday.service.LocalityReferentialService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

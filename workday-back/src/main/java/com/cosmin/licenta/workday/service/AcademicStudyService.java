@@ -5,7 +5,10 @@ import com.cosmin.licenta.workday.entity.*;
 import com.cosmin.licenta.workday.mapper.AcademicStudyMapper;
 import com.cosmin.licenta.workday.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +37,7 @@ public class AcademicStudyService {
         this.countryReferentialRepository = countryReferentialRepository;
     }
 
+    @Transactional
     public List<AcademicStudyDTO> getAcademicStudies(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -47,7 +51,9 @@ public class AcademicStudyService {
         return null;
     }
 
-    public AcademicStudyDTO putAcademicStudy(final AcademicStudyDTO academicStudyDTO) {
+    public AcademicStudyDTO putAcademicStudy(final AcademicStudyDTO academicStudyDTO, final MultipartFile document) throws IOException {
+
+        academicStudyDTO.setDiploma(document.getBytes());
         Optional<StudyLevelReferential> studyLevelReferentialOptional = studyLevelReferentialRepository.findByLabel(academicStudyDTO.getStudyLevel().getLabel());
         academicStudyDTO.getStudyLevel().setId(studyLevelReferentialOptional.get().getId());
 

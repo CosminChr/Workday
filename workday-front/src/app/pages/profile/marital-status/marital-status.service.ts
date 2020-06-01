@@ -5,6 +5,8 @@ import {MaritalStatus} from "../../../shared/models/marital-status.model";
 
 const MARITAL_STATUS_API = 'maritalStatus/';
 
+const MARITAL_STATUS_API_MULTIPART = 'maritalStatus/multipart/marriageCertificate/';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +20,8 @@ export class MaritalStatusService {
     return this.http.get<MaritalStatus>(MARITAL_STATUS_API + employeeId);
   }
 
-  putMaritalStatus(maritalStatus: MaritalStatus): Observable<MaritalStatus> {
-    return this.http.put<MaritalStatus>(MARITAL_STATUS_API, maritalStatus);
+  putMaritalStatus(formData: FormData): Observable<MaritalStatus> {
+    return this.http.put<MaritalStatus>(MARITAL_STATUS_API_MULTIPART, formData);
   }
 
 }

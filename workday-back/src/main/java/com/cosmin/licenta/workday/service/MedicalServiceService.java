@@ -11,6 +11,7 @@ import com.cosmin.licenta.workday.repository.MedicalServiceProviderReferentialRe
 import com.cosmin.licenta.workday.repository.MedicalServiceRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,7 @@ public class MedicalServiceService {
         this.employeeMapper = employeeMapper;
     }
 
+    @Transactional
     public MedicalServiceDTO getMedicalService(final Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);

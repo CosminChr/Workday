@@ -49,7 +49,6 @@ export class MedicalServicesComponent implements OnInit, AfterViewInit {
         this.medicalService = data[0] as MedicalService;
         this.medicalServiceProviderReferentials = data[1] as Array<Referential>;
         this.createMedicalServiceForm();
-        console.log(data);
       })
   }
 
