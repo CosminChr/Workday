@@ -22,7 +22,7 @@
             <column name="home_phone_number" type="varchar(10)"/>
             <column name="mobile_phone_number" type="varchar(10)"/>
             <column name="job_position_id" type="bigint"/>
-            <column name="entity" type="varchar(30)"/>
+            <column name="entity" type="varchar(50)"/>
             <column name="location" type="varchar(30)"/>
             <column name="department_id" type="bigint"/>
             <column name="it_deduction" type="boolean"/>

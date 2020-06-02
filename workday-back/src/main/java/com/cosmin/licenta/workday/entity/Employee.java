@@ -60,7 +60,7 @@ public class Employee extends User implements Serializable {
     @JoinColumn(name = "job_position_id")
     private JobPositionReferential jobPosition;
 
-    @Size(max = 30)
+    @Size(max = 50)
     private String entity;
 
     @Size(max = 30)

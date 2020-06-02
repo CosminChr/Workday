@@ -74,7 +74,9 @@
     "twitter-bootstrap-wizard": "1.2.0",
     "web-animations-js": "2.3.1",
     "webpack-dev-server": "^3.9.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "jspdf": "1.5.3",
+    "jspdf-customfonts": "0.0.4-rc.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.900.4",
@@ -97,6 +99,8 @@
     "protractor": "5.4.3",
     "ts-node": "8.6.2",
     "tslint": "6.0.0",
-    "typescript": "3.7.5"
+    "typescript": "3.7.5",
+    "jspdf": "1.5.3",
+    "jspdf-customfonts": "0.0.4-rc.4"
   }
 }
