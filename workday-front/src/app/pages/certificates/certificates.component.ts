@@ -140,7 +140,7 @@ export class CertificatesComponent implements OnInit, AfterViewInit {
     doc.setFontType('normal');
     doc.text("Societe Generale European Business Services S.A.", 25, 250);
     doc.text("West Gate Park - Strada Preciziei, nr 24, cladire H4, etaj 5, 062204, Bucuresti, România", 25, 254);
-    doc.text("Capital social: 12.900.000 RON; R.C R.c J40/151/2011; C.U.I./C.I.F.: 27883477", 25, 258);
+    doc.text("Capital social: 12.900.000 RON; R.C R.C J40/151/2011; C.U.I./C.I.F.: 27883477", 25, 258);
     doc.text("Numar de Inregistrare in Registrul Operatorilor de Date cu Caracter Personal 25980", 25, 262);
     doc.text("Telefon: +4037.416.75.24; Fax: +4021.310.82.00", 25, 266);
     doc.save("Adeverință " + this.employee.lastName + ' ' + this.employee.firstName + '.pdf');
