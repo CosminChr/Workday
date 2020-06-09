@@ -24,9 +24,9 @@ public class MenuController {
         this.subMenuItemService = subMenuItemService;
     }
 
-    @GetMapping("/menuItems")
-    public ResponseEntity<List<MenuItemDTO>> getMenuItems() {
-        return ResponseEntity.ok(menuItemService.getMenuItems());
+    @GetMapping("/menuItems/{employeeId}")
+    public ResponseEntity<List<MenuItemDTO>> getMenuItems(@PathVariable(name = "employeeId") final Long employeeId) {
+        return ResponseEntity.ok(menuItemService.getMenuItems(employeeId));
     }
 
     @GetMapping("/subMenuItems")

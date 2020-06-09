@@ -28,9 +28,11 @@ public class Holiday {
     @Column(name = "to_date")
     private LocalDate toDate;
 
-    private boolean approved;
+    private Boolean approved;
 
-    private boolean validated;
+    private Boolean rejected;
+
+    private Boolean validated;
 
     @Size(max = 200)
     private String comment;
@@ -79,12 +81,20 @@ public class Holiday {
         this.toDate = toDate;
     }
 
-    public boolean isApproved() {
+    public Boolean isApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(Boolean approved) {
         this.approved = approved;
+    }
+
+    public Boolean isRejected() {
+        return rejected;
+    }
+
+    public void setRejected(Boolean rejected) {
+        this.rejected = rejected;
     }
 
     public boolean isValidated() {

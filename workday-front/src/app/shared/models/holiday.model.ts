@@ -15,6 +15,8 @@ export class Holiday {
 
   approved: boolean;
 
+  rejected: boolean;
+
   validated: boolean;
 
   comment: string;

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="create_table_workday_employee_role" author="cosminchiriac">
+        <createTable tableName="workday_employee_role">
+            <column name="employee_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="role_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="employeeRoles" author="cosminchiriac">
+        <loadData  encoding="UTF-8"
+                   file="config/liquibase/loaddata/employeeRoles.csv"
+                   separator=";"
+                   tableName="workday_employee_role">
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

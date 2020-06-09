@@ -23,8 +23,6 @@ export class LoginComponent implements OnInit {
   password: string;
 
   isSubmitted = false;
-  //roles: string[] = [];
-
 
   loginForm: FormGroup;
 
@@ -40,7 +38,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     if (this.tokenStorageService.getToken()) {
       this.workDayService.setIsConnected(true);
-      //this.roles = this.tokenStorage.getUser().roles;
     } else {
       this.createLoginForm();
       this.workDayService.setIsConnected(false);
@@ -52,7 +49,6 @@ export class LoginComponent implements OnInit {
       data => {
         this.tokenStorageService.saveToken(data.accessToken);
         this.tokenStorageService.saveUser(data);
-        //this.roles = this.tokenStorage.getUser().roles;
         this.isLoginFailed = false;
         this.workDayService.setIsConnected(true);
       },
@@ -61,8 +57,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
         this.notificationService.showNotification('top','center', 'danger', 'Ai introdus greșit usernameul sau parola. Te rugăm reîncearcă !');
       }, () => {
-        this.router.navigate(['/profile/personalData']);
-        this.notificationService.showNotification('top','center', 'success', 'Bine ai venit în aplicația WorkDay, ' + this.tokenStorageService.getUser().username + ' !');
+          this.router.navigate(['/profile/personalData']);
       });
   }
 

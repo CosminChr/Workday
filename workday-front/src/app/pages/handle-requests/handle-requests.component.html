@@ -1,0 +1,156 @@
+<div class="main-content">
+  <div class="alert alert-warning fade show" *ngIf="!doHolidaysThatNeedsApprovalExist()">
+    <span>Nu există cereri de concediu</span>
+  </div>
+  <div class="row" *ngIf="doHolidaysThatNeedsApprovalExist()">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Gestionează cereri de concediu </h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+                Angajat
+              </th>
+              <th>
+                De la
+              </th>
+              <th>
+                Până
+              </th>
+              <th>
+                Motiv plecare
+              </th>
+              <th class="text-right">
+                Număr zile
+              </th>
+              <th class="text-right">
+                Stare
+              </th>
+              <th class="text-right">
+                Validat
+              </th>
+              <th class="text-right">
+                Acțiune
+              </th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let holiday of holidays">
+                <td *ngIf="!holiday.validated">
+                  {{holiday.employee.firstName + ' '  + holiday.employee.lastName}}
+                </td>
+                <td *ngIf="!holiday.validated">
+                  {{formatDate(holiday.fromDate)}}
+                </td>
+                <td *ngIf="!holiday.validated">
+                  {{formatDate(holiday.toDate)}}
+                </td>
+                <td *ngIf="!holiday.validated">
+                  {{holiday.holidayType.label}}
+                </td>
+                <td class="text-right" *ngIf="!holiday.validated">
+                  {{dateDifference(holiday.fromDate, holiday.toDate)}}
+                </td>
+                <td class="text-right" *ngIf="!holiday.validated">
+                  {{'În așteptare'}}
+                </td>
+                <td class="text-right" *ngIf="!holiday.validated">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" [checked]="holiday.validated" disabled>
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                </td>
+                <td class="text-right" *ngIf="!holiday.validated">
+                  <span class="btn btn-file btn-success btn-sm" title="Aprobă" (click)="validateHolidayRequest(holiday)">
+                    <i class = "fa fa-check-circle"></i>
+                    <input>
+                  </span>
+                  <span class="btn btn-file btn-danger btn-sm" title = "Respinge" (click)="rejectHolidayRequest(holiday)">
+                    <i class = "fa fa-times-circle"></i>
+                    <input>
+                  </span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Istoric cereri de concediu </h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+                Angajat
+              </th>
+              <th>
+                De la
+              </th>
+              <th>
+                Până
+              </th>
+              <th>
+                Motiv plecare
+              </th>
+              <th class="text-right">
+                Număr zile
+              </th>
+              <th class="text-right">
+                Stare
+              </th>
+              <th class="text-right">
+                Validat
+              </th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let holiday of holidays">
+                <td *ngIf="holiday.validated">
+                  {{holiday.employee.firstName + ' '  + holiday.employee.lastName}}
+                </td>
+                <td *ngIf="holiday.validated">
+                  {{formatDate(holiday.fromDate)}}
+                </td>
+                <td *ngIf="holiday.validated">
+                  {{formatDate(holiday.toDate)}}
+                </td>
+                <td *ngIf="holiday.validated">
+                  {{holiday.holidayType.label}}
+                </td>
+                <td class="text-right" *ngIf="holiday.validated">
+                  {{dateDifference(holiday.fromDate, holiday.toDate)}}
+                </td>
+                <td class="text-right" *ngIf="holiday.validated">
+                  {{holiday.approved ? 'Aprobat' : 'Respins'}}
+                </td>
+                <td class="text-right" *ngIf="holiday.validated">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" [checked]="holiday.validated" disabled>
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -83,9 +83,8 @@ public class Employee extends User implements Serializable {
     @JoinColumn(name = "nationality_id")
     private NationalityReferential nationality;
 
-    @OneToOne
-    @JoinColumn(name = "manager_id")
-    private Employee manager;
+    @Column(name = "manager_id")
+    private Long managerId;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "workday_employee_role",
@@ -238,12 +237,12 @@ public class Employee extends User implements Serializable {
         this.nationality = nationality;
     }
 
-    public Employee getManager() {
-        return manager;
+    public Long getManagerId() {
+        return managerId;
     }
 
-    public void setManager(Employee manager) {
-        this.manager = manager;
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
     }
 
     @Override

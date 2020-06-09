@@ -88,7 +88,7 @@ export class CertificatesComponent implements OnInit, AfterViewInit {
     return this.newCertificateFormGroup;
   }
 
-  functie() {
+  generatePDF() {
 
     let doc = new jsPDF();
     const img = new Image();
@@ -116,17 +116,17 @@ export class CertificatesComponent implements OnInit, AfterViewInit {
     const owner = this.employee.gender?.id === 1 ? 'posesor' : 'posesoare';
     const identityCard: IdentityDocument = this.identityDocuments.filter(document => document.identityDocumentType.id === 1)[0];
     doc.text(permanentAddress.number + ' bl. ' + permanentAddress.block + ', scara ' +
-      + permanentAddress.stairwell + ', etajul ' + permanentAddress.floor + ', judet ' + permanentAddress.locality.county.label + ', '
+      + permanentAddress.stairwell + ', etajul ' + permanentAddress.floor + ', județ ' + permanentAddress.locality.county.label + ', '
       + owner + ' a cărții de identitate seria ' + identityCard.seriesAndNumber.substring(0,2) + ' nr. '
       + identityCard.seriesAndNumber.substring(2,identityCard.seriesAndNumber.length ) + ', eliberată', 25, 122);
     const employed = this.employee.gender?.id === 1 ? 'angajat' : 'angajată';
     const entity = this.employee.entity.split(' ');
     doc.text('de ' + identityCard.issuer + ', la data de ' + new Date(identityCard.issueDate).toLocaleString('en-GB').split(',')[0] +
-      'CNP ' + this.employee.personIdentifier + ', este ' + employed + ' ' + (entity[0] ? entity[0]: '') + ' ' + (entity[1] ? entity[1]: '') , 25, 128);
+      ' CNP ' + this.employee.personIdentifier + ', este ' + employed + ' ' + (entity[0] ? entity[0]: '') + ' ' + (entity[1] ? entity[1]: '') , 25, 128);
     doc.text((entity[2] ? entity[2]: '') + ' ' + (entity[3] ? entity[3]: '') + ' ' + (entity[4] ? entity[4]: '') + ' ' + (entity[5] ? entity[5]: '')
       + ' din data de ' + new Date(this.employee.joiningDate).toLocaleString('en-GB').split(',')[0] + ' cu contract de muncă pe durată ', 25, 134);
     const codNumber = Math.floor((Math.random() * 100000) + 300000);
-    doc.text('nedeterminată, ocupând în prezent funcția de ' + this.employee.jobPosition.label + ' Cod COR ' + codNumber, 25, 140);
+    doc.text('nedeterminată, ocupând în prezent funcția de ' + this.employee.jobPosition.label + ' Cod COR ' + codNumber + '.', 25, 140);
     doc.text('S-a eliberat prezenta la cerere, pentru a-i servi la ' + this.newCertificateFormGroup.controls.certificateType.value.toString().toLowerCase() + '.', 25, 152);
     doc.setFontSize(11);
     doc.setFontType('bold');

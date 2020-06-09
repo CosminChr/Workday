@@ -7,6 +7,9 @@ import {MenuItem} from "../../models/menuItem.model";
 import {SubMenuItem} from "../../models/subMenuItem.model";
 import {forkJoin} from "rxjs";
 import {find} from "lodash";
+import {Employee} from "../../models/employee.model";
+import {EmployeeService} from "../../services/employee/employee.service";
+import {TokenStorageService} from "../../../core/services/security/token-storage.service";
 
 declare var $: any;
 
@@ -20,6 +23,8 @@ export class NavbarComponent implements OnInit {
   @Input()
   isConnected: boolean;
 
+  employee: Employee;
+
   menuItems: Array<MenuItem>;
 
   subMenuItems: Array<SubMenuItem>;
@@ -30,29 +35,29 @@ export class NavbarComponent implements OnInit {
               private notificationService: NotificationService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private sidebarService: SidebarService) {
+              private sidebarService: SidebarService,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit(): void {
 
-    forkJoin([
-      this.sidebarService.getMenuItems(),
-      this.sidebarService.getSubMenuItems()])
-      .subscribe(data => {
-        this.menuItems = data[0];
-        this.subMenuItems = data[1];
-        this.initializePageTitle();
-        this.handlePageTitleChanges();
-      });
+
+    this.employee = this.tokenStorageService.getUser();
+
+      forkJoin([
+        this.sidebarService.getMenuItems(this.employee.id),
+        this.sidebarService.getSubMenuItems()])
+        .subscribe(data => {
+          this.menuItems = data[0];
+          this.subMenuItems = data[1];
+          this.initializePageTitle();
+          this.handlePageTitleChanges();
+        });
   }
 
   hideLogoutModal() {
     $(".modal-fade").modal("hide");
     $(".modal-backdrop").remove();
-  }
-
-  showNotification() {
-    this.notificationService.showNotification('top', 'center', 'success', 'Mulțumim că ai folosit aplicația WorkDay !');
   }
 
   initializePageTitle() {

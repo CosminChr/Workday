@@ -16,6 +16,9 @@ export const WorkdayRoutes: Routes = [{
     path: 'companyJobs',
     loadChildren: './pages/company-jobs/company-jobs.module#CompanyJobsModule'
   }, {
+    path: 'handleRequests',
+    loadChildren: './pages/handle-requests/handle-requests.module#HandleRequestsModule'
+  }, {
     path: 'holidays',
     loadChildren: './pages/holidays/holidays.module#HolidaysModule'
   }, {
@@ -40,15 +43,3 @@ export const WorkdayRoutes: Routes = [{
   ]
 }
 ];
-
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes, {
-//     useHash: true
-//   }),
-//     FormsModule,
-//     ReactiveFormsModule,
-//   ],
-//   exports: [RouterModule],
-// })
-// export class WorkdayRoutingModule {
-// }

@@ -51,7 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   exports: [RouterModule],
   providers: [authInterceptorProvider,
-  apiInterceptorProvider],
+    apiInterceptorProvider],
   bootstrap: [WorkdayComponent]
 })
 export class WorkdayModule {

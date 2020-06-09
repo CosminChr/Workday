@@ -8,9 +8,6 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "workday_medical_service")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class MedicalService {
 
     @Id

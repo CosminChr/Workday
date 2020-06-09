@@ -10,9 +10,6 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "workday_work_from_home")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class WorkFromHome {
 
     @Id

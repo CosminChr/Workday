@@ -9,12 +9,9 @@ import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import com.cosmin.licenta.workday.repository.HolidayReferentialRepository;
 import com.cosmin.licenta.workday.repository.HolidayRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,4 +53,12 @@ public class HolidayService {
         return holiday;
     }
 
+    @Transactional
+    public List<HolidayDTO> getHolidays(final List<Long> employeeIds) {
+        final List<Holiday> holidaysByEmployeeId = holidayRepository.findAll();
+        if (!CollectionUtils.isEmpty(holidaysByEmployeeId)) {
+            return holidayMapper.entitiesToDomains(holidaysByEmployeeId);
+        }
+        return null;
+    }
 }

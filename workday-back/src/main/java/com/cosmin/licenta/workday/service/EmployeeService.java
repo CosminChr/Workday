@@ -13,6 +13,7 @@ import com.cosmin.licenta.workday.repository.JobPositionReferentialRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -82,6 +83,22 @@ public class EmployeeService {
 
             employeeRepository.save(employeeToUpdate);
             return employeeMapper.entityToDomain(employeeToUpdate);
+        }
+        return null;
+    }
+
+    public List<EmployeeDTO> getEmployeesBymanagerId(Long managerId) {
+        final Optional<List<Employee>> employeesByManagerIdOptional = this.employeeRepository.findByManagerId(managerId);
+        if (employeesByManagerIdOptional.isPresent()) {
+            return this.employeeMapper.entitiesToDomains(employeesByManagerIdOptional.get());
+        }
+        return null;
+    }
+
+    public EmployeeDTO getManager(Long managerId) {
+        final Optional<Employee> managerOptional = employeeRepository.findById(managerId);
+        if (managerOptional.isPresent()) {
+            return this.employeeMapper.entityToDomain(managerOptional.get());
         }
         return null;
     }
