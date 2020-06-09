@@ -14,6 +14,7 @@
             <column name="from_date" type="date"/>
             <column name="to_date" type="date"/>
             <column name="approved" type="boolean"/>
+            <column name="rejected" type="boolean"/>
             <column name="validated" type="boolean"/>
             <column name="comment" type="varchar(40)"/>
             <column name="attesting_document" type="blob"/>

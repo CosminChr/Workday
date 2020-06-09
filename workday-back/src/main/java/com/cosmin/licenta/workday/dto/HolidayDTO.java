@@ -18,9 +18,11 @@ public class HolidayDTO {
 
     private LocalDate toDate;
 
-    private boolean approved;
+    private Boolean approved;
 
-    private boolean validated;
+    private Boolean rejected;
+
+    private Boolean validated;
 
     private String comment;
 
@@ -66,19 +68,27 @@ public class HolidayDTO {
         this.toDate = toDate;
     }
 
-    public boolean isApproved() {
+    public Boolean isRejected() {
+        return rejected;
+    }
+
+    public void setRejected(Boolean rejected) {
+        this.rejected = rejected;
+    }
+
+    public Boolean isApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(Boolean approved) {
         this.approved = approved;
     }
 
-    public boolean isValidated() {
+    public Boolean isValidated() {
         return validated;
     }
 
-    public void setValidated(boolean validated) {
+    public void setValidated(Boolean validated) {
         this.validated = validated;
     }
 

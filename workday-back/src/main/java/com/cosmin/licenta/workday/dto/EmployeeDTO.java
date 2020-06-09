@@ -11,7 +11,6 @@ public class EmployeeDTO {
 
     private Long id;
 
-
     @Size(max = 30)
     private String username;
 
@@ -64,7 +63,7 @@ public class EmployeeDTO {
 
     private ReferentialDTO nationality;
 
-    private EmployeeDTO manager;
+    private Long managerId;
 
     private Set<ReferentialDTO> roles = new HashSet<>();
 
@@ -236,12 +235,12 @@ public class EmployeeDTO {
         this.nationality = nationality;
     }
 
-    public EmployeeDTO getManager() {
-        return manager;
+    public Long getManagerId() {
+        return managerId;
     }
 
-    public void setManager(EmployeeDTO manager) {
-        this.manager = manager;
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
     }
 
     public Set<ReferentialDTO> getRoles() {
@@ -276,7 +275,7 @@ public class EmployeeDTO {
                 .add("joiningDate", joiningDate)
                 .add("currentPositionStartingDate", currentPositionStartingDate)
                 .add("nationality", nationality)
-                .add("manager", manager)
+                .add("managerId", managerId)
                 .add("roles", roles)
                 .toString();
     }

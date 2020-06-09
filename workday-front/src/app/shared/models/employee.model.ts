@@ -1,5 +1,4 @@
 import {Referential} from "./referential.model";
-import {PreviousJob} from "./previous-job.model";
 
 export class Employee {
 
@@ -45,5 +44,5 @@ export class Employee {
 
   nationality: Referential;
 
-  manager: Employee;
+  managerId: number;
 }

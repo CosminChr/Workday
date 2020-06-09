@@ -1,23 +1,11 @@
-
-
 <div class="main-content">
-
-
   <div class="row">
-
-
-
-
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
           <h4 class="card-title">Istoric concedii</h4>
         </div>
-
-
-
         <div class="card-body">
-
           <div class="col-lg-5 col-md-6 col-sm-3" style="margin: 0vw 1.5vw;">
             <select class="selectpicker" data-size="7" data-style="btn btn-outline-success btn-round" title="Anul"
                     (change)="selectChangeHandler($event)">
@@ -27,63 +15,60 @@
               </option>
             </select>
           </div>
-
-
-        <div class="table-responsive">
-          <table class="table">
-            <thead class="">
-            <th>
-              De la
-            </th>
-            <th>
-              Până
-            </th>
-            <th>
-              Motiv plecare
-            </th>
-            <th class="text-right">
-              Număr zile
-            </th>
-            <th class="text-right">
-              Stare
-            </th>
-            <th class="text-right">
-              Validat
-            </th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let holiday of holidays">
-              <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
-                {{formatDate(holiday.fromDate)}}
-              </td>
-              <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
-                {{formatDate(holiday.toDate)}}
-              </td>
-              <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
-                {{holiday.holidayType.label}}
-              </td>
-              <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
-                {{dateDifference(holiday.fromDate, holiday.toDate)}}
-              </td>
-              <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
-                {{holiday.approved ? 'Aprobat' : 'În așteptare'}}
-              </td>
-              <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" [checked]="holiday.validated" disabled>
-                    <span class="form-check-sign"></span>
-                  </label>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+                De la
+              </th>
+              <th>
+                Până
+              </th>
+              <th>
+                Motiv plecare
+              </th>
+              <th class="text-right">
+                Număr zile
+              </th>
+              <th class="text-right">
+                Stare
+              </th>
+              <th class="text-right">
+                Validat
+              </th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let holiday of holidays">
+                <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                  {{formatDate(holiday.fromDate)}}
+                </td>
+                <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                  {{formatDate(holiday.toDate)}}
+                </td>
+                <td *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                  {{holiday.holidayType.label}}
+                </td>
+                <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                  {{dateDifference(holiday.fromDate, holiday.toDate)}}
+                </td>
+                <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                  {{!holiday.validated ? 'În așteptare' : holiday.approved ? 'Aprobat' : 'Respins'}}
+                </td>
+                <td class="text-right" *ngIf="yearsAreEqual(holiday.fromDate, this.selectedYear)">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" [checked]="holiday.validated" disabled>
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-
 
 
     <div class="col-md-12">
@@ -93,171 +78,170 @@
         </div>
         <div class="card-body">
 
-        <div class="table-responsive">
-          <table class="table">
-            <thead class="">
-            <th>
-              Motiv plecare
-            </th>
-            <th>
-              Zile legale
-            </th>
-            <th>
-              Ianuarie
-            </th>
-            <th>
-              Februarie
-            </th>
-            <th>
-              Martie
-            </th>
-            <th>
-              Aprilie
-            </th>
-            <th>
-              Mai
-            </th>
-            <th>
-              Iunie
-            </th>
-            <th>
-              Iulie
-            </th>
-            <th>
-              August
-            </th>
-            <th>
-              Septembrie
-            </th>
-            <th>
-              Octombrie
-            </th>
-            <th>
-              Noiembrie
-            </th>
-            <th>
-              Decembrie
-            </th>
-            <th>
-              Zile utilizate
-            </th>
-            <th>
-              Zile rămase
-            </th>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                Concediu de odihnă
-              </td>
-              <td>
-                21
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(0)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(1)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(2)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(3)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(4)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(5)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(6)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(7)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(8)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(9)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(10)}}
-              </td>
-              <td>
-                {{currentYearHolidaysByMonth.get(11)}}
-              </td>
-              <td>
-                {{ getDaysUsedFromCurrentLeave()}}
-              </td>
-              <td>
-                {{21 - getDaysUsedFromCurrentLeave()}}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Necesitate medicală
-              </td>
-              <td>
-                3
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(0)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(1)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(2)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(3)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(4)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(5)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(6)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(7)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(8)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(9)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(10)}}
-              </td>
-              <td>
-                {{sickDaysHolidaysByMonth.get(11)}}
-              </td>
-              <td>
-                {{getDaysUsedFromSickDaysLeave()}}
-              </td>
-              <td>
-                {{3 - getDaysUsedFromSickDaysLeave()}}
-              </td>
-            </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+                Motiv plecare
+              </th>
+              <th>
+                Zile legale
+              </th>
+              <th>
+                Ianuarie
+              </th>
+              <th>
+                Februarie
+              </th>
+              <th>
+                Martie
+              </th>
+              <th>
+                Aprilie
+              </th>
+              <th>
+                Mai
+              </th>
+              <th>
+                Iunie
+              </th>
+              <th>
+                Iulie
+              </th>
+              <th>
+                August
+              </th>
+              <th>
+                Septembrie
+              </th>
+              <th>
+                Octombrie
+              </th>
+              <th>
+                Noiembrie
+              </th>
+              <th>
+                Decembrie
+              </th>
+              <th>
+                Zile utilizate
+              </th>
+              <th>
+                Zile rămase
+              </th>
+              </thead>
+              <tbody>
+              <tr>
+                <td>
+                  Concediu de odihnă
+                </td>
+                <td>
+                  21
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(0)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(1)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(2)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(3)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(4)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(5)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(6)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(7)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(8)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(9)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(10)}}
+                </td>
+                <td>
+                  {{currentYearHolidaysByMonth.get(11)}}
+                </td>
+                <td>
+                  {{ getDaysUsedFromCurrentLeave()}}
+                </td>
+                <td>
+                  {{21 - getDaysUsedFromCurrentLeave()}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Necesitate medicală
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(0)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(1)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(2)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(3)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(4)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(5)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(6)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(7)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(8)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(9)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(10)}}
+                </td>
+                <td>
+                  {{sickDaysHolidaysByMonth.get(11)}}
+                </td>
+                <td>
+                  {{getDaysUsedFromSickDaysLeave()}}
+                </td>
+                <td>
+                  {{3 - getDaysUsedFromSickDaysLeave()}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      </div>
-      <div class ="text-right">
+      <div class="text-right">
         <button type="submit" class="btn btn-outline-danger btn-round mb-3" data-toggle="modal"
                 data-target="#myModal" (click)="reinitializePicker()">Cerere nouă de concediu
         </button>
       </div>
     </div>
-
 
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -270,10 +254,11 @@
             <h4 class="title">Cerere de concediu pentru {{employee.lastName + ' ' + employee.firstName}}</h4>
           </div>
           <div class="modal-body">
-            <form  [formGroup]="holidayForm" *ngIf="holidayForm">
-              <div class ="row">
+            <form [formGroup]="holidayForm" *ngIf="holidayForm">
+              <div class="row">
                 <div class="col-lg-5 col-md-6 col-sm-3">
-                  <select formControlName = "holidayType" class="form-control selectpicker" data-size="7" data-style="btn btn-outline-success btn-round"
+                  <select formControlName="holidayType" class="form-control selectpicker" data-size="7"
+                          data-style="btn btn-outline-success btn-round"
                           title="Tip concediu">
                     <option *ngFor="let referential of holidayReferentials">
                       {{referential.label}}
@@ -281,22 +266,24 @@
                   </select>
                 </div>
               </div>
-              <div class = "row">
+              <div class="row">
                 <div class="col-md-5 text-center">
                   <div class="form-group">
-                    <input formControlName = "fromDate" type="text" class="form-control text-center" placeholder="De la">
+                    <input formControlName="fromDate" type="text" class="form-control text-center" placeholder="De la">
                   </div>
                 </div>
                 <div class="col-md-5 text-center">
                   <div class="form-group">
-                    <input formControlName = "toDate" type="text" class="form-control text-center" placeholder="Până">
+                    <input formControlName="toDate" type="text" class="form-control text-center" placeholder="Până">
                   </div>
                 </div>
               </div>
             </form>
             <div class="modal-footer">
               <div class="left-side">
-                <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putHoliday()">Trimite spre validare</button>
+                <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putHoliday()">
+                  Trimite spre validare
+                </button>
               </div>
               <div class="divider"></div>
               <div class="right-side">
@@ -307,6 +294,6 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
 </div>
 

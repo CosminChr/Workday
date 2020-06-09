@@ -25,6 +25,8 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
 
   departmentReferentials: Array<Referential>;
 
+  manager: Employee;
+
   constructor(private employeeService: EmployeeService,
               private tokenStorageService: TokenStorageService,
               private departmentReferentialService: DepartmentReferentialService,
@@ -43,10 +45,16 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
         this.employeeService.setStoredEmployee(this.employee);
         this.departmentReferentials = data[1] as Array<Referential>;
         this.personalDataForm = this.createPersonalDataForm();
-        this.employeeDataForm = this.createEmployeeDataForm();
-        this.employeeDataForm = this.populateEmployeeDataForm();
-      });
 
+        this.employeeService.getManager(this.employee.managerId)
+          .subscribe(
+            data => {
+              this.manager = data;
+              this.employeeDataForm = this.createEmployeeDataForm();
+              this.employeeDataForm = this.populateEmployeeDataForm();
+            }
+          )
+      });
   }
 
   ngAfterViewInit(): void {
@@ -85,7 +93,7 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
       'ITDeduction': [this.employee.ITDeduction, [Validators.required]],
       'joiningDate': [this.employee.joiningDate ? formatDate(this.employee.joiningDate) : '', [Validators.required]],
       'currentPositionStartingDate': [this.employee.currentPositionStartingDate ? formatDate(this.employee.currentPositionStartingDate) : '', [Validators.required]],
-      'manager': [this.employee.manager?.lastName + ' '  + this.employee.manager?.firstName , [Validators.required]],
+      'manager': [this.manager.lastName + ' '  + this.manager.firstName , [Validators.required]],
     });
     return this.employeeDataForm;
   }

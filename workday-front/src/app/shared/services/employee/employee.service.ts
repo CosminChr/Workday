@@ -5,6 +5,9 @@ import {Employee} from "../../models/employee.model";
 
 const EMPLOYEE_API = 'employee/';
 
+const EMPLOYEES_API = 'employee/manager/employees/';
+
+const MANAGER_API = 'employee/manager/';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +41,14 @@ export class EmployeeService {
 
   putEmployee(employee: Employee): Observable<Employee> {
     return this.http.put<Employee>(EMPLOYEE_API, employee);
+  }
+
+  getEmployeesByManagerId(managerId: number): Observable<Array<Employee>> {
+    return this.http.get<Array<Employee>>(EMPLOYEES_API + managerId)
+  }
+
+  getManager(managerId: number): Observable<Employee> {
+    return this.http.get<Employee>(MANAGER_API + managerId);
   }
 
 

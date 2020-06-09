@@ -36,5 +36,13 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.putEmployee(employee));
     }
 
+    @GetMapping("/manager/employees/{managerId}")
+    public ResponseEntity<List<EmployeeDTO>> getEmployeesByManagerId(@PathVariable(name = "managerId") final Long managerId) {
+        return ResponseEntity.ok(employeeService.getEmployeesBymanagerId(managerId));
+    }
 
+    @GetMapping("/manager/{managerId}")
+    public ResponseEntity<EmployeeDTO> getManager(@PathVariable(name = "managerId") final Long managerId) {
+        return ResponseEntity.ok(employeeService.getManager(managerId));
+    }
 }

@@ -14,9 +14,6 @@ import java.util.Collections;
 import java.util.Set;
 
 @MappedSuperclass
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public abstract class User {
 
     @Id

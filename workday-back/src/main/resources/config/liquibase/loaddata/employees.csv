@@ -1,2 +1,3 @@
-username;email;password;nationality_id
-ilonacojoaca;ilona.cojoaca@gmail.com;$2a$10$QMRMLULk4rmGsEPQMGBpZuZe3J.DNpo2hW0Z9fortR3mNmHdh1xpC;180
+username;email;password;nationality_id;manager_id
+ilonacojoaca;ilona.cojoaca@gmail.com;$2a$10$QMRMLULk4rmGsEPQMGBpZuZe3J.DNpo2hW0Z9fortR3mNmHdh1xpC;180;2
+cosminchiriac;cosmin.chiriac@gmail.com;$2a$10$QMRMLULk4rmGsEPQMGBpZuZe3J.DNpo2hW0Z9fortR3mNmHdh1xpC;180;2
