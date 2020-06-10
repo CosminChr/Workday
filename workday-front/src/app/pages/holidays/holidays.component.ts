@@ -10,6 +10,7 @@ import {HolidaysReferentialService} from "./holiday-referential.service";
 import {Referential} from "../../shared/models/referential.model";
 import {forkJoin} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {HolidaysMessagingService} from "./holidays-messaging.service";
 
 declare var $: any;
 
@@ -41,6 +42,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   constructor(private employeeService: EmployeeService,
               private holidayService: HolidaysService,
               private holidayReferentialService: HolidaysReferentialService,
+              private holidaysMessagingService: HolidaysMessagingService,
               private formBuilder: FormBuilder) {
   }
 
@@ -156,7 +158,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     return this.holidayForm;
   }
 
-  putHoliday() {
+  putHolidayRequest() {
 
     let holidayType = new Referential();
     holidayType.label = this.holidayForm.controls.holidayType.value;
@@ -172,6 +174,10 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
       this.holidayService.getHolidays(this.employee.id).subscribe(data => {
         this.holidays = data as Array<Holiday>;
         this.populateHolidayMapsByMonth();
+      }, () => {
+
+      }, () => {
+        this.holidaysMessagingService.sendHolidayRequest(this.employee.managerId);
       });
     });
   }

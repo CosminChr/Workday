@@ -91,7 +91,6 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
       this.languageLevelReferentialService.getLanguageLevelReferentials()
     ]).subscribe(data => {
       this.citizenships = data[0] as Array<Citizenship>;
-      console.log(data[0]);
       this.nationality = data[1] as Referential;
       this.citizenshipReferentials = data[2] as Array<Referential>;
       this.nationalityReferentials = data[3] as Array<Referential>;

@@ -1,6 +1,11 @@
 import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {Notification} from "../../models/notification.model";
 
 declare var $: any;
+
+const NOTIFICATION_API = 'notification/';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +13,11 @@ declare var $: any;
 export class NotificationService {
 
 
-  constructor() {
+  constructor(private http: HttpClient) {
+  }
+
+  getNotificationsByEmployeeId(employeeId: number): Observable<Array<Notification>> {
+    return this.http.get<Array<Notification>>(NOTIFICATION_API + employeeId);
   }
 
   showNotification(from: string, align: string, type: string, message: string) {

@@ -45,4 +45,6 @@ export class Employee {
   nationality: Referential;
 
   managerId: number;
+
+  roles: Array<Referential>;
 }

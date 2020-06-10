@@ -17,4 +17,7 @@ public interface HolidayRepository extends JpaRepository<Holiday, Long> {
 
     @Query("SELECT h FROM Holiday h WHERE h.employee.id IN ?1")
     Optional<List<Holiday>> findByEmployeeId(final List<Long> employeeIds);
+
+    @Query("SELECT h FROM Holiday h WHERE h.employee.managerId = ?1")
+    Optional<List<Holiday>> findByManagerId(final Long managerId);
 }

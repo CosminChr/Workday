@@ -46,7 +46,7 @@ public class HolidayService {
         return null;
     }
 
-    public HolidayDTO putHoliday(final HolidayDTO holiday)  {
+    public HolidayDTO putHolidayRequest(final HolidayDTO holiday)  {
         Optional<HolidayReferential> holidayReferential = holidayReferentialRepository.findByLabel(holiday.getHolidayType().getLabel());
         holiday.getHolidayType().setId(holidayReferential.get().getId());
         holidayRepository.save(holidayMapper.domainToEntity(holiday));
@@ -55,10 +55,26 @@ public class HolidayService {
 
     @Transactional
     public List<HolidayDTO> getHolidays(final List<Long> employeeIds) {
-        final List<Holiday> holidaysByEmployeeId = holidayRepository.findAll();
-        if (!CollectionUtils.isEmpty(holidaysByEmployeeId)) {
-            return holidayMapper.entitiesToDomains(holidaysByEmployeeId);
+        final Optional<List<Holiday>> holidaysByEmployeeId = holidayRepository.findByEmployeeId(employeeIds);
+        if (holidaysByEmployeeId.isPresent() && !CollectionUtils.isEmpty(holidaysByEmployeeId.get())) {
+            return holidayMapper.entitiesToDomains(holidaysByEmployeeId.get());
         }
+        return null;
+    }
+
+    @Transactional
+    public List<HolidayDTO> getHolidaysHandledByManager(final Long managerId) {
+
+        final Optional<Employee> manager = employeeRepository.findById(managerId);
+
+        if (manager.isPresent()) {
+            final Optional<List<Holiday>> holidaysByManagerId = holidayRepository.findByManagerId(manager.get().getId());
+
+            if (holidaysByManagerId.isPresent() && !CollectionUtils.isEmpty(holidaysByManagerId.get())) {
+                return holidayMapper.entitiesToDomains(holidaysByManagerId.get());
+            }
+        }
+
         return null;
     }
 }
