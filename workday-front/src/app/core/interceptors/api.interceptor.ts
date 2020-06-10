@@ -1,8 +1,6 @@
 import {HTTP_INTERCEPTORS, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-import {TokenStorageService} from '../services/security/token-storage.service';
-
 const URL_API = 'http://localhost:8080/api/';
 
 @Injectable()

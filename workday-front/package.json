@@ -76,7 +76,9 @@
     "webpack-dev-server": "^3.9.0",
     "zone.js": "~0.10.2",
     "jspdf": "1.5.3",
-    "jspdf-customfonts": "0.0.4-rc.4"
+    "jspdf-customfonts": "0.0.4-rc.4",
+    "@stomp/stompjs": "5.4.4",
+    "sockjs-client": "1.4.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.900.4",

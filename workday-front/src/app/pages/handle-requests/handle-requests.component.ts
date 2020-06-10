@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Employee} from "../../shared/models/employee.model";
 import {Holiday} from "../../shared/models/holiday.model";
 import {Referential} from "../../shared/models/referential.model";
-import {FormBuilder, FormGroup} from "@angular/forms";
 import {EmployeeService} from "../../shared/services/employee/employee.service";
 import {HolidaysService} from "../holidays/holiday.service";
-import {dateDifference, formatDate, parseDate} from "../../shared/utils/utils";
+import {dateDifference, formatDate} from "../../shared/utils/utils";
 import {forkJoin} from "rxjs";
+import {HolidaysMessagingService} from "../holidays/holidays-messaging.service";
+import {NavbarService} from "../../shared/components/navbar/navbar.service";
+import {Notification} from "../../shared/models/notification.model";
 
 declare var $: any;
 
@@ -21,23 +23,12 @@ export class HandleRequestsComponent implements OnInit {
 
   employeesOfTheManager: Array<Employee>;
 
-  yearsInCompany = new Array<number>();
-
-  currentYearHolidaysByMonth = new Map<number, number>();
-
-  sickDaysHolidaysByMonth = new Map<number, number>();
-
-  selectedYear = 2020;
-
   holidays: Array<Holiday>;
-
-  holidayReferentials: Array<Referential>;
-
-  holidayForm: FormGroup;
 
   constructor(private employeeService: EmployeeService,
               private holidayService: HolidaysService,
-              private formBuilder: FormBuilder) {
+              private holidaysMessagingService: HolidaysMessagingService,
+              private navbarService: NavbarService) {
   }
 
   ngOnInit() {
@@ -51,9 +42,18 @@ export class HandleRequestsComponent implements OnInit {
         this.holidayService.getHolidaysForEmployees(this.employeesOfTheManager)
           .subscribe(
             data => {
-              console.log(data);
               this.holidays = data;
-            })
+              this.holidaysMessagingService.stompClient.subscribe('/topic/manager', (data) => {
+                this.holidays = JSON.parse(data.body).body;
+                const notification = new Notification();
+                const receivedHolidayRequest: Holiday = this.holidays.reduce((prev, current) => (+prev.id > +current.id) ? prev : current);
+                notification.message = 'Ai primit o nouă cerere de aprobare concediu de la '
+                  + receivedHolidayRequest.employee.firstName + ' ' + receivedHolidayRequest.employee.lastName;
+
+                this.navbarService.getStoredManagerNotifications().value.push(notification);
+                this.navbarService.setManagerNotifications(this.navbarService.getStoredManagerNotifications().value);
+              });
+            });
       });
   }
 
@@ -66,19 +66,18 @@ export class HandleRequestsComponent implements OnInit {
     return ++difference;
   }
 
-  doHolidaysThatNeedsApprovalExist():boolean {
+  doHolidaysThatNeedApprovalExist(): boolean {
     if (this.holidays) {
-      return this.holidays.map(holiday => holiday.approved).filter(approved => approved !== true).length !== 0;
+      return this.holidays.map(holiday => holiday.validated).filter(validated => validated !== true).length !== 0;
     }
     return false;
   }
 
   validateHolidayRequest(holiday: Holiday) {
-    console.log(holiday.id);
-      holiday.approved = true;
-      holiday.rejected = false;
-      holiday.validated = true;
-      this.updateHoliday(holiday);
+    holiday.approved = true;
+    holiday.rejected = false;
+    holiday.validated = true;
+    this.updateHoliday(holiday);
   }
 
   rejectHolidayRequest(holiday: Holiday) {

@@ -8,8 +8,13 @@ import {SubMenuItem} from "../../models/subMenuItem.model";
 import {forkJoin} from "rxjs";
 import {find} from "lodash";
 import {Employee} from "../../models/employee.model";
-import {EmployeeService} from "../../services/employee/employee.service";
 import {TokenStorageService} from "../../../core/services/security/token-storage.service";
+import {Referential} from "../../models/referential.model";
+import {NavbarService} from "./navbar.service";
+import {RoleReferentialService} from "../../services/role/role-referential.service";
+import {EmployeeRoleEnum} from "../../enums/employee-role.enum";
+import {SubMenuItemEnum} from "../../enums/sub-menu-item.enum";
+import {Notification} from "../../models/notification.model";
 
 declare var $: any;
 
@@ -31,12 +36,20 @@ export class NavbarComponent implements OnInit {
 
   pageTitle: string;
 
+  employeeNotifications = new Array<Notification>();
+
+  managerNotifications = new Array<Notification>();
+
+  roleReferentials: Array<Referential>;
+
   constructor(private authService: AuthService,
               private notificationService: NotificationService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private sidebarService: SidebarService,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private navbarService: NavbarService,
+              private roleReferentialService: RoleReferentialService) {
   }
 
   ngOnInit(): void {
@@ -44,15 +57,29 @@ export class NavbarComponent implements OnInit {
 
     this.employee = this.tokenStorageService.getUser();
 
-      forkJoin([
-        this.sidebarService.getMenuItems(this.employee.id),
-        this.sidebarService.getSubMenuItems()])
-        .subscribe(data => {
-          this.menuItems = data[0];
-          this.subMenuItems = data[1];
-          this.initializePageTitle();
-          this.handlePageTitleChanges();
-        });
+    forkJoin([
+      this.sidebarService.getMenuItems(this.employee.id),
+      this.sidebarService.getSubMenuItems(),
+      this.roleReferentialService.getRoleReferentialsForEmployee(this.employee.id),
+      this.notificationService.getNotificationsByEmployeeId(this.employee.id)
+    ])
+      .subscribe(data => {
+        this.menuItems = data[0];
+        this.subMenuItems = data[1];
+        this.roleReferentials = data[2] as Array<Referential>;
+        if (this.isManager() && data[3]) {
+          this.managerNotifications = data[3] as Array<Notification>;
+        } else if (this.isManager() && data[3]) {
+          this.employeeNotifications = data[3] as Array<Notification>
+        }
+        this.initializePageTitle();
+        this.handlePageTitleChanges();
+      });
+
+    this.navbarService.getStoredManagerNotifications().asObservable()
+      .subscribe( data => {
+        this.managerNotifications = data as Array<Notification>;
+      });
   }
 
   hideLogoutModal() {
@@ -91,7 +118,7 @@ export class NavbarComponent implements OnInit {
           .map(p => p.children)[1]
           .map(p => p.routeConfig)
           .map(p => p.path)[0];
-      }).name : "Date Personale";
+      }).name : SubMenuItemEnum.PERSONAL_DATA;
     }
   }
 
@@ -99,5 +126,15 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe(() => {
       this.initializePageTitle();
     });
+  }
+
+  isManager(): boolean {
+    return this.roleReferentials && this.roleReferentials.filter(role => role.label === EmployeeRoleEnum.MANAGER).length > 0;
+  }
+
+  emptyArray(array: Array<Object>) {
+    while(array.length > 0) {
+      array.pop();
+    }
   }
 }

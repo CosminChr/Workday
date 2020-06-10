@@ -1,7 +1,6 @@
 package com.cosmin.licenta.workday.resource;
 
 import com.cosmin.licenta.workday.dto.HolidayDTO;
-import com.cosmin.licenta.workday.entity.Employee;
 import com.cosmin.licenta.workday.service.HolidayService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,7 @@ public class HolidayController {
 
     @PutMapping("/")
     public ResponseEntity<HolidayDTO> putHoliday(@RequestBody final HolidayDTO holidayDTO) {
-        return ResponseEntity.ok(holidayService.putHoliday(holidayDTO));
+        return ResponseEntity.ok(holidayService.putHolidayRequest(holidayDTO));
     }
 
     @GetMapping("/employees/")

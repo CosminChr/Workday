@@ -44,7 +44,7 @@ export class EmployeeService {
   }
 
   getEmployeesByManagerId(managerId: number): Observable<Array<Employee>> {
-    return this.http.get<Array<Employee>>(EMPLOYEES_API + managerId)
+    return this.http.get<Array<Employee>>(EMPLOYEES_API + managerId);
   }
 
   getManager(managerId: number): Observable<Employee> {

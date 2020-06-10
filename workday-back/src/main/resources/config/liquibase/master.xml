@@ -50,4 +50,5 @@
     <include file="classpath:config/liquibase/changelog/medicalServices.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/overtime.xml" relativeToChangelogFile="false"></include>
     <include file="classpath:config/liquibase/changelog/workFromHome.xml" relativeToChangelogFile="false"></include>
+    <include file="classpath:config/liquibase/changelog/notifications.xml" relativeToChangelogFile="false"></include>
 </databaseChangeLog>

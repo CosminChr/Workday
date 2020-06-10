@@ -1,5 +1,5 @@
 export enum EmployeeRoleEnum {
-  EMPLOYEE = 'EMPLOYEE',
-  MANAGER = 'MANAGER',
-  ADMIN = 'ADMIN'
+  EMPLOYEE = 'Employee',
+  MANAGER = 'Manager',
+  ADMIN = 'Aadmin'
 }
