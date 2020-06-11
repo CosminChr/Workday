@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Notification {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String message;
@@ -17,6 +18,8 @@ public class Notification {
     @JsonBackReference
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    private boolean active;
 
     public Long getId() {
         return id;
@@ -40,5 +43,13 @@ public class Notification {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

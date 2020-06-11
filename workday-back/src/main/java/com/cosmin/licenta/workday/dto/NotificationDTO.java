@@ -10,6 +10,8 @@ public class NotificationDTO {
 
     private EmployeeDTO employee;
 
+    private boolean active;
+
     public Long getId() {
         return id;
     }
@@ -34,12 +36,21 @@ public class NotificationDTO {
         this.employee = employee;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("message", message)
                 .add("employee", employee)
+                .add("active", active)
                 .toString();
     }
 }

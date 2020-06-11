@@ -7,6 +7,8 @@ declare var $: any;
 
 const NOTIFICATION_API = 'notification/';
 
+const NOTIFICATION_API_DEACTIVATE = 'notification/deactivateNotifications';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +21,16 @@ export class NotificationService {
   getNotificationsByEmployeeId(employeeId: number): Observable<Array<Notification>> {
     return this.http.get<Array<Notification>>(NOTIFICATION_API + employeeId);
   }
+
+  putNotification(notification: Notification): Observable<Notification> {
+    return this.http.put<Notification>(NOTIFICATION_API, notification);
+  }
+
+  putNotifications(notifications: Array<Notification>): Observable<Array<Notification>> {
+    return this.http.put<Array<Notification>>(NOTIFICATION_API_DEACTIVATE, notifications);
+  }
+
+
 
   showNotification(from: string, align: string, type: string, message: string) {
 

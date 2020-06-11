@@ -38,7 +38,7 @@ public class HolidayService {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
         if (employeeOptional.isPresent()) {
-            Optional<List<Holiday>> holidaysListOptional = this.holidayRepository.findByEmployee(employeeOptional.get());
+            Optional<List<Holiday>> holidaysListOptional = this.holidayRepository.findByEmployeeId(employeeOptional.get().getId());
             if (holidaysListOptional.isPresent()) {
                 return holidayMapper.entitiesToDomains(holidaysListOptional.get());
             }
@@ -75,6 +75,17 @@ public class HolidayService {
             }
         }
 
+        return null;
+    }
+
+
+    public HolidayDTO getHoliday(final Long holidayId) {
+
+        final Optional<Holiday> holidayOptional = holidayRepository.findById(holidayId);
+
+        if (holidayOptional.isPresent()) {
+            return holidayMapper.entityToDomain(holidayOptional.get());
+        }
         return null;
     }
 }

@@ -44,4 +44,13 @@ public class NotificationService {
     }
 
 
+    public NotificationDTO putNotification(NotificationDTO notificationDTO) {
+        notificationRepository.save(notificationMapper.domainToEntity(notificationDTO));
+        return notificationDTO;
+    }
+
+    public List<NotificationDTO> putNotifications(List<NotificationDTO> notificationDTOs) {
+        notificationRepository.saveAll(notificationMapper.domainsToEntities(notificationDTOs));
+        return notificationDTOs;
+    }
 }

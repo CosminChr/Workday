@@ -7,7 +7,6 @@ import {Referential} from "../../../shared/models/referential.model";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
 import {DepartmentReferentialService} from "./department-referential.service";
 import {forkJoin} from "rxjs";
-import {HolidaysMessagingService} from "../../holidays/holidays-messaging.service";
 
 declare var $: any;
 

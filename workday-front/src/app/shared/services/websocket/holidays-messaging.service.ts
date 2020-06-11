@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import * as SockJS from 'sockjs-client';
 import {CompatClient, Stomp} from "@stomp/stompjs";
+import {StompClientService} from "./client/stomp-client.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,8 @@ export class HolidaysMessagingService {
 
   stompClient: CompatClient;
 
-  constructor() {
-
-    this.stompClient = Stomp.over(() => {
-      return new SockJS('http://localhost:8080/websocket-endpoint');
-    });
-    this.stompClient.connect({},
-      () => {
-
-      });
+  constructor(private stompClientService: StompClientService) {
+    this.stompClient = this.stompClientService.stompClient;
   }
 
   sendHolidayRequest(managerId: number) {
@@ -25,6 +19,14 @@ export class HolidaysMessagingService {
       '/app/employee',
       {},
       managerId.toString()
+    );
+  }
+
+  handleHolidayRequest(holidayId: number) {
+    this.stompClient.send(
+      '/app/manager',
+      {},
+      holidayId.toString()
     );
   }
 }
