@@ -26,8 +26,9 @@ public class HolidayMessagingController {
 
     @MessageMapping("/manager")
     @SendTo("/topic/employee")
-    public ResponseEntity<List<HolidayDTO>> handleHolidayRequest(final String managerId) {
-        return ResponseEntity.ok(holidayService.getHolidays(Long.parseLong(managerId)));
+    public ResponseEntity<HolidayDTO> handleHolidayRequest(final String holidayId) {
+        return ResponseEntity.ok(holidayService.getHoliday(Long.parseLong(holidayId)));
     }
 }
+
 

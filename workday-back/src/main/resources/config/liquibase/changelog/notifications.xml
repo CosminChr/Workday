@@ -11,6 +11,7 @@
             </column>
             <column name="message" type="varchar(100)"/>
             <column name="employee_id" type="bigint"/>
+            <column name="active" type="boolean"/>
         </createTable>
     </changeSet>
 

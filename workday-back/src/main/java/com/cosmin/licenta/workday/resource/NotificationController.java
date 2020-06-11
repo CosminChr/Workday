@@ -22,4 +22,14 @@ public class NotificationController {
     public ResponseEntity<List<NotificationDTO>> getNotifications(@PathVariable(name = "employeeId") final Long employeeId) {
         return ResponseEntity.ok(notificationService.getNotificationsByEmployeeId(employeeId));
     }
+
+    @PutMapping("/")
+    public ResponseEntity<NotificationDTO> putNotififcation(@RequestBody final NotificationDTO notificationDTO) {
+        return ResponseEntity.ok(notificationService.putNotification(notificationDTO));
+    }
+
+    @PutMapping("/deactivateNotifications")
+    public ResponseEntity<List<NotificationDTO>> putNotififcations(@RequestBody final List<NotificationDTO> notificationDTOs) {
+        return ResponseEntity.ok(notificationService.putNotifications(notificationDTOs));
+    }
 }

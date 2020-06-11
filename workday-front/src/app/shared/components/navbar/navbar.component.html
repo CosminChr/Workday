@@ -9,14 +9,19 @@
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"   title="Notificări">
-            <span [hidden]="(employee && isManager() && managerNotifications.length === 0) || (employee && !isManager() && employeeNotifications.length === 0)" class="badge badge-danger btn-round ml-2">{{employee && isManager() ? managerNotifications.length : employeeNotifications.length}}</span>
-            <i (click)="managerNotifications.length === 0 ? emptyArray(employeeNotifications) : emptyArray(managerNotifications)" class="nc-icon nc-bell-55"></i>
+            <span [hidden]="isManager() ? !activeNotificationsExist(managerNotifications) : !activeNotificationsExist(employeeNotifications)" (click)="isManager() ? deactivateNotifications(managerNotifications) : deactivateNotifications(employeeNotifications)" class="badge badge-danger btn-round ml-2">{{isManager() ? countActiveNotifications(managerNotifications) : countActiveNotifications(employeeNotifications)}}</span>
+            <i (click)="isManager() ? deactivateNotifications(managerNotifications) : deactivateNotifications(employeeNotifications)" class="nc-icon nc-bell-55"></i>
             <p>
               <span class="d-lg-none d-md-block">Some Actions</span>
             </p>
           </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a *ngFor="let managerNotification of managerNotifications" class="dropdown-item" href="javascript:void(0)">{{managerNotification.label}}</a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" >
+            <div *ngFor="let managerNotification of managerNotifications">
+            <a *ngIf="managerNotification.active"  class="dropdown-item" href="javascript:void(0)">{{managerNotification.message}}</a>
+            </div>
+            <div *ngFor="let employeeNotification of employeeNotifications">
+              <a *ngIf="employeeNotification.active"  class="dropdown-item" href="javascript:void(0)">{{employeeNotification.message}}</a>
+            </div>
           </div>
         </li>
         <li class="nav-item" >

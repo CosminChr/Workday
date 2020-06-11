@@ -67,9 +67,10 @@ export class NavbarComponent implements OnInit {
         this.menuItems = data[0];
         this.subMenuItems = data[1];
         this.roleReferentials = data[2] as Array<Referential>;
+        console.log(data[3]);
         if (this.isManager() && data[3]) {
           this.managerNotifications = data[3] as Array<Notification>;
-        } else if (this.isManager() && data[3]) {
+        } else if (!this.isManager() && data[3]) {
           this.employeeNotifications = data[3] as Array<Notification>
         }
         this.initializePageTitle();
@@ -79,6 +80,11 @@ export class NavbarComponent implements OnInit {
     this.navbarService.getStoredManagerNotifications().asObservable()
       .subscribe( data => {
         this.managerNotifications = data as Array<Notification>;
+      });
+
+    this.navbarService.getStoredEmployeeNotifications().asObservable()
+      .subscribe( data => {
+        this.employeeNotifications = data as Array<Notification>;
       });
   }
 
@@ -132,9 +138,21 @@ export class NavbarComponent implements OnInit {
     return this.roleReferentials && this.roleReferentials.filter(role => role.label === EmployeeRoleEnum.MANAGER).length > 0;
   }
 
-  emptyArray(array: Array<Object>) {
-    while(array.length > 0) {
-      array.pop();
-    }
+  deactivateNotifications(array: Array<Notification>) {
+    array.forEach(notification => {
+      notification.active = false;
+    });
+    console.log(array);
+    console.log(array);
+    this.notificationService.putNotifications(array)
+      .subscribe();
+  }
+
+  activeNotificationsExist(array: Array<Notification>): boolean {
+    return array.filter(notification => notification.active === true).length != 0;
+  }
+
+  countActiveNotifications(array: Array<Notification>): number {
+    return array && array.filter(notification => notification.active === true).length;
   }
 }

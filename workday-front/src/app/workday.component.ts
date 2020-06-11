@@ -6,7 +6,9 @@ import {WorkdayService} from "./workday.service";
 import {Employee} from "./shared/models/employee.model";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
-import {HolidaysMessagingService} from "./pages/holidays/holidays-messaging.service";
+import {StompClientService} from "./shared/services/websocket/client/stomp-client.service";
+
+;
 
 @Component({
   selector: 'workday-root',
@@ -25,7 +27,7 @@ export class WorkdayComponent implements OnInit, OnDestroy {
   constructor(private tokenStorageService: TokenStorageService,
               private employeeService: EmployeeService,
               private workdayService: WorkdayService,
-              private holidaysMessagingService: HolidaysMessagingService,
+              private stompClientService: StompClientService,
               private router: Router) {
   }
 

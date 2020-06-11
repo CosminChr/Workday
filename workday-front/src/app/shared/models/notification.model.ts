@@ -7,4 +7,6 @@ export class Notification {
   message: string;
 
   employee: Employee;
+
+  active: boolean;
 }
