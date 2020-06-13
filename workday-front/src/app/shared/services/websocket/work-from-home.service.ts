@@ -6,7 +6,7 @@ import {StompClientService} from "./client/stomp-client.service";
 @Injectable({
   providedIn: 'root'
 })
-export class HolidaysMessagingService {
+export class WorkFromHomeMessagingService {
 
   stompClient: CompatClient;
 
@@ -14,19 +14,19 @@ export class HolidaysMessagingService {
     this.stompClient = this.stompClientService.stompClient;
   }
 
-  sendHolidayRequest(managerId: number) {
+  sendWorkFromHomeRequest(workFromHomeId: number) {
     this.stompClient.send(
-      '/app/employee/holiday',
+      '/app/employee/workFromHome',
       {},
-      managerId.toString()
+      workFromHomeId.toString()
     );
   }
 
-  handleHolidayRequest(holidayId: number) {
+  handleWorkFromHomeRequest(workFromHomeId: number) {
     this.stompClient.send(
-      '/app/manager/holiday',
+      '/app/manager/workFromHome',
       {},
-      holidayId.toString()
+      workFromHomeId.toString()
     );
   }
 }

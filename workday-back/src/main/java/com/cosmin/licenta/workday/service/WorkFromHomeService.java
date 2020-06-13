@@ -1,5 +1,6 @@
 package com.cosmin.licenta.workday.service;
 
+import com.cosmin.licenta.workday.dto.HolidayDTO;
 import com.cosmin.licenta.workday.dto.OvertimeDTO;
 import com.cosmin.licenta.workday.dto.WorkFromHomeDTO;
 import com.cosmin.licenta.workday.entity.*;
@@ -10,10 +11,16 @@ import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import com.cosmin.licenta.workday.repository.OvertimeRepository;
 import com.cosmin.licenta.workday.repository.WorkFromHomeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Comparator.*;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class WorkFromHomeService {
@@ -39,7 +46,7 @@ public class WorkFromHomeService {
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
         if (employeeOptional.isPresent()) {
             Optional<WorkFromHome> workFromHomeOptional = this.workFromHomeRepository.findByEmployee(employeeOptional.get());
-            if (workFromHomeOptional.isPresent()) {
+            if (workFromHomeOptional.isPresent()) { ;
                 return workFromHomeMapper.entityToDomain(workFromHomeOptional.get());
             }
         }
@@ -55,9 +62,8 @@ public class WorkFromHomeService {
 
         if (workFromHomeDTO.getDayOfWeekDay2() != null) {
             Optional<DayOfWeekReferential> dayOfWeek2ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getDayOfWeekDay2().getLabel());
-            workFromHomeDTO.getDayOfWeekDay1().setId(dayOfWeek2ReferentialOptional.get().getId());
+            workFromHomeDTO.getDayOfWeekDay2().setId(dayOfWeek2ReferentialOptional.get().getId());
         }
-
 
         if (workFromHomeDTO.getPotentialDayOfWeekDay1() != null) {
             Optional<DayOfWeekReferential> potentialDayOfWeek1ReferentialOptional = dayOfWeekReferentialRepository.findByLabel(workFromHomeDTO.getPotentialDayOfWeekDay1().getLabel());
@@ -71,5 +77,30 @@ public class WorkFromHomeService {
 
         workFromHomeRepository.save(workFromHomeMapper.domainToEntity(workFromHomeDTO));
         return workFromHomeDTO;
+    }
+
+    public List<WorkFromHomeDTO> getWorkFromHomeForEmployeesOfManager(Long managerId) {
+        final Optional<List<WorkFromHome>> workFromHomeListOptional = workFromHomeRepository.findByManagerId(managerId);
+
+        if (workFromHomeListOptional.isPresent()) {
+            return workFromHomeMapper.entitiesToDomains(workFromHomeListOptional.get());
+        }
+
+        return null;
+    }
+
+    @Transactional
+    public List<WorkFromHomeDTO> getWorkFromHomeHandledByManager(Long managerId) {
+
+            final Optional<Employee> manager = employeeRepository.findById(managerId);
+
+            if (manager.isPresent()) {
+                final Optional<List<WorkFromHome>> workFromHomeByManagerId = workFromHomeRepository.findByManagerId(manager.get().getId());
+
+                if (workFromHomeByManagerId.isPresent() && !CollectionUtils.isEmpty(workFromHomeByManagerId.get())) {
+                    return workFromHomeMapper.entitiesToDomains(workFromHomeByManagerId.get());
+                }
+        }
+        return null;
     }
 }

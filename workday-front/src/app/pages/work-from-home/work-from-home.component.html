@@ -5,7 +5,7 @@
     <div class="col-md-12">
       <div class="card ">
         <div class="card-header ">
-          <h4 class="card-title">Modifică zile WFH</h4>
+          <h4 class="card-title">Gestionează zile WFH</h4>
         </div>
         <div class="card-body ">
           <form [formGroup]="workFromHomeFormGroup" class="form-horizontal"
@@ -16,7 +16,8 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Dată angajare</label>
-                      <input formControlName="joiningDate" type="text" class="form-control" placeholder="Dată angajare">
+                      <input formControlName="joiningDate" id="joiningDate" type="text" class="form-control"
+                             placeholder="Dată angajare">
                     </div>
                   </div>
                 </div>
@@ -25,21 +26,23 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Dată start ziua 1 WFH</label>
-                      <input formControlName="startDateDay1" id = "startDateDay1" type="text" class="form-control" placeholder="Dată start ziua 1 WFH"
-                             >
+                      <input formControlName="startDateDay1" id="startDateDay1" type="text" class="form-control"
+                             placeholder="Dată start ziua 1 WFH">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Dată start ziua 2 WFH</label>
-                      <input formControlName="startDateDay2" id = "startDateDay2" type="text" class="form-control" placeholder="Dată start ziua 2 WFH">
+                      <input formControlName="startDateDay2" id="startDateDay2" type="text" class="form-control"
+                             placeholder="Dată start ziua 2 WFH">
                     </div>
                   </div>
                 </div>
 
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-6">
-                    <select (change)="onDayOfWeekDay1Change($event)" formControlName="dayOfWeekDay1" id ="dayOfWeekDay1" class="selectpicker form-control" data-size="7"
+                  <div class="col-lg-3 col-md-4 col-sm-6">
+                    <select (change)="onDayOfWeekDay1Change($event)" formControlName="dayOfWeekDay1" id="dayOfWeekDay1"
+                            class="selectpicker form-control" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="Ziua 1 WFH">
                       <option *ngFor="let referential of dayOfWeekReferentials">
@@ -47,8 +50,9 @@
                       </option>
                     </select>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-sm-6">
-                    <select (change)="onDayOfWeekDay2Change($event)" formControlName="dayOfWeekDay2" id ="dayOfWeekDay2" class="selectpicker form-control" data-size="7"
+                  <div class="col-lg-3 col-md-4 col-sm-6">
+                    <select (change)="onDayOfWeekDay2Change($event)" formControlName="dayOfWeekDay2" id="dayOfWeekDay2"
+                            class="selectpicker form-control" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="Ziua 2 WFH">
                       <option *ngFor="let referential of dayOfWeekReferentials">
@@ -60,20 +64,20 @@
               </div>
             </div>
 
-            <div class="card-footer">
-              <p class="text-warning mt-3 " *ngIf="workFromHome.dayOfWeekDay1 && workFromHome.potentialDayOfWeekDay1 &&
-        workFromHome.dayOfWeekDay1.label !== workFromHome.potentialDayOfWeekDay1.label">
-                A fost solicitată modificarea zilei 1 WFH. Aceasta este încă în proces de validare. </p>
+
+            <div class="alert alert-warning fade show" *ngIf=" workFromHome.potentialDayOfWeekDay1">
+              <span> A fost solicitată modificarea zilei 1 WFH. Aceasta este încă în proces de validare.</span>
             </div>
 
-            <div class="card-footer">
-              <p class="text-warning mt-3 " *ngIf="workFromHome.dayOfWeekDay2 && workFromHome.potentialDayOfWeekDay2 &&
-        workFromHome.dayOfWeekDay2.label !== workFromHome.potentialDayOfWeekDay2.label">
-                A fost solicitată modificarea zilei 1 WFH. Aceasta este încă în proces de validare. </p>
+            <div class="alert alert-warning fade show" *ngIf=" workFromHome.potentialDayOfWeekDay2">
+              <span> A fost solicitată modificarea zilei 2 WFH. Aceasta este încă în proces de validare.</span>
             </div>
 
             <div class="card-footer text-right">
-              <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putWorkFromHome()">Trimite spre Validare</button>
+              <button [disabled]="workFromHome.potentialDayOfWeekDay1 || workFromHome.potentialDayOfWeekDay2"
+                      type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putWorkFromHome()">Trimite
+                spre Validare
+              </button>
             </div>
 
           </form>

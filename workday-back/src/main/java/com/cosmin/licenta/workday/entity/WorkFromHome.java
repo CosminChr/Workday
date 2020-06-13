@@ -7,6 +7,7 @@ import org.apache.tomcat.jni.Local;
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "workday_work_from_home")
@@ -43,10 +44,12 @@ public class WorkFromHome {
     private DayOfWeekReferential potentialDayOfWeekDay2;
 
     @Column(name = "last_initiation_date")
-    private LocalDate lastInitiationDate;
+    private LocalDateTime lastInitiationDate;
 
-    @Column(name = "last_approval_date")
-    private LocalDate lastApprovalDate;
+    @Column(name = "last_processing_date")
+    private LocalDateTime lastProcessingDate;
+
+    private boolean approved;
 
     public Long getId() {
         return id;
@@ -112,19 +115,27 @@ public class WorkFromHome {
         this.potentialDayOfWeekDay2 = potentialDayOfWeekDay2;
     }
 
-    public LocalDate getLastInitiationDate() {
+    public LocalDateTime getLastInitiationDate() {
         return lastInitiationDate;
     }
 
-    public void setLastInitiationDate(LocalDate lastInitiationDate) {
+    public void setLastInitiationDate(LocalDateTime lastInitiationDate) {
         this.lastInitiationDate = lastInitiationDate;
     }
 
-    public LocalDate getLastApprovalDate() {
-        return lastApprovalDate;
+    public LocalDateTime getLastProcessingDate() {
+        return lastProcessingDate;
     }
 
-    public void setLastApprovalDate(LocalDate lastApprovalDate) {
-        this.lastApprovalDate = lastApprovalDate;
+    public void setLastProcessingDate(LocalDateTime lastProcessingDate) {
+        this.lastProcessingDate = lastProcessingDate;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

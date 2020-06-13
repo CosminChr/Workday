@@ -21,5 +21,7 @@ export class WorkFromHome {
 
   lastInitiationDate: Date;
 
-  lastApprovalDate: Date;
+  lastProcessingDate: Date;
+
+  approved: boolean;
 }

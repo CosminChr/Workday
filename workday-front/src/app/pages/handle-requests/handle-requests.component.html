@@ -1,8 +1,8 @@
 <div class="main-content">
-  <div class="alert alert-warning fade show" *ngIf="!doHolidaysThatNeedApprovalExist()">
+  <div class="alert alert-info fade show" *ngIf="!doHolidayRequestsThatNeedApprovalExist()">
     <span>Nu există cereri de concediu</span>
   </div>
-  <div class="row" *ngIf="doHolidaysThatNeedApprovalExist()">
+  <div class="row" *ngIf="doHolidayRequestsThatNeedApprovalExist()">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
@@ -143,6 +143,97 @@
                       <span class="form-check-sign"></span>
                     </label>
                   </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info fade show" *ngIf="!doWorkFromHomeRequestsThatNeedApprovalExist()">
+    <span>Nu există cereri pentru Work From Home</span>
+  </div>
+  <div class="row" *ngIf="doWorkFromHomeRequestsThatNeedApprovalExist()">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Gestionează cereri Work From Home</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+                Angajat
+              </th>
+              <th>
+                Data angajare
+              </th>
+              <th>
+                Data start ziua 1
+              </th>
+              <th>
+                Ziua 1
+              </th>
+              <th>
+                Data start ziua 2
+              </th>
+              <th>
+                Ziua 2
+              </th>
+              <th class="text-right">
+                Validat
+              </th>
+              <th class="text-right">
+                Stare
+              </th>
+              <th class="text-right">
+                Acțiune
+              </th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let workFromHome of workFromHomeListOfManager">
+                <td *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  {{workFromHome.employee.firstName + ' '  + workFromHome.employee.lastName}}
+                </td>
+                <td *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  {{formatDate(workFromHome.employee.joiningDate)}}
+                </td>
+                <td *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  {{workFromHome.startDateDay1 ? formatDate(workFromHome.startDateDay1) : '-'}}
+                </td>
+                <td *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  {{workFromHome.dayOfWeekDay1 ? workFromHome.dayOfWeekDay1.label : '-'}}
+                </td>
+                <td *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  {{workFromHome.startDateDay2 ? formatDate(workFromHome.startDateDay2) : '-'}}
+                </td>
+                <td *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  {{workFromHome.dayOfWeekDay2 ? workFromHome.dayOfWeekDay2.label : '-'}}
+                </td>
+                <td class="text-right" *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  {{'În așteptare'}}
+                </td>
+                <td class="text-right" *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" [checked]="false" disabled>
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                </td>
+                <td class="text-right" *ngIf="needsApproval(workFromHome.lastInitiationDate, workFromHome.lastProcessingDate)">
+                  <span class="btn btn-file btn-success btn-sm" title="Aprobă" (click)="validateWorkFromHomeRequest(workFromHome)">
+                    <i class = "fa fa-check-circle"></i>
+                    <input>
+                  </span>
+                  <span class="btn btn-file btn-danger btn-sm" title = "Respinge" (click)="rejectWorkFromHomeRequest(workFromHome)">
+                    <i class = "fa fa-times-circle"></i>
+                    <input>
+                  </span>
                 </td>
               </tr>
               </tbody>

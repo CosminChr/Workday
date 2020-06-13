@@ -1,11 +1,10 @@
 package com.cosmin.licenta.workday.dto;
 
-import com.cosmin.licenta.workday.entity.DayOfWeekReferential;
 import com.cosmin.licenta.workday.entity.Employee;
 import com.google.common.base.MoreObjects;
 
-import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class WorkFromHomeDTO {
 
@@ -21,13 +20,15 @@ public class WorkFromHomeDTO {
 
     private ReferentialDTO dayOfWeekDay2;
 
-    private ReferentialDTO  potentialDayOfWeekDay1;
+    private ReferentialDTO potentialDayOfWeekDay1;
 
-    private ReferentialDTO  potentialDayOfWeekDay2;
+    private ReferentialDTO potentialDayOfWeekDay2;
 
-    private LocalDate lastInitiationDate;
+    private LocalDateTime lastInitiationDate;
 
-    private LocalDate lastApprovalDate;
+    private LocalDateTime lastProcessingDate;
+
+    private boolean approved;
 
     public Long getId() {
         return id;
@@ -93,20 +94,28 @@ public class WorkFromHomeDTO {
         this.potentialDayOfWeekDay2 = potentialDayOfWeekDay2;
     }
 
-    public LocalDate getLastInitiationDate() {
+    public LocalDateTime getLastInitiationDate() {
         return lastInitiationDate;
     }
 
-    public void setLastInitiationDate(LocalDate lastInitiationDate) {
+    public void setLastInitiationDate(LocalDateTime lastInitiationDate) {
         this.lastInitiationDate = lastInitiationDate;
     }
 
-    public LocalDate getLastApprovalDate() {
-        return lastApprovalDate;
+    public LocalDateTime getLastProcessingDate() {
+        return lastProcessingDate;
     }
 
-    public void setLastApprovalDate(LocalDate lastApprovalDate) {
-        this.lastApprovalDate = lastApprovalDate;
+    public void setLastProcessingDate(LocalDateTime lastProcessingDate) {
+        this.lastProcessingDate = lastProcessingDate;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 
     @Override
@@ -121,7 +130,8 @@ public class WorkFromHomeDTO {
                 .add("potentialDayOfWeekDay1", potentialDayOfWeekDay1)
                 .add("potentialDayOfWeekDay2", potentialDayOfWeekDay2)
                 .add("lastInitiationDate", lastInitiationDate)
-                .add("lastApprovalDate", lastApprovalDate)
+                .add("lastProcessingDate", lastProcessingDate)
+                .add("approved", approved)
                 .toString();
     }
 }
