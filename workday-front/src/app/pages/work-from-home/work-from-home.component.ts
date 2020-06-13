@@ -10,7 +10,6 @@ import {Referential} from "../../shared/models/referential.model";
 import {dateDifference, formatDate, parseDate} from "../../shared/utils/utils";
 import {WorkFromHomeMessagingService} from "../../shared/services/websocket/work-from-home.service";
 import {Notification} from "../../shared/models/notification.model";
-import {Holiday} from "../../shared/models/holiday.model";
 import {NavbarService} from "../../shared/components/navbar/navbar.service";
 import {NotificationService} from "../../shared/services/notification/notification.service";
 
@@ -62,9 +61,18 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
       this.createWorkfromHomeForm();
       if (!this.workFromHomeMessagingService.stompClient.connected) {
         this.workFromHomeMessagingService.stompClient.connect({}, () => {
-          this.workFromHomeMessagingService.stompClient.subscribe('/topic/employee/workFromHomeRequest', (data) => {
+          this.workFromHomeMessagingService.stompClient.subscribe('/topic/employee/workFromHome', (data) => {
             const workFromHome: WorkFromHome = JSON.parse(data.body).body;
             this.workFromHome = workFromHome;
+
+            this.workFromHomeFormGroup.controls.startDateDay1
+              .setValue(this.workFromHome.startDateDay1 ? formatDate(this.workFromHome.startDateDay1) : '');
+            this.workFromHomeFormGroup.controls.startDateDay1.updateValueAndValidity();
+
+            this.workFromHomeFormGroup.controls.startDateDay2
+              .setValue(this.workFromHome.startDateDay2 ? formatDate(this.workFromHome.startDateDay2) : '');
+            this.workFromHomeFormGroup.controls.startDateDay2.updateValueAndValidity();
+
             setTimeout(function () {
               $('.selectpicker').selectpicker();
 
@@ -110,8 +118,8 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
 
             const notification = new Notification();
             if (this.notifications && this.navbarService.getStoredEmployeeNotifications().value.length === 0) {
-              const lastId = Math.max.apply(null, this.notifications.map(item => item.id)) ;
-              notification.id =  lastId + 1;
+              const lastId = Math.max.apply(null, this.notifications.map(item => item.id));
+              notification.id = lastId + 1;
             } else if (this.notifications) {
               const lastId = Math.max.apply(null, this.navbarService.getStoredEmployeeNotifications().value.map(item => item.id));
               notification.id = lastId + 1;
@@ -121,63 +129,12 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
             notification.employee = this.employee;
             notification.active = true;
             this.notificationService.putNotification(notification)
-              .subscribe( data => {
+              .subscribe(data => {
                 this.navbarService.getStoredEmployeeNotifications().value.push(notification);
                 this.navbarService.setEmployeeNotifications(this.navbarService.getStoredEmployeeNotifications().value);
               });
           });
         });
-      } else {
-        this.workFromHomeMessagingService.stompClient.subscribe('/topic/employee/workFromHomeRequest', (data) => {
-          const workFromHome: WorkFromHome = JSON.parse(data.body).body;
-          this.workFromHome = workFromHome;
-          setTimeout(function () {
-            $('.selectpicker').selectpicker();
-
-            $('#dayOfWeekDay1').selectpicker('val', workFromHome.dayOfWeekDay1?.label);
-            $('#dayOfWeekDay1').selectpicker('refresh');
-
-            $('#dayOfWeekDay2').selectpicker('val', workFromHome.dayOfWeekDay2?.label);
-            $('#dayOfWeekDay2').selectpicker('refresh');
-
-          }, 200);
-
-          if (workFromHome.potentialDayOfWeekDay1 || workFromHome.potentialDayOfWeekDay2) {
-            setTimeout(function () {
-              $('#dayOfWeekDay1').selectpicker('val', workFromHome.dayOfWeekDay1?.label);
-              $('#dayOfWeekDay1').prop("disabled", true);
-              $('#dayOfWeekDay1').selectpicker('refresh');
-
-            }, 200);
-          }
-
-          if (workFromHome.potentialDayOfWeekDay1 || workFromHome.potentialDayOfWeekDay2) {
-            setTimeout(function () {
-              $('#dayOfWeekDay2').selectpicker('val', workFromHome.dayOfWeekDay2?.label);
-              $('#dayOfWeekDay2').prop("disabled", true);
-              $('#dayOfWeekDay2').selectpicker('refresh');
-
-            }, 200);
-          }
-
-          const notification = new Notification();
-          if (this.notifications && this.navbarService.getStoredEmployeeNotifications().value.length === 0) {
-            const lastId = Math.max.apply(null, this.notifications.map(item => item.id)) ;
-            notification.id =  lastId + 1;
-          } else if (this.notifications) {
-            const lastId = Math.max.apply(null, this.navbarService.getStoredEmployeeNotifications().value.map(item => item.id));
-            notification.id = lastId + 1;
-          }
-
-          notification.message = 'Cererea ta pentru Work From Home a fost ' + (workFromHome.approved ? 'aprobată' : 'respinsă') + '.';
-          notification.employee = this.employee;
-          notification.active = true;
-          this.notificationService.putNotification(notification)
-            .subscribe( data => {
-              this.navbarService.getStoredEmployeeNotifications().value.push(notification);
-              this.navbarService.setEmployeeNotifications(this.navbarService.getStoredEmployeeNotifications().value);
-            });
-         });
       }
     });
   }
@@ -318,13 +275,8 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
             }, 200);
           }
         }, complete: () => {
-            if (!this.workFromHomeMessagingService.stompClient.connected) {
-              this.workFromHomeMessagingService.stompClient.connect({}, () => {
-                this.workFromHomeMessagingService.sendWorkFromHomeRequest(this.workFromHome.employee.managerId);
-              });
-            } else {
-              this.workFromHomeMessagingService.sendWorkFromHomeRequest(this.workFromHome.employee.managerId);
-            }
+          console.log("S-a salvat un wfh");
+          this.workFromHomeMessagingService.sendWorkFromHomeRequest(this.workFromHome.employee.managerId);
         }
       });
   }

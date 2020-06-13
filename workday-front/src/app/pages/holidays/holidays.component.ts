@@ -71,9 +71,8 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
           this.notifications = data[2] as Array<Notification>;
           this.createHolidayForm();
 
-          if (!this.holidaysMessagingService.stompClient.connected) {
             this.holidaysMessagingService.stompClient.connect({}, () => {
-              this.holidaysMessagingService.stompClient.subscribe('/topic/employee/holidayRequest', (data) => {
+              this.holidaysMessagingService.stompClient.subscribe('/topic/employee/holiday', (data) => {
                 const holiday: Holiday = JSON.parse(data.body).body;
                 this.holidays = this.holidays.filter(h => h.id !== holiday.id);
                 this.holidays.push(holiday);
@@ -98,32 +97,6 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
                   });
               });
             });
-          } else {
-            this.holidaysMessagingService.stompClient.subscribe('/topic/employee/holidayRequest', (data) => {
-              const holiday: Holiday = JSON.parse(data.body).body;
-              this.holidays = this.holidays.filter(h => h.id !== holiday.id);
-              this.holidays.push(holiday);
-              const notification = new Notification();
-              if (this.notifications && this.navbarService.getStoredEmployeeNotifications().value.length === 0) {
-                const lastId = Math.max.apply(null, this.notifications.map(item => item.id)) ;
-                notification.id = lastId + 1;
-              } else if (this.notifications) {
-                const lastId = Math.max.apply(null, this.navbarService.getStoredEmployeeNotifications().value.map(item => item.id));
-                notification.id = lastId + 1;
-              }
-
-              notification.message = 'Cererea ta de concediu pentru ' +
-                (new Date(holiday.fromDate).getTime() === new Date(holiday.toDate).getTime() ? formatDate(holiday.toDate) : 'perioada '
-                  + holiday.fromDate + ' - ' + holiday.toDate) + ' a fost ' + (holiday.approved ? 'aprobată' : 'respinsă') + '.';
-              notification.employee = this.employee;
-              notification.active = true;
-              this.notificationService.putNotification(notification)
-                .subscribe( data => {
-                  this.navbarService.getStoredEmployeeNotifications().value.push(notification);
-                  this.navbarService.setEmployeeNotifications(this.navbarService.getStoredEmployeeNotifications().value);
-                });
-            });
-          }
         }, complete: () => {
           this.populateHolidayMapsByMonth();
         }
@@ -246,14 +219,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
           this.holidays = data as Array<Holiday>;
           this.populateHolidayMapsByMonth();
         }, complete: () => {
-
-          if (!this.holidaysMessagingService.stompClient.connected) {
-            this.holidaysMessagingService.stompClient.connect({}, () => {
-              this.holidaysMessagingService.sendHolidayRequest(this.employee.managerId);
-            });
-          } else {
-            this.holidaysMessagingService.sendHolidayRequest(this.employee.managerId);
-          }
+          this.holidaysMessagingService.sendHolidayRequest(this.employee.managerId);
         }
       });
     });
