@@ -73,7 +73,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
           if (!this.holidaysMessagingService.stompClient.connected) {
             this.holidaysMessagingService.stompClient.connect({}, () => {
-              this.holidaysMessagingService.stompClient.subscribe('/topic/employee', (data) => {
+              this.holidaysMessagingService.stompClient.subscribe('/topic/employee/holidayRequest', (data) => {
                 const holiday: Holiday = JSON.parse(data.body).body;
                 this.holidays = this.holidays.filter(h => h.id !== holiday.id);
                 this.holidays.push(holiday);
@@ -99,15 +99,15 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
               });
             });
           } else {
-            this.holidaysMessagingService.stompClient.subscribe('/topic/employee', (data) => {
+            this.holidaysMessagingService.stompClient.subscribe('/topic/employee/holidayRequest', (data) => {
               const holiday: Holiday = JSON.parse(data.body).body;
               this.holidays = this.holidays.filter(h => h.id !== holiday.id);
               this.holidays.push(holiday);
               const notification = new Notification();
-              if (this.navbarService.getStoredEmployeeNotifications().value.length === 0) {
+              if (this.notifications && this.navbarService.getStoredEmployeeNotifications().value.length === 0) {
                 const lastId = Math.max.apply(null, this.notifications.map(item => item.id)) ;
                 notification.id = lastId + 1;
-              } else {
+              } else if (this.notifications) {
                 const lastId = Math.max.apply(null, this.navbarService.getStoredEmployeeNotifications().value.map(item => item.id));
                 notification.id = lastId + 1;
               }
@@ -246,7 +246,14 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
           this.holidays = data as Array<Holiday>;
           this.populateHolidayMapsByMonth();
         }, complete: () => {
-          this.holidaysMessagingService.sendHolidayRequest(this.employee.managerId);
+
+          if (!this.holidaysMessagingService.stompClient.connected) {
+            this.holidaysMessagingService.stompClient.connect({}, () => {
+              this.holidaysMessagingService.sendHolidayRequest(this.employee.managerId);
+            });
+          } else {
+            this.holidaysMessagingService.sendHolidayRequest(this.employee.managerId);
+          }
         }
       });
     });

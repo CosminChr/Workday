@@ -18,14 +18,14 @@ public class HolidayMessagingController {
         this.holidayService = holidayService;
     }
 
-    @MessageMapping("/employee")
-    @SendTo("/topic/manager")
+    @MessageMapping("/employee/holiday")
+    @SendTo("/topic/manager/holidayRequest")
     public ResponseEntity<List<HolidayDTO>> sendHolidayRequest(final String managerId) {
         return ResponseEntity.ok(holidayService.getHolidaysHandledByManager(Long.parseLong(managerId)));
     }
 
-    @MessageMapping("/manager")
-    @SendTo("/topic/employee")
+    @MessageMapping("/manager/holiday")
+    @SendTo("/topic/employee/holidayRequest")
     public ResponseEntity<HolidayDTO> handleHolidayRequest(final String holidayId) {
         return ResponseEntity.ok(holidayService.getHoliday(Long.parseLong(holidayId)));
     }

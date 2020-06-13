@@ -16,8 +16,9 @@
             <column name="day_of_week_2_id" type="bigint"/>
             <column name="potential_day_of_week_1_id" type="bigint"/>
             <column name="potential_day_of_week_2_id" type="bigint"/>
-            <column name="last_initiation_date" type="date"/>
-            <column name="last_approval_date" type="date"/>
+            <column name="last_initiation_date" type="timestamp"/>
+            <column name="last_processing_date" type="timestamp"/>
+            <column name="approved" type="boolean"/>
         </createTable>
     </changeSet>
 

@@ -8,6 +8,11 @@ import {WorkFromHome} from "../../shared/models/work-from-home.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Referential} from "../../shared/models/referential.model";
 import {dateDifference, formatDate, parseDate} from "../../shared/utils/utils";
+import {WorkFromHomeMessagingService} from "../../shared/services/websocket/work-from-home.service";
+import {Notification} from "../../shared/models/notification.model";
+import {Holiday} from "../../shared/models/holiday.model";
+import {NavbarService} from "../../shared/components/navbar/navbar.service";
+import {NotificationService} from "../../shared/services/notification/notification.service";
 
 declare var $: any;
 
@@ -26,13 +31,19 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
 
   workFromHomeFormGroup: FormGroup;
 
-  initialDayOfWeekDay1: string;
+  currentDayOfWeekDay1: string;
 
-  initialDayOfWeekDay2: string;
+  currentDayOfWeekDay2: string;
+
+  notifications = new Array<Notification>();
+
 
   constructor(private employeeService: EmployeeService,
               private dayOfWeekReferentialService: DayOfWeekReferentialService,
               private workFromHomeService: WorkFromHomeService,
+              private workFromHomeMessagingService: WorkFromHomeMessagingService,
+              private navbarService: NavbarService,
+              private notificationService: NotificationService,
               private formBuilder: FormBuilder) {
   }
 
@@ -42,13 +53,132 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
 
     forkJoin([
       this.workFromHomeService.getWorkFromHome(this.employee.id),
-      this.dayOfWeekReferentialService.getDayOfWeekReferentials()
+      this.dayOfWeekReferentialService.getDayOfWeekReferentials(),
+      this.notificationService.getNotificationsByEmployeeId(this.employee.id)
     ]).subscribe(data => {
       this.workFromHome = data[0] as WorkFromHome;
       this.dayOfWeekReferentials = data[1] as Array<Referential>;
+      this.notifications = data[2] as Array<Notification>;
       this.createWorkfromHomeForm();
-      this.initialDayOfWeekDay1 = this.workFromHome.dayOfWeekDay1?.label;
-      this.initialDayOfWeekDay2 = this.workFromHome.dayOfWeekDay2?.label;
+      if (!this.workFromHomeMessagingService.stompClient.connected) {
+        this.workFromHomeMessagingService.stompClient.connect({}, () => {
+          this.workFromHomeMessagingService.stompClient.subscribe('/topic/employee/workFromHomeRequest', (data) => {
+            const workFromHome: WorkFromHome = JSON.parse(data.body).body;
+            this.workFromHome = workFromHome;
+            setTimeout(function () {
+              $('.selectpicker').selectpicker();
+
+              $('#dayOfWeekDay1').selectpicker('val', workFromHome.dayOfWeekDay1?.label);
+              $('#dayOfWeekDay1').selectpicker('refresh');
+
+              $('#dayOfWeekDay2').selectpicker('val', workFromHome.dayOfWeekDay2?.label);
+              $('#dayOfWeekDay2').selectpicker('refresh');
+
+            }, 200);
+
+            if (workFromHome.potentialDayOfWeekDay1 || workFromHome.potentialDayOfWeekDay2) {
+              setTimeout(function () {
+                $('#dayOfWeekDay1').selectpicker('val', workFromHome.dayOfWeekDay1?.label);
+                $('#dayOfWeekDay1').prop("disabled", true);
+                $('#dayOfWeekDay1').selectpicker('refresh');
+
+              }, 200);
+            }
+
+            if (workFromHome.potentialDayOfWeekDay1 || workFromHome.potentialDayOfWeekDay2) {
+              setTimeout(function () {
+                $('#dayOfWeekDay2').selectpicker('val', workFromHome.dayOfWeekDay2?.label);
+                $('#dayOfWeekDay2').prop("disabled", true);
+                $('#dayOfWeekDay2').selectpicker('refresh');
+
+              }, 200);
+            }
+
+            if (!workFromHome.potentialDayOfWeekDay1 && !workFromHome.potentialDayOfWeekDay2) {
+              setTimeout(function () {
+
+                $('#dayOfWeekDay1').selectpicker('val', workFromHome.dayOfWeekDay1?.label);
+                $('#dayOfWeekDay1').prop("disabled", false);
+                $('#dayOfWeekDay1').selectpicker('refresh');
+
+                $('#dayOfWeekDay2').selectpicker('val', workFromHome.dayOfWeekDay2?.label);
+                $('#dayOfWeekDay2').prop("disabled", false);
+                $('#dayOfWeekDay2').selectpicker('refresh');
+
+              }, 200);
+            }
+
+            const notification = new Notification();
+            if (this.notifications && this.navbarService.getStoredEmployeeNotifications().value.length === 0) {
+              const lastId = Math.max.apply(null, this.notifications.map(item => item.id)) ;
+              notification.id =  lastId + 1;
+            } else if (this.notifications) {
+              const lastId = Math.max.apply(null, this.navbarService.getStoredEmployeeNotifications().value.map(item => item.id));
+              notification.id = lastId + 1;
+            }
+
+            notification.message = 'Cererea ta pentru Work From Home a fost ' + (workFromHome.approved ? 'aprobată' : 'respinsă') + '.';
+            notification.employee = this.employee;
+            notification.active = true;
+            this.notificationService.putNotification(notification)
+              .subscribe( data => {
+                this.navbarService.getStoredEmployeeNotifications().value.push(notification);
+                this.navbarService.setEmployeeNotifications(this.navbarService.getStoredEmployeeNotifications().value);
+              });
+          });
+        });
+      } else {
+        this.workFromHomeMessagingService.stompClient.subscribe('/topic/employee/workFromHomeRequest', (data) => {
+          const workFromHome: WorkFromHome = JSON.parse(data.body).body;
+          this.workFromHome = workFromHome;
+          setTimeout(function () {
+            $('.selectpicker').selectpicker();
+
+            $('#dayOfWeekDay1').selectpicker('val', workFromHome.dayOfWeekDay1?.label);
+            $('#dayOfWeekDay1').selectpicker('refresh');
+
+            $('#dayOfWeekDay2').selectpicker('val', workFromHome.dayOfWeekDay2?.label);
+            $('#dayOfWeekDay2').selectpicker('refresh');
+
+          }, 200);
+
+          if (workFromHome.potentialDayOfWeekDay1 || workFromHome.potentialDayOfWeekDay2) {
+            setTimeout(function () {
+              $('#dayOfWeekDay1').selectpicker('val', workFromHome.dayOfWeekDay1?.label);
+              $('#dayOfWeekDay1').prop("disabled", true);
+              $('#dayOfWeekDay1').selectpicker('refresh');
+
+            }, 200);
+          }
+
+          if (workFromHome.potentialDayOfWeekDay1 || workFromHome.potentialDayOfWeekDay2) {
+            setTimeout(function () {
+              $('#dayOfWeekDay2').selectpicker('val', workFromHome.dayOfWeekDay2?.label);
+              $('#dayOfWeekDay2').prop("disabled", true);
+              $('#dayOfWeekDay2').selectpicker('refresh');
+
+            }, 200);
+          }
+
+          const notification = new Notification();
+          if (this.notifications && this.navbarService.getStoredEmployeeNotifications().value.length === 0) {
+            const lastId = Math.max.apply(null, this.notifications.map(item => item.id)) ;
+            notification.id =  lastId + 1;
+          } else if (this.notifications) {
+            const lastId = Math.max.apply(null, this.navbarService.getStoredEmployeeNotifications().value.map(item => item.id));
+            notification.id = lastId + 1;
+          }
+
+          notification.message = 'Cererea ta pentru Work From Home a fost ' + (workFromHome.approved ? 'aprobată' : 'respinsă') + '.';
+          notification.employee = this.employee;
+          notification.active = true;
+          this.notificationService.putNotification(notification)
+            .subscribe( data => {
+              this.navbarService.getStoredEmployeeNotifications().value.push(notification);
+              this.navbarService.setEmployeeNotifications(this.navbarService.getStoredEmployeeNotifications().value);
+            });
+         });
+      }
     });
   }
 
@@ -68,28 +198,33 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
         }, 200);
       });
 
-    this.workFromHomeService.getWorkFromHome(this.employee.id).subscribe( (data: WorkFromHome) => {
+    this.workFromHomeService.getWorkFromHome(this.employee.id)
+      .subscribe((data: WorkFromHome) => {
 
-      if (data.dayOfWeekDay1 && data.potentialDayOfWeekDay1 &&
-        data.dayOfWeekDay1.label !== data.potentialDayOfWeekDay1.label) {
+        if (data.potentialDayOfWeekDay1 || data.potentialDayOfWeekDay2) {
+          setTimeout(function () {
+            $('#dayOfWeekDay1').selectpicker('val', data.dayOfWeekDay1?.label);
+            $('#dayOfWeekDay1').prop("disabled", true);
+            $('#dayOfWeekDay1').selectpicker('refresh');
+
+          }, 200);
+        }
+
+        if (data.potentialDayOfWeekDay1 || data.potentialDayOfWeekDay2) {
+          setTimeout(function () {
+            $('#dayOfWeekDay2').selectpicker('val', data.dayOfWeekDay2?.label);
+            $('#dayOfWeekDay2').prop("disabled", true);
+            $('#dayOfWeekDay2').selectpicker('refresh');
+
+          }, 200);
+        }
+
         setTimeout(function () {
-          $('#dayOfWeekDay1').selectpicker('val', data.dayOfWeekDay1?.label);
-          $('#dayOfWeekDay1').prop("disabled", true);
-          $('#dayOfWeekDay1').selectpicker('refresh');
+          $('#joiningDate').prop("disabled", true);
+          $('#joiningDate').selectpicker('refresh');
 
         }, 200);
-      }
-
-      if (data.dayOfWeekDay2 && data.potentialDayOfWeekDay2 &&
-        data.dayOfWeekDay2.label !== data.potentialDayOfWeekDay2.label) {
-        setTimeout(function () {
-          $('#dayOfWeekDay2').selectpicker('val', data.dayOfWeekDay2?.label);
-          $('#dayOfWeekDay2').prop("disabled", true);
-          $('#dayOfWeekDay2').selectpicker('refresh');
-
-        }, 200);
-      }
-    });
+      });
   }
 
 
@@ -98,8 +233,8 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
       'joiningDate': [this.employee.joiningDate ? formatDate(this.employee.joiningDate) : '', [Validators.required]],
       'startDateDay1': [this.workFromHome.startDateDay1 ? formatDate(this.workFromHome.startDateDay1) : '', [Validators.required]],
       'startDateDay2': [this.workFromHome.startDateDay2 ? formatDate(this.workFromHome.startDateDay2) : '', [Validators.required]],
-      'dayOfWeekDay1': [this.workFromHome.dayOfWeekDay1?.label, [Validators.required, Validators.maxLength(13)]],
-      'dayOfWeekDay2': [this.workFromHome.dayOfWeekDay2?.label, [Validators.required, Validators.minLength(13), Validators.maxLength(13)]]
+      'dayOfWeekDay1': [this.currentDayOfWeekDay1 ? this.currentDayOfWeekDay1 : this.workFromHome.dayOfWeekDay1?.label, [Validators.required, Validators.maxLength(13)]],
+      'dayOfWeekDay2': [this.currentDayOfWeekDay2 ? this.currentDayOfWeekDay2 : this.workFromHome.dayOfWeekDay2?.label, [Validators.required, Validators.minLength(13), Validators.maxLength(13)]]
     });
 
     if (!this.isStartDateDay1Eligibile() || this.workFromHome?.startDateDay1) {
@@ -127,63 +262,70 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
   }
 
   isStartDateDay1Eligibile(): boolean {
-    return Math.floor(dateDifference(this.employee.joiningDate, new Date()) / 30) >= 6;
+    return Math.floor(dateDifference(this.employee.joiningDate, new Date()) / 30) >= 6 && !this.workFromHome.potentialDayOfWeekDay1;
   }
 
   isStartDateDay2Eligibile(): boolean {
-    return Math.floor(dateDifference(this.employee.joiningDate, new Date()) / 30) >= 12;
+    return Math.floor(dateDifference(this.employee.joiningDate, new Date()) / 30) >= 12 && !this.workFromHome.potentialDayOfWeekDay2;
   }
 
   onDayOfWeekDay1Change(event) {
-    if (!this.workFromHome.potentialDayOfWeekDay1) {
-      this.workFromHome.potentialDayOfWeekDay1 = new Referential();
-    }
-
-    this.workFromHome.potentialDayOfWeekDay1.label = this.dayOfWeekReferentials[event.target.selectedIndex - 1].label;
-    this.workFromHome.dayOfWeekDay1.label = this.initialDayOfWeekDay1 ? this.initialDayOfWeekDay1 : this.workFromHome.dayOfWeekDay1.label;
+    this.currentDayOfWeekDay1 = this.dayOfWeekReferentials[event.target.selectedIndex - 1].label;
   }
 
   onDayOfWeekDay2Change(event) {
-
-    if (!this.workFromHome.potentialDayOfWeekDay2) {
-      this.workFromHome.potentialDayOfWeekDay2 = new Referential();
-    }
-
-    this.workFromHome.potentialDayOfWeekDay2.label = this.dayOfWeekReferentials[event.target.selectedIndex].label;
-    this.workFromHome.dayOfWeekDay2.label = this.initialDayOfWeekDay2 ? this.initialDayOfWeekDay2 : this.workFromHome.dayOfWeekDay2.label;
+    this.currentDayOfWeekDay2 = this.dayOfWeekReferentials[event.target.selectedIndex - 1].label;
   }
 
   putWorkFromHome() {
-    this.workFromHome.startDateDay1 = parseDate(this.workFromHomeFormGroup.controls.startDateDay1.value);
+    if (this.currentDayOfWeekDay1) {
+      this.workFromHome.potentialDayOfWeekDay1 = new Referential();
+      this.workFromHome.potentialDayOfWeekDay1.label = this.currentDayOfWeekDay1;
+    }
+    if (this.currentDayOfWeekDay2) {
+      this.workFromHome.potentialDayOfWeekDay2 = new Referential();
+      this.workFromHome.potentialDayOfWeekDay2.label = this.currentDayOfWeekDay2;
+    }
 
-    this.workFromHome.startDateDay2 = this.workFromHomeFormGroup.controls.startDateDay2.value != '' ? parseDate(this.workFromHomeFormGroup.controls.startDateDay2.value): null;
+    this.workFromHome.startDateDay1 = this.workFromHomeFormGroup.controls.startDateDay1.value != '' ? parseDate(this.workFromHomeFormGroup.controls.startDateDay1.value) : null;
+
+    this.workFromHome.startDateDay2 = this.workFromHomeFormGroup.controls.startDateDay2.value != '' ? parseDate(this.workFromHomeFormGroup.controls.startDateDay2.value) : null;
+
     this.workFromHome.employee = this.employee;
     this.workFromHome.lastInitiationDate = new Date();
 
-    this.workFromHomeService.putWorkFromHome(this.workFromHome).subscribe((data: WorkFromHome) => {
-      this.workFromHome = data;
 
+    this.workFromHomeService.putWorkFromHome(this.workFromHome)
+      .subscribe({
+        next: (data: WorkFromHome) => {
+          this.workFromHome = data;
 
-      if (this.workFromHome.dayOfWeekDay1 &&  this.workFromHome.potentialDayOfWeekDay1 &&
-        this.workFromHome.dayOfWeekDay1.label !== this.workFromHome.potentialDayOfWeekDay1.label) {
-        setTimeout(function () {
-          $('#dayOfWeekDay1').selectpicker('val', data.dayOfWeekDay1?.label);
-          $('#dayOfWeekDay1').prop("disabled", true);
-          $('#dayOfWeekDay1').selectpicker('refresh');
-        }, 200);
-      }
+          if (data.potentialDayOfWeekDay1 || data.potentialDayOfWeekDay2) {
+            setTimeout(function () {
+              $('#dayOfWeekDay1').selectpicker('val', data.dayOfWeekDay1?.label);
+              $('#dayOfWeekDay1').prop("disabled", true);
+              $('#dayOfWeekDay1').selectpicker('refresh');
 
-      if (this.workFromHome.dayOfWeekDay2 &&  this.workFromHome.potentialDayOfWeekDay2 &&
-        this.workFromHome.dayOfWeekDay2.label !== this.workFromHome.potentialDayOfWeekDay2.label) {
-        setTimeout(function () {
-          $('#dayOfWeekDay2').selectpicker('val', data.dayOfWeekDay2?.label);
-          $('#dayOfWeekDay2').prop("disabled", true);
-          $('#dayOfWeekDay2').selectpicker('refresh');
-        }, 200);
-      }
+            }, 200);
+          }
 
-    });
+          if (data.potentialDayOfWeekDay1 || data.potentialDayOfWeekDay2) {
+            setTimeout(function () {
+              $('#dayOfWeekDay2').selectpicker('val', data.dayOfWeekDay2?.label);
+              $('#dayOfWeekDay2').prop("disabled", true);
+              $('#dayOfWeekDay2').selectpicker('refresh');
+
+            }, 200);
+          }
+        }, complete: () => {
+            if (!this.workFromHomeMessagingService.stompClient.connected) {
+              this.workFromHomeMessagingService.stompClient.connect({}, () => {
+                this.workFromHomeMessagingService.sendWorkFromHomeRequest(this.workFromHome.employee.managerId);
+              });
+            } else {
+              this.workFromHomeMessagingService.sendWorkFromHomeRequest(this.workFromHome.employee.managerId);
+            }
+        }
+      });
   }
-
-
 }

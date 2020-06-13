@@ -67,7 +67,6 @@ export class NavbarComponent implements OnInit {
         this.menuItems = data[0];
         this.subMenuItems = data[1];
         this.roleReferentials = data[2] as Array<Referential>;
-        console.log(data[3]);
         if (this.isManager() && data[3]) {
           this.managerNotifications = data[3] as Array<Notification>;
         } else if (!this.isManager() && data[3]) {
@@ -142,8 +141,6 @@ export class NavbarComponent implements OnInit {
     array.forEach(notification => {
       notification.active = false;
     });
-    console.log(array);
-    console.log(array);
     this.notificationService.putNotifications(array)
       .subscribe();
   }
