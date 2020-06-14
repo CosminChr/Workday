@@ -15,5 +15,5 @@ export class Overtime {
 
   approved: boolean;
 
-  validate: boolean;
+  validated: boolean;
 }

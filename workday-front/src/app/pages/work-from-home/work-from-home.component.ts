@@ -8,7 +8,7 @@ import {WorkFromHome} from "../../shared/models/work-from-home.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Referential} from "../../shared/models/referential.model";
 import {dateDifference, formatDate, parseDate} from "../../shared/utils/utils";
-import {WorkFromHomeMessagingService} from "../../shared/services/websocket/work-from-home.service";
+import {WorkFromHomeMessagingService} from "../../shared/services/websocket/work-from-home-messaging.service";
 import {Notification} from "../../shared/models/notification.model";
 import {NavbarService} from "../../shared/components/navbar/navbar.service";
 import {NotificationService} from "../../shared/services/notification/notification.service";

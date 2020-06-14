@@ -243,5 +243,135 @@
       </div>
     </div>
   </div>
+
+  <div class="alert alert-info fade show" *ngIf="!doOvertimeRequestsThatNeedApprovalExist()">
+    <span>Nu există cereri pentru Overtime</span>
+  </div>
+  <div class="row" *ngIf="doOvertimeRequestsThatNeedApprovalExist()">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Gestionează cereri Overtime</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+                Angajat
+              </th>
+              <th>
+                Data
+              </th>
+              <th>
+                Număr ore
+              </th>
+              <th class="text-right">
+                Aprobat
+              </th>
+              <th class="text-right">
+                Validat
+              </th>
+              <th class="text-right">
+                Acțiune
+              </th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let overtime of overtimeListOfManager">
+                <td *ngIf="!overtime.validated">
+                  {{overtime.employee.firstName + ' '  + overtime.employee.lastName}}
+                </td>
+                <td *ngIf="!overtime.validated">
+                  {{formatDate(overtime.effectuationDate)}}
+                </td>
+                <td *ngIf="!overtime.validated">
+                  {{overtime.numberOfHours}}
+                </td>
+                <td class="text-right" *ngIf="!overtime.validated">
+                  {{'În așteptare'}}
+                </td>
+                <td class="text-right" *ngIf="!overtime.validated">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" [checked]="false" disabled>
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                </td>
+                <td class="text-right" *ngIf="!overtime.validated">
+                  <span class="btn btn-file btn-success btn-sm" title="Aprobă" (click)="validateOvertimeRequest(overtime)">
+                    <i class = "fa fa-check-circle"></i>
+                    <input>
+                  </span>
+                  <span class="btn btn-file btn-danger btn-sm" title = "Respinge" (click)="rejectOvertimeRequest(overtime)">
+                    <i class = "fa fa-times-circle"></i>
+                    <input>
+                  </span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Istoric cereri Overtime </h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+                Angajat
+              </th>
+              <th>
+                Data
+              </th>
+              <th>
+                Număr ore
+              </th>
+              <th>
+                Aprobat
+              </th>
+              <th>
+                Validat
+              </th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let overtime of overtimeListOfManager">
+                <td *ngIf="overtime.validated">
+                  {{overtime.employee.firstName + ' '  + overtime.employee.lastName}}
+                </td>
+                <td *ngIf="overtime.validated">
+                  {{formatDate(overtime.effectuationDate)}}
+                </td>
+                <td *ngIf="overtime.validated">
+                  {{overtime.numberOfHours}}
+                </td>
+                <td  *ngIf="overtime.validated">
+                  {{overtime.approved}}
+                </td>
+                <td  *ngIf="overtime.validated">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" [checked]="overtime.validated" disabled>
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
