@@ -1,12 +1,15 @@
 package com.cosmin.licenta.workday.service;
 
+import com.cosmin.licenta.workday.dto.HolidayDTO;
 import com.cosmin.licenta.workday.dto.OvertimeDTO;
 import com.cosmin.licenta.workday.entity.Employee;
+import com.cosmin.licenta.workday.entity.Holiday;
 import com.cosmin.licenta.workday.entity.Overtime;
 import com.cosmin.licenta.workday.mapper.OvertimeMapper;
 import com.cosmin.licenta.workday.repository.EmployeeRepository;
 import com.cosmin.licenta.workday.repository.OvertimeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -44,5 +47,29 @@ public class OvertimeService {
 
         overtimeRepository.save(overtimeMapper.domainToEntity(overtimeDTO));
         return overtimeDTO;
+    }
+
+    public OvertimeDTO getOvertime(Long overtimeId) {
+        final Optional<Overtime> overtimeOptional = overtimeRepository.findById(overtimeId);
+
+        if (overtimeOptional.isPresent()) {
+            return overtimeMapper.entityToDomain(overtimeOptional.get());
+        }
+        return null;
+    }
+
+    public List<OvertimeDTO> getOvertimeHandledByManager(Long managerId) {
+
+        final Optional<Employee> manager = employeeRepository.findById(managerId);
+
+        if (manager.isPresent()) {
+            final Optional<List<Overtime>> overtimeListByManagerId = overtimeRepository.findByManagerId(manager.get().getId());
+
+            if (overtimeListByManagerId.isPresent() && !CollectionUtils.isEmpty(overtimeListByManagerId.get())) {
+                return overtimeMapper.entitiesToDomains(overtimeListByManagerId.get());
+            }
+        }
+
+        return null;
     }
 }

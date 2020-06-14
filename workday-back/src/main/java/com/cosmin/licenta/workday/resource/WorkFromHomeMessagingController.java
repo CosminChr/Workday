@@ -21,7 +21,7 @@ public class WorkFromHomeMessagingController {
     @MessageMapping("/employee/workFromHome")
     @SendTo("/topic/manager/workFromHome")
     public ResponseEntity<List<WorkFromHomeDTO>> sendWorkFromHomeRequest(final String managerId) {
-        return ResponseEntity.ok(workFromHomeService.getWorkFromHomeHandledByManager(Long.parseLong(managerId)));
+        return ResponseEntity.ok(workFromHomeService.getWorkFromHomeForEmployeesOfManager(Long.parseLong(managerId)));
     }
 
     @MessageMapping("/manager/workFromHome")

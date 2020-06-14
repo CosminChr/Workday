@@ -12,7 +12,10 @@ import {HolidaysMessagingService} from "../../shared/services/websocket/holidays
 import {WorkFromHomeService} from "../work-from-home/work-from-home.service";
 import {WorkFromHome} from "../../shared/models/work-from-home.model";
 import {Referential} from "../../shared/models/referential.model";
-import {WorkFromHomeMessagingService} from "../../shared/services/websocket/work-from-home.service";
+import {WorkFromHomeMessagingService} from "../../shared/services/websocket/work-from-home-messaging.service";
+import {Overtime} from "../../shared/models/overtime.model";
+import {OvertimeService} from "../overtime/overtime.service";
+import {OvertimeMessagingService} from "../../shared/services/websocket/overtime-messaging.service";
 
 declare var $: any;
 
@@ -33,78 +36,102 @@ export class HandleRequestsComponent implements OnInit {
 
   workFromHomeListOfManager: Array<WorkFromHome>;
 
+  overtimeListOfManager: Array<Overtime>;
+
   constructor(private employeeService: EmployeeService,
               private holidayService: HolidaysService,
               private holidaysMessagingService: HolidaysMessagingService,
               private workFromHomeMessagingService: WorkFromHomeMessagingService,
               private navbarService: NavbarService,
               private notificationService: NotificationService,
-              private workFromHomeService: WorkFromHomeService) {
+              private workFromHomeService: WorkFromHomeService,
+              private overtimeService: OvertimeService,
+              private overtimeMessagingService: OvertimeMessagingService) {
   }
 
   ngOnInit() {
 
     this.employee = this.employeeService.getSavedEmployee();
 
-      forkJoin([
-        this.employeeService.getEmployeesByManagerId(this.employee.managerId),
-        this.notificationService.getNotificationsByEmployeeId(this.employee.id),
-        this.workFromHomeService.getWorkFromHomeForEmployeesOfManager(this.employee.managerId)
-      ])
-        .subscribe(data => {
-          this.employeesOfManager = data[0] as Array<Employee>;
-          this.notifications = data[1] as Array<Notification>;
-          this.workFromHomeListOfManager = data[2] as Array<WorkFromHome>;
-          this.holidayService.getHolidaysForEmployees(this.employeesOfManager)
-            .subscribe(
-              data => {
-                this.holidays = data;
-                  this.holidaysMessagingService.stompClient.connect({}, () => {
-                    this.holidaysMessagingService.stompClient.subscribe('/topic/manager/holiday', (data) => {
-                      this.holidays = JSON.parse(data.body).body;
-                      const notification = new Notification();
-                      if (this.notifications && this.navbarService.getStoredManagerNotifications().value.length === 0) {
-                        const lastId = Math.max.apply(null, this.notifications.map(item => item.id));
-                        notification.id = lastId + 1;
-                      } else if (this.notifications) {
-                        const lastId = Math.max.apply(null, this.navbarService.getStoredManagerNotifications().value.map(item => item.id));
-                        notification.id = lastId + 1;
-                      }
+    forkJoin([
+      this.employeeService.getEmployeesByManagerId(this.employee.managerId),
+      this.notificationService.getNotificationsByEmployeeId(this.employee.id),
+      this.workFromHomeService.getWorkFromHomeForEmployeesOfManager(this.employee.managerId),
+      this.overtimeService.getOvertimeForEmployeesOfManager(this.employee.managerId)
+    ])
+      .subscribe(data => {
+        this.employeesOfManager = data[0] as Array<Employee>;
+        this.notifications = data[1] as Array<Notification>;
+        this.workFromHomeListOfManager = data[2] as Array<WorkFromHome>;
+        this.overtimeListOfManager = data[3] as Array<Overtime>;
 
-                      const receivedHolidayRequest: Holiday = this.holidays.reduce((prev, current) => (+prev.id > +current.id) ? prev : current);
-                      notification.message = 'Ai primit o nouă cerere de aprobare concediu de la '
-                        + receivedHolidayRequest.employee.firstName + ' ' + receivedHolidayRequest.employee.lastName + '.';
-                      notification.employee = this.employee;
-                      notification.active = true;
-                      this.notificationService.putNotification(notification)
-                        .subscribe();
-                      this.navbarService.getStoredManagerNotifications().value.push(notification);
-                      this.navbarService.setManagerNotifications(this.navbarService.getStoredManagerNotifications().value);
-                    });
+        this.holidaysMessagingService.stompClient.connect({}, () => {
+          this.holidaysMessagingService.stompClient.subscribe('/topic/manager/holiday', (data) => {
+            this.holidays = JSON.parse(data.body).body;
+            const notification = new Notification();
+            if (this.notifications && this.navbarService.getStoredManagerNotifications().value.length === 0) {
+              const lastId = Math.max.apply(null, this.notifications.map(item => item.id));
+              notification.id = lastId + 1;
+            } else if (this.notifications) {
+              const lastId = Math.max.apply(null, this.navbarService.getStoredManagerNotifications().value.map(item => item.id));
+              notification.id = lastId + 1;
+            }
 
-                    this.workFromHomeMessagingService.stompClient.subscribe('/topic/manager/workFromHome', (data) => {
-                      this.workFromHomeListOfManager = JSON.parse(data.body).body;
-                      const notification = new Notification();
-                      if (this.notifications && this.navbarService.getStoredManagerNotifications().value.length === 0) {
-                        const lastId = Math.max.apply(null, this.notifications.map(item => item.id)) ;
-                        notification.id =  lastId + 1;
-                      } else if (this.notifications) {
-                        const lastId = Math.max.apply(null, this.navbarService.getStoredManagerNotifications().value.map(item => item.id));
-                        notification.id = lastId + 1;
-                      }
-                      const receivedWorkFromHomeRequest: WorkFromHome = this.workFromHomeListOfManager[0];
-                      notification.message = 'Ai primit o nouă cerere de aprobare Work From Home de la '
-                        + receivedWorkFromHomeRequest.employee.firstName + ' ' + receivedWorkFromHomeRequest.employee.lastName + '.';
-                      notification.employee = this.employee;
-                      notification.active = true;
-                      this.notificationService.putNotification(notification)
-                        .subscribe();
-                      this.navbarService.getStoredManagerNotifications().value.push(notification);
-                      this.navbarService.setManagerNotifications(this.navbarService.getStoredManagerNotifications().value);
-                    });
-                  });
-              });
+            const receivedHolidayRequest: Holiday = this.holidays.reduce((prev, current) => (+prev.id > +current.id) ? prev : current);
+            notification.message = 'Ai primit o nouă cerere de aprobare concediu de la '
+              + receivedHolidayRequest.employee.firstName + ' ' + receivedHolidayRequest.employee.lastName + '.';
+            notification.employee = this.employee;
+            notification.active = true;
+            this.notificationService.putNotification(notification)
+              .subscribe();
+            this.navbarService.getStoredManagerNotifications().value.push(notification);
+            this.navbarService.setManagerNotifications(this.navbarService.getStoredManagerNotifications().value);
+          });
+
+          this.workFromHomeMessagingService.stompClient.subscribe('/topic/manager/workFromHome', (data) => {
+            this.workFromHomeListOfManager = JSON.parse(data.body).body;
+            const notification = new Notification();
+            if (this.notifications && this.navbarService.getStoredManagerNotifications().value.length === 0) {
+              const lastId = Math.max.apply(null, this.notifications.map(item => item.id));
+              notification.id = lastId + 1;
+            } else if (this.notifications) {
+              const lastId = Math.max.apply(null, this.navbarService.getStoredManagerNotifications().value.map(item => item.id));
+              notification.id = lastId + 1;
+            }
+            const receivedWorkFromHomeRequest: WorkFromHome = this.workFromHomeListOfManager[0];
+            notification.message = 'Ai primit o nouă cerere de aprobare Work From Home de la '
+              + receivedWorkFromHomeRequest.employee.firstName + ' ' + receivedWorkFromHomeRequest.employee.lastName + '.';
+            notification.employee = this.employee;
+            notification.active = true;
+            this.notificationService.putNotification(notification)
+              .subscribe();
+            this.navbarService.getStoredManagerNotifications().value.push(notification);
+            this.navbarService.setManagerNotifications(this.navbarService.getStoredManagerNotifications().value);
+          });
+
+          this.overtimeMessagingService.stompClient.subscribe('/topic/manager/overtime', (data) => {
+            this.overtimeListOfManager = JSON.parse(data.body).body;
+            const notification = new Notification();
+            if (this.notifications && this.navbarService.getStoredManagerNotifications().value.length === 0) {
+              const lastId = Math.max.apply(null, this.notifications.map(item => item.id));
+              notification.id = lastId + 1;
+            } else if (this.notifications) {
+              const lastId = Math.max.apply(null, this.navbarService.getStoredManagerNotifications().value.map(item => item.id));
+              notification.id = lastId + 1;
+            }
+            const overtimeRequest: Overtime = this.overtimeListOfManager[0];
+            notification.message = 'Ai primit o nouă cerere de aprobare Overtime de la '
+              + overtimeRequest.employee.firstName + ' ' + overtimeRequest.employee.lastName + '.';
+            notification.employee = this.employee;
+            notification.active = true;
+            this.notificationService.putNotification(notification)
+              .subscribe();
+            this.navbarService.getStoredManagerNotifications().value.push(notification);
+            this.navbarService.setManagerNotifications(this.navbarService.getStoredManagerNotifications().value);
+          });
         });
+
+      });
   }
 
   formatDate(date: Date): string {
@@ -140,7 +167,7 @@ export class HandleRequestsComponent implements OnInit {
   updateHoliday(holiday: Holiday) {
     this.holidayService.putHoliday(holiday)
       .subscribe({
-        complete : () => {
+        complete: () => {
           this.holidaysMessagingService.handleHolidayRequest(holiday.id);
         }
       });
@@ -188,13 +215,41 @@ export class HandleRequestsComponent implements OnInit {
   updateWorkFromHome(workFromHome: WorkFromHome) {
     this.workFromHomeService.putWorkFromHome(workFromHome)
       .subscribe({
-        complete : () => {
-           this.workFromHomeMessagingService.handleWorkFromHomeRequest(workFromHome.id);
+        complete: () => {
+          this.workFromHomeMessagingService.handleWorkFromHomeRequest(workFromHome.id);
         }
       });
   }
 
   needsApproval(initiationDate, processingDate): boolean {
     return new Date(initiationDate).getTime() > new Date(processingDate).getTime();
+  }
+
+  doOvertimeRequestsThatNeedApprovalExist(): boolean {
+    if (this.overtimeListOfManager) {
+      return this.overtimeListOfManager.map(overtime => overtime.validated).filter(validated => validated !== true).length !== 0;
+    }
+    return false;
+  }
+
+  validateOvertimeRequest(overtime: Overtime) {
+    overtime.approved = true;
+    overtime.validated = true;
+    this.updateOvertime(overtime);
+  }
+
+  rejectOvertimeRequest(overtime: Overtime) {
+    overtime.approved = false;
+    overtime.validated = true;
+    this.updateOvertime(overtime);
+  }
+
+  updateOvertime(overtime: Overtime) {
+    this.overtimeService.putOvertime(overtime)
+      .subscribe({
+        complete: () => {
+          this.overtimeMessagingService.handleOvertimeRequest(overtime.id);
+        }
+      });
   }
 }

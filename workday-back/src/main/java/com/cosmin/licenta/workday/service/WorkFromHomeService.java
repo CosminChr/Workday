@@ -88,19 +88,4 @@ public class WorkFromHomeService {
 
         return null;
     }
-
-    @Transactional
-    public List<WorkFromHomeDTO> getWorkFromHomeHandledByManager(Long managerId) {
-
-            final Optional<Employee> manager = employeeRepository.findById(managerId);
-
-            if (manager.isPresent()) {
-                final Optional<List<WorkFromHome>> workFromHomeByManagerId = workFromHomeRepository.findByManagerId(manager.get().getId());
-
-                if (workFromHomeByManagerId.isPresent() && !CollectionUtils.isEmpty(workFromHomeByManagerId.get())) {
-                    return workFromHomeMapper.entitiesToDomains(workFromHomeByManagerId.get());
-                }
-        }
-        return null;
-    }
 }
