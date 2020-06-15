@@ -1,4 +1,4 @@
-package com.cosmin.licenta.workday.dto.response;
+package com.cosmin.licenta.workday.dto;
 
 import com.cosmin.licenta.workday.entity.SubMenuItem;
 import org.springframework.lang.Nullable;

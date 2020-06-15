@@ -1,4 +1,4 @@
-package com.cosmin.licenta.workday.dto.response;
+package com.cosmin.licenta.workday.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

@@ -7,4 +7,5 @@ path;name;collapse;icon_name
 /overtime;Overtime;null;nc-user-run
 /companyJobs;Joburile Companiei;null;nc-badge
 /handleRequests;Gestionează Cereri;null;nc-paper
-
+/employees;Angajați;null;nc-circle-10
+/reports;Rapoarte;null;nc-chart-bar-32

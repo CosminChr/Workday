@@ -3,7 +3,9 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 
-const MENU_API = 'menu/menuItems/';
+const MENU_API_EMPLOYEE = 'menu/menuItems/employee/';
+
+const MENU_API_ADMIN = 'menu/menuItems/admin/';
 
 const SUB_MENU_API = 'menu/subMenuItems/';
 
@@ -17,8 +19,12 @@ export class SidebarService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public getMenuItems(employeeId: number): Observable<any> {
-    return this.httpClient.get<any>(MENU_API + employeeId);
+  public getMenuItemsForEmployee(employeeId: number): Observable<any> {
+    return this.httpClient.get<any>(MENU_API_EMPLOYEE + employeeId);
+  }
+
+  public getMenuItemsForAdmin(adminId: number): Observable<any> {
+    return this.httpClient.get<any>(MENU_API_ADMIN + adminId);
   }
 
   public getSubMenuItems(): Observable<any> {

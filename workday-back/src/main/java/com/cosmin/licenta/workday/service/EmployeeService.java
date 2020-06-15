@@ -102,4 +102,8 @@ public class EmployeeService {
         }
         return null;
     }
+
+    public List<EmployeeDTO> getEmployees() {
+        return employeeMapper.entitiesToDomains(employeeRepository.findAll());
+    }
 }

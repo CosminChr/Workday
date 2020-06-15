@@ -39,7 +39,13 @@ export const WorkdayRoutes: Routes = [{
   }, {
     path: 'register',
     loadChildren: './pages/register/register.module#RegisterModule'
-  }
+  }, {
+    path: 'employees',
+    loadChildren: './pages/employees/employees.module#EmployeesModule'
+  }, {
+    path: 'reports',
+    loadChildren: './pages/reports/reports.module#ReportsModule'
+  },
   ]
 }
 ];

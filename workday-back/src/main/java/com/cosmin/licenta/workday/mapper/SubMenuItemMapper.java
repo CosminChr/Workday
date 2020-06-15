@@ -1,6 +1,6 @@
 package com.cosmin.licenta.workday.mapper;
 
-import com.cosmin.licenta.workday.dto.response.SubMenuItemDTO;
+import com.cosmin.licenta.workday.dto.SubMenuItemDTO;
 import com.cosmin.licenta.workday.entity.SubMenuItem;
 import org.mapstruct.Mapper;
 
