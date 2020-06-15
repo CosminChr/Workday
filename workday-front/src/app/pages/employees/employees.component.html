@@ -13,10 +13,7 @@
             <table class="table">
               <thead class="">
               <th>
-                Nume
-              </th>
-              <th>
-                Prenume
+                Angajat
               </th>
               <th>
                 Departament
@@ -31,10 +28,7 @@
               <tbody>
               <tr *ngFor="let employee of employees">
                 <td>
-                  {{employee.lastName}}
-                </td>
-                <td>
-                  {{employee.firstName}}
+                  {{employee.firstName + ' ' + employee.lastName}}
                 </td>
                 <td>
                   {{employee.department.label}}
