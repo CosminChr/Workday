@@ -51,5 +51,9 @@ export class EmployeeService {
     return this.http.get<Employee>(MANAGER_API + managerId);
   }
 
+  getEmployees(): Observable<Array<Employee>> {
+    return this.http.get<Array<Employee>>(EMPLOYEE_API);
+  }
+
 
 }

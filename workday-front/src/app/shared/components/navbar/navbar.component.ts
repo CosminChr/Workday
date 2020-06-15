@@ -58,7 +58,7 @@ export class NavbarComponent implements OnInit {
     this.employee = this.tokenStorageService.getUser();
 
     forkJoin([
-      this.sidebarService.getMenuItems(this.employee.id),
+      this.sidebarService.getMenuItemsForEmployee(this.employee.id),
       this.sidebarService.getSubMenuItems(),
       this.roleReferentialService.getRoleReferentialsForEmployee(this.employee.id),
       this.notificationService.getNotificationsByEmployeeId(this.employee.id)

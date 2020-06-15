@@ -1,17 +1,10 @@
 package com.cosmin.licenta.workday.resource;
 
 import com.cosmin.licenta.workday.dto.EmployeeDTO;
-import com.cosmin.licenta.workday.dto.response.MenuItemDTO;
-import com.cosmin.licenta.workday.dto.response.SubMenuItemDTO;
-import com.cosmin.licenta.workday.entity.Employee;
 import com.cosmin.licenta.workday.service.EmployeeService;
-import com.cosmin.licenta.workday.service.MenuItemService;
-import com.cosmin.licenta.workday.service.SubMenuItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -44,5 +37,10 @@ public class EmployeeController {
     @GetMapping("/manager/{managerId}")
     public ResponseEntity<EmployeeDTO> getManager(@PathVariable(name = "managerId") final Long managerId) {
         return ResponseEntity.ok(employeeService.getManager(managerId));
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<EmployeeDTO>> getEmployees() {
+        return ResponseEntity.ok(employeeService.getEmployees());
     }
 }

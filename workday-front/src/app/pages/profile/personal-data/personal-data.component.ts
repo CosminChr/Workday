@@ -7,6 +7,8 @@ import {Referential} from "../../../shared/models/referential.model";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
 import {DepartmentReferentialService} from "./department-referential.service";
 import {forkJoin} from "rxjs";
+import {Admin} from "../../../shared/models/admin.model";
+import {Router, RouterModule} from "@angular/router";
 
 declare var $: any;
 
@@ -30,41 +32,48 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
   constructor(private employeeService: EmployeeService,
               private tokenStorageService: TokenStorageService,
               private departmentReferentialService: DepartmentReferentialService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private router: Router) {
   }
 
 
   ngOnInit() {
 
-    forkJoin([
-      this.employeeService.getEmployee(this.tokenStorageService.getUser().username),
-      this.departmentReferentialService.getDepartmentReferentials()
-    ])
-      .subscribe( data =>{
-        this.employee = data[0] as Employee;
-        this.employeeService.setStoredEmployee(this.employee);
-        this.departmentReferentials = data[1] as Array<Referential>;
-        this.personalDataForm = this.createPersonalDataForm();
+    if (this.tokenStorageService.getUser().roles.filter(role => role === 'Admin').length === 0) {
+      forkJoin([
+        this.employeeService.getEmployee(this.tokenStorageService.getUser().username),
+        this.departmentReferentialService.getDepartmentReferentials()
+      ])
+        .subscribe(data => {
+          this.employee = data[0] as Employee;
+          this.employeeService.setStoredEmployee(this.employee);
+          this.departmentReferentials = data[1] as Array<Referential>;
+          this.personalDataForm = this.createPersonalDataForm();
 
-        this.employeeService.getManager(this.employee.managerId)
-          .subscribe(
-            data => {
-              this.manager = data;
-              this.employeeDataForm = this.createEmployeeDataForm();
-              this.employeeDataForm = this.populateEmployeeDataForm();
-            }
-          )
-      });
+          this.employeeService.getManager(this.employee.managerId)
+            .subscribe(
+              data => {
+                this.manager = data;
+                this.employeeDataForm = this.createEmployeeDataForm();
+                this.employeeDataForm = this.populateEmployeeDataForm();
+              }
+            )
+        });
+    } else {
+      this.router.navigate(['/employees']);
+    }
   }
 
   ngAfterViewInit(): void {
-    this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe( data =>{
-      setTimeout(function () {
-        $('.selectpicker').selectpicker();
-        $('.selectpicker').selectpicker('val', data.department?.label);
-        $('.selectpicker').selectpicker('refresh');
-      }, 100);
-    });
+    if (this.tokenStorageService.getUser().roles.filter(role => role === 'Admin').length === 0) {
+      this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe(data => {
+        setTimeout(function () {
+          $('.selectpicker').selectpicker();
+          $('.selectpicker').selectpicker('val', data.department?.label);
+          $('.selectpicker').selectpicker('refresh');
+        }, 100);
+      });
+    }
   }
 
   createPersonalDataForm(): FormGroup {

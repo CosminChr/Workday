@@ -1,10 +1,9 @@
 package com.cosmin.licenta.workday.resource;
 
-import com.cosmin.licenta.workday.dto.response.MenuItemDTO;
-import com.cosmin.licenta.workday.dto.response.SubMenuItemDTO;
+import com.cosmin.licenta.workday.dto.MenuItemDTO;
+import com.cosmin.licenta.workday.dto.SubMenuItemDTO;
 import com.cosmin.licenta.workday.service.MenuItemService;
 import com.cosmin.licenta.workday.service.SubMenuItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +23,14 @@ public class MenuController {
         this.subMenuItemService = subMenuItemService;
     }
 
-    @GetMapping("/menuItems/{employeeId}")
-    public ResponseEntity<List<MenuItemDTO>> getMenuItems(@PathVariable(name = "employeeId") final Long employeeId) {
-        return ResponseEntity.ok(menuItemService.getMenuItems(employeeId));
+    @GetMapping("/menuItems/employee/{employeeId}")
+    public ResponseEntity<List<MenuItemDTO>> getMenuItemsForEmployee(@PathVariable(name = "employeeId") final Long employeeId) {
+        return ResponseEntity.ok(menuItemService.getMenuItemsForEmployee(employeeId));
+    }
+
+    @GetMapping("/menuItems/admin/{adminId}")
+    public ResponseEntity<List<MenuItemDTO>> getMenuItemsForAdmin(@PathVariable(name = "adminId") final Long adminId) {
+        return ResponseEntity.ok(menuItemService.getMenuItemsForAdmin(adminId));
     }
 
     @GetMapping("/subMenuItems")

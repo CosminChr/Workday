@@ -1,0 +1,67 @@
+<div class="main-content">
+  <div class="alert alert-info fade show" *ngIf="!doEmployeesExist()">
+    <span>Nu există cereri de concediu</span>
+  </div>
+  <div class="row" *ngIf="doEmployeesExist()">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Gestionează angajați </h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="">
+              <th>
+                Nume
+              </th>
+              <th>
+                Prenume
+              </th>
+              <th>
+                Departament
+              </th>
+              <th>
+                Funcție
+              </th>
+              <th class="text-right">
+                Acțiune
+              </th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let employee of employees">
+                <td>
+                  {{employee.lastName}}
+                </td>
+                <td>
+                  {{employee.firstName}}
+                </td>
+                <td>
+                  {{employee.department.label}}
+                </td>
+                <td>
+                  {{employee.jobPosition.label}}
+                </td>
+                <td class="text-right">
+                  <span class="btn btn-file btn-primary btn-sm" title="Modifică date angajat" (click)="updateEmployee(employee)">
+                    <i class = "fa fa-pencil-square-o"></i>
+                    <input>
+                  </span>
+                  <span class="btn btn-file btn-danger btn-sm" title = "Șterge angajat" (click)="deleteEmployee(employee)">
+                    <i class = "fa fa-times-circle"></i>
+                    <input>
+                  </span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-right">
+    <button type="submit" class="btn btn-outline-danger btn-round mb-3">Adaugă angajat</button>
+  </div>
+</div>
+
