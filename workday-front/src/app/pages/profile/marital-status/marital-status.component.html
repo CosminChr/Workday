@@ -12,7 +12,7 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-lg-2" >
-                    <select formControlName="maritalStatus" class="selectpicker  form-control mt-sm-3" data-size="7"
+                    <select id = "maritalStatus" formControlName="maritalStatus" class="selectpicker  form-control mt-sm-3" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="Stare civilă">
                       <option *ngFor="let referential of maritalStatusReferentials" >
@@ -23,8 +23,11 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Data</label>
-                      <input formControlName="startingDate" type="text" class="form-control" placeholder="Data">
+                      <input formControlName="startingDate" type="text" class="form-control" placeholder="ZZ-LL-AAAA">
                     </div>
+                    <small [hidden]="!maritalStatusFormGroup.get('startingDate').errors" class="text-danger">
+                      Nu ați introdus data evenimentului sau formatul este invalid.
+                    </small>
                   </div>
                 </div>
                 <div class="row">
@@ -33,12 +36,18 @@
                       <label>Nume soț/soție</label>
                       <input formControlName="lastName" type="text" class="form-control" placeholder="Nume soț/soție">
                     </div>
+                    <small [hidden]="!maritalStatusFormGroup.get('lastName').errors" class="text-danger">
+                      Nu ați introdus numele partenerului.
+                    </small>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Prenume soț/soție</label>
                       <input formControlName="firstName" type="text" class="form-control" placeholder="Prenume soț/soție">
                     </div>
+                    <small [hidden]="!maritalStatusFormGroup.get('firstName').errors" class="text-danger">
+                      Nu ați introdus prenumele partenerului.
+                    </small>
                   </div>
                 </div>
                 <div class="row">
@@ -47,12 +56,18 @@
                       <label>CNP soț/soție</label>
                       <input formControlName="personIdentifier" type="text" class="form-control" placeholder="CNP soț/soție">
                     </div>
+                    <small [hidden]="!maritalStatusFormGroup.get('personIdentifier').errors" class="text-danger">
+                      Nu ați introdus CNP-ul partenerului sau CNP-ul introdus nu este valid.
+                    </small>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Dată naștere soț/soție</label>
-                      <input formControlName="birthDate" type="text" class="form-control" placeholder="Dată naștere soț/soție">
+                      <input formControlName="birthDate" type="text" class="form-control" placeholder="ZZ-LL-AAAA">
                     </div>
+                    <small [hidden]="!maritalStatusFormGroup.get('birthDate').errors" class="text-danger">
+                      Nu ați introdus data de naștere a partenerului sau formatul este invalid.
+                    </small>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
@@ -80,7 +95,7 @@
             </div>
             </div>
             <div class="card-footer text-right">
-              <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putMaritalStatusAndPartner()">Salvează</button>
+              <button [disabled]="maritalStatusFormGroup.pristine || maritalStatusFormGroup.pending || maritalStatusFormGroup.invalid" type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putMaritalStatusAndPartner()">Salvează</button>
             </div>
           </form>
         </div>
@@ -115,12 +130,18 @@
                               <label>Nume</label>
                               <input formControlName="lastName" type="text" class="form-control" placeholder="Nume">
                             </div>
+                            <small [hidden]="!childrenFormGroups[i].get('lastName').errors" class="text-danger">
+                              Nu ați introdus numele copilului.
+                            </small>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Prenume</label>
                               <input formControlName="firstName" type="text" class="form-control" placeholder="Prenume">
                             </div>
+                            <small [hidden]="!childrenFormGroups[i].get('firstName').errors" class="text-danger">
+                              Nu ați introdus prenumele copilului.
+                            </small>
                           </div>
                         </div>
                         <div class="row">
@@ -129,12 +150,18 @@
                               <label>CNP</label>
                               <input formControlName="personIdentifier" type="text" class="form-control" placeholder="CNP">
                             </div>
+                            <small [hidden]="!childrenFormGroups[i].get('personIdentifier').errors" class="text-danger">
+                              Nu ați introdus CNP-ul copilului sau CNP-ul introdus nu este valid.
+                            </small>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Dată naștere</label>
-                              <input formControlName="birthDate" type="text" class="form-control" placeholder="Dată naștere">
+                              <input formControlName="birthDate" type="text" class="form-control" placeholder="Dată naștere" (click)="show(i)">
                             </div>
+                            <small [hidden]="!childrenFormGroups[i].get('birthDate').errors" class="text-danger">
+                              Nu ați data de naștere a copilului sau formatul este invalid.
+                            </small>
                           </div>
                         </div>
                         <div class="row">
@@ -171,7 +198,7 @@
                       </div>
                     </div>
                     <div class="card-footer text-right">
-                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                      <button (click)="putChild(i)" [disabled]="childrenFormGroups[i].pristine || childrenFormGroups[i].invalid || childrenFormGroups[i].pending"  type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
                   </form>
                 </div>
@@ -220,7 +247,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input formControlName="birthDate" type="text" class="form-control" placeholder="Dată naștere">
+                      <input formControlName="birthDate" type="text" class="form-control" placeholder="ZZ-LL-AAAA">
                     </div>
                   </div>
                 </div>
@@ -262,7 +289,7 @@
           </form>
           <div class="modal-footer">
             <div class="left-side">
-              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewChild()">Salvează noul copil
+              <button [disabled]="newChildFormGroup && (newChildFormGroup.pristine || newChildFormGroup.invalid)" type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewChild()">Salvează noul copil
               </button>
             </div>
             <div class="divider"></div>

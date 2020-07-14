@@ -68,7 +68,7 @@
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Data început</label>
-                              <input formControlName="fromDate" type="text" class="form-control" placeholder="Data start">
+                              <input formControlName="fromDate" type="text" class="form-control" placeholder="ZZ-LL-AAAA">
                             </div>
                             <small [hidden]="!previousJobFormGroups[i].get('fromDate').errors" class="text-danger">
                               Nu ați introdus data de început.
@@ -77,7 +77,7 @@
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Data sfârșit</label>
-                              <input formControlName="toDate" type="text" class="form-control" placeholder="Data sfârșit">
+                              <input formControlName="toDate" type="text" class="form-control" placeholder="ZZ-LL-AAAA">
                             </div>
                             <small [hidden]="!previousJobFormGroups[i].get('toDate').errors" class="text-danger">
                               Nu ați introdus data de sfârșit.

@@ -148,6 +148,7 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
 
     this.bankAccountService.putBankAccount(data).subscribe(data => {
       this.bankAccountService.getBankAccounts(this.employee.id).subscribe(data => {
+        this.bankAccountsFormGroups[index].markAsPristine();
         this.isDoesAnyBankAccountExist = true;
         this.bankAccounts = data;
         this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');

@@ -196,6 +196,7 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
 
     this.previousJobService.putPreviousJob(this.previousJobs[index]).subscribe(data => {
       this.previousJobService.getPreviousJobs(this.employee.id).subscribe( data => {
+        this.previousJobFormGroups[index].markAsPristine();
         this.isDoesAnyPreviousJobExist = true;
         this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');
         this.previousJobs = data;
