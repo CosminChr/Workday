@@ -24,24 +24,32 @@
                     <div class="row">
                       <div class="col-sm-10">
                         <div class="row">
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label>Tip adresă</label>
-                              <input formControlName="addressType" type="text" class="form-control"
-                                     placeholder="Tip adresă">
-                            </div>
+                          <div class="col-lg-4 col-md-4 col-sm-6" >
+                            <select id = 'addressType-{{i}}' formControlName="addressType" class="selectpicker form-control mt-sm-3" data-size="7" required="required"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Tip adresă">
+                              <option *ngFor="let referential of addressReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
                               <label>Stradă</label>
                               <input formControlName="street" type="text" class="form-control" placeholder="Strada">
                             </div>
+                            <small [hidden]="!addressFormGroups[i].get('street').errors" class="text-danger">
+                              Nu ați introdus numele străzii.
+                            </small>
                           </div>
                           <div class="col-md-2">
                             <div class="form-group">
                               <label>Număr</label>
                               <input formControlName="number" type="text" class="form-control" placeholder="Număr">
                             </div>
+                            <small [hidden]="!addressFormGroups[i].get('number').errors" class="text-danger">
+                              Nu ați introdus numărul.
+                            </small>
                           </div>
                         </div>
 
@@ -80,18 +88,27 @@
                               <input formControlName="locality" type="text" class="form-control"
                                      placeholder="Localitate">
                             </div>
+                            <small [hidden]="!addressFormGroups[i].get('locality').errors" class="text-danger">
+                              Nu ați introdus localitatea.
+                            </small>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Județ</label>
                               <input formControlName="county" type="text" class="form-control" placeholder="Județ">
                             </div>
+                            <small [hidden]="!addressFormGroups[i].get('county').errors" class="text-danger">
+                              Nu ați introdus județul.
+                            </small>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Țară</label>
                               <input formControlName="country" type="text" class="form-control" placeholder="Țară">
                             </div>
+                            <small [hidden]="!addressFormGroups[i].get('county').errors" class="text-danger">
+                              Nu ați introdus țara.
+                            </small>
                           </div>
                           <div class="col-md-2">
                             <div class="form-group">
@@ -99,14 +116,16 @@
                               <input formControlName="postalCode" type="text" class="form-control"
                                      placeholder="Cod poștal">
                             </div>
+                            <small [hidden]="!addressFormGroups[i].get('postalCode').errors" class="text-danger">
+                              Nu ați introdus codul poștal.
+                            </small>
                           </div>
                         </div>
                       </div>
                     </div>
 
-
                     <div class="card-footer text-right">
-                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                      <button (click)="putAddress(i)" [disabled]="addressFormGroups[i].pristine || addressFormGroups[i].pending" type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
 
                   </form>
@@ -140,8 +159,8 @@
         <div class="modal-body">
           <form [formGroup]="newAddressForm" *ngIf="newAddressForm">
             <div class="row">
-              <div class="col-lg-4 col-md-4 col-sm-3">
-                <select formControlName="addressType" class="selectpicker" data-size="7"
+              <div class="col-lg-5 col-md-4 col-sm-3">
+                <select id = "addressType" formControlName="addressType" class="selectpicker form-control" data-size="7"
                         data-style="btn btn-outline-success btn-round"
                         title="Tip adresă">
                   <option *ngFor="let referential of addressReferentials">
@@ -156,7 +175,7 @@
                          placeholder="Stradă">
                 </div>
               </div>
-              <div class="col-md-4 text-center">
+              <div class="col-md-3 text-center">
                 <div class="form-group">
                   <!--                  <label>Până</label>-->
                   <input formControlName="number" type="text" class="form-control text-center mt-sm-2"
@@ -234,7 +253,7 @@
           </form>
           <div class="modal-footer">
             <div class="left-side">
-              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewAddress()">Salvează adresa
+              <button  [disabled]="newAddressForm && (newAddressForm.pristine || newAddressForm.invalid) || !isALocalitySelected()" type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewAddress()">Salvează adresa
               </button>
             </div>
             <div class="divider"></div>

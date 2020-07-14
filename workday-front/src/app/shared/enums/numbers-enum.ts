@@ -1,0 +1,8 @@
+export enum NumbersEnum {
+
+  WORKDAY_DEFAULT_STREET_NUMBER_FORMAT_REGEX = '^[1-9]\\d*$',
+  WORKDAY_DEFAULT_POSTAL_CODE_FORMAT_REGEX = '^[0-9]{1,6}$'
+}
+
+
+
