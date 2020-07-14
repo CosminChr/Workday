@@ -106,7 +106,7 @@
                               <label>Țară</label>
                               <input formControlName="country" type="text" class="form-control" placeholder="Țară">
                             </div>
-                            <small [hidden]="!addressFormGroups[i].get('county').errors" class="text-danger">
+                            <small [hidden]="!addressFormGroups[i].get('country').errors" class="text-danger">
                               Nu ați introdus țara.
                             </small>
                           </div>
@@ -125,7 +125,7 @@
                     </div>
 
                     <div class="card-footer text-right">
-                      <button (click)="putAddress(i)" [disabled]="addressFormGroups[i].pristine || addressFormGroups[i].pending" type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                      <button (click)="putAddress(i)" [disabled]="addressFormGroups[i].pristine || addressFormGroups[i].pending || addressFormGroups[i].invalid" type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
 
                   </form>

@@ -10,6 +10,7 @@ import {Employee} from "../../../shared/models/employee.model";
 import {EmployeeService} from "../../../shared/services/employee/employee.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WorkdayValidators} from "../../../shared/validators/workday-validators";
+import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 declare var $: any;
 
@@ -43,6 +44,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
               private addressTypeReferentialService: AddressTypeReferentialService,
               private localityService: LocalityReferentialService,
               private employeeService: EmployeeService,
+              private notificationService: NotificationService,
               private formBuilder: FormBuilder) {
   }
 
@@ -117,6 +119,9 @@ export class AddressComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
 
     setTimeout(() => {
+      if (!this.addresses) {
+        this.addresses = new Array<Address>();
+      }
       for (let i = 0; i < this.addresses.length; i++) {
         if (this.addresses[i].addressType?.label) {
           $('#addressType-' + i).selectpicker();
@@ -126,12 +131,6 @@ export class AddressComponent implements OnInit, AfterViewInit {
             this.addressFormGroups[i].markAsPending();
           }
         }
-      }
-      $('#addressType').selectpicker();
-      $('#addressType').selectpicker('val', this.newAddress.addressType?.label);
-      $('#addressType').selectpicker('refresh');
-      if ($('#addressType').val() === '') {
-        this.newAddressForm.markAsPending();
       }
 
       $('#datatable').DataTable({
@@ -199,6 +198,8 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
     this.addressService.putAddress(this.addresses[index]).subscribe(data => {
       this.addressService.getAddresses(this.employee.id).subscribe(data => {
+        this.isDoesAnyAddressExist = true;
+        this.notificationService.showNotification('top','center', 'success', 'Datele au fost modificate cu succes.');
         this.addresses = data;
         this.createAddressForms();
         setTimeout(() => {
@@ -242,6 +243,8 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
     this.newAddress.employee = this.employee;
     this.addressService.putAddress(this.newAddress).subscribe(data => {
+      this.isDoesAnyAddressExist = true;
+      this.notificationService.showNotification('top','center', 'success', 'Datele au fost salvate cu succes.');
       this.addresses.push(data as Address);
       this.createAddressForms();
       setTimeout(() => {
