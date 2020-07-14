@@ -420,7 +420,4 @@ export class MaritalStatusComponent implements OnInit, AfterViewInit {
     this.birthCertificate = event.target.files[0];
   }
 
-  show(i: number) {
-    console.log(this.childrenFormGroups[i]);
-  }
 }

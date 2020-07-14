@@ -275,7 +275,6 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
             }, 200);
           }
         }, complete: () => {
-          console.log("S-a salvat un wfh");
           this.workFromHomeMessagingService.sendWorkFromHomeRequest(this.workFromHome.employee.managerId);
         }
       });
