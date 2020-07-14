@@ -14,7 +14,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Naționalitate</label>
-                  <input formControlName="nationality" type="text" class="form-control" placeholder="Naționalitate">
+                  <input formControlName="nationality" type="text" class="form-control" placeholder="Naționalitate" disabled>
                 </div>
               </div>
             </div>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="card-footer text-right">
-              <button type="submit" class="btn btn-outline-danger btn-round mb-3" >Salvează</button>
+              <button (click)="putCitizenship(i)" [disabled]="citizenshipFormGroups && (citizenshipFormGroups[i].pristine || citizenshipFormGroups[i].invalid || citizenshipFormGroups[i].pending)" type="submit" class="btn btn-outline-danger btn-round mb-3" >Salvează</button>
             </div>
           </form>
         </div>
@@ -100,7 +100,7 @@
           </form>
           <div class="modal-footer">
             <div class="left-side">
-              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewCitizenship()">Salvează cetățenia
+              <button [disabled]="citizenshipFormGroup && (citizenshipFormGroup.pristine || citizenshipFormGroup.invalid || citizenshipFormGroup.pending)" type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewCitizenship()">Salvează cetățenia
               </button>
             </div>
             <div class="divider"></div>
@@ -199,7 +199,7 @@
                       </div>
                     </div>
                     <div class="card-footer text-right">
-                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                      <button (click)="putLanguage(i)" [disabled]="languageFormGroups && (languageFormGroups[i].pristine || languageFormGroups[i].invalid || languageFormGroups[i].pending)" type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
                   </form>
                 </div>
@@ -297,7 +297,7 @@
           </form>
           <div class="modal-footer">
             <div class="left-side">
-              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewLanguage()">Salvează limba
+              <button [disabled]="languageFormGroup && (languageFormGroup.pristine || languageFormGroup.invalid || languageFormGroup.pending)" type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewLanguage()">Salvează limba
               </button>
             </div>
             <div class="divider"></div>

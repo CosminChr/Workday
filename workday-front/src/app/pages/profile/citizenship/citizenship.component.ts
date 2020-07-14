@@ -15,6 +15,7 @@ import {Language} from "../../../shared/models/language.model";
 import {LanguageService} from "./language.service";
 import {LanguageReferentialService} from "./language-referential.service";
 import {LanguageLevelReferentialService} from "./language-level-referential.service";
+import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 declare var $: any;
 
@@ -26,8 +27,6 @@ declare var $: any;
 export class CitizenshipComponent implements OnInit, AfterViewInit {
 
   employee: Employee;
-
-  nationalty: Referential;
 
   citizenships: Array<Citizenship>;
 
@@ -74,6 +73,7 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
               private languageService : LanguageService,
               private languageReferentialService: LanguageReferentialService,
               private languageLevelReferentialService: LanguageLevelReferentialService,
+              private notificationService: NotificationService,
               private formBuilder: FormBuilder) {
   }
 
@@ -110,7 +110,7 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.citizenshipService.getCitizenships(this.employee.id)
       .subscribe( (data: Array<Citizenship>) => {
-        setTimeout(function () {
+        setTimeout( () => {
           $('.selectpicker').selectpicker();
           for (let i = 0; i < data.length; i++) {
             $('#' + i).selectpicker('val', data[i]?.citizenship.label);
@@ -120,18 +120,25 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
     });
     this.languageService.getLanguages(this.employee.id)
       .subscribe( (data: Array<Language>) =>{
-        setTimeout(function () {
+        setTimeout( () => {
           for (let i = 0; i < data.length; i++) {
             $('#language-' +i).selectpicker('val', data[i]?.language.label);
             $('#language-' +i).selectpicker('refresh');
             $('#reading-' +i).selectpicker('val', data[i]?.reading.label);
             $('#reading-' +i).selectpicker('refresh');
             $('#writing-' +i).selectpicker('val', data[i]?.writing.label);
-            $('#reading-' +i).selectpicker('refresh');
+            $('#writing-' +i).selectpicker('refresh');
             $('#speaking-' +i).selectpicker('val', data[i]?.speaking.label);
-            $('#reading-' +i).selectpicker('refresh');
+            $('#speaking-' +i).selectpicker('refresh');
             $('#overallLevel-' +i).selectpicker('val', data[i]?.overallLevel.label);
-            $('#reading-' +i).selectpicker('refresh');
+            $('#overallLevel-' +i).selectpicker('refresh');
+            if ($('#language-' + i).val() === ''
+              || $('#reading-' + i).val() === ''
+              || $('#writing-' + i).val() === ''
+              || $('#speaking-' + i).val() === ''
+              || $('#overallLevel-' + i).val() === '') {
+              this.languageFormGroups[i].markAsPending();
+            }
           }
         }, 500);
 
@@ -172,18 +179,55 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
     return this.citizenshipFormGroup;
   }
 
+
+  putCitizenship(index: number) {
+    this.citizenships[index].citizenship.label = this.citizenshipFormGroups[index].controls.citizenship.value;
+
+    const data = new FormData();
+    data.append("citizenshipCertificate", this.citizenshipDocument ? this.citizenshipDocument: new Blob(), this.citizenshipDocument?.name);
+    data.append('citizenship', new Blob([JSON.stringify(this.citizenships[index])], {
+      type: "application/json"
+    }));
+
+    this.citizenshipService.putCitizenship(data).subscribe( (data: Citizenship) => {
+      this.citizenshipService.getCitizenships(this.employee.id).subscribe( data => {
+        this.citizenshipFormGroups[index].markAsPristine();
+        this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');
+
+        this.citizenships = data;
+        this.createCitizenshipFormGroups();
+        setTimeout(() => {
+          $('.selectpicker').selectpicker();
+          for (let i = 0; i <  this.citizenships.length; i++) {
+            $('#' + i).selectpicker('val',  this.citizenships[i]?.citizenship.label);
+            $('#' + i).selectpicker('refresh');
+          }
+        }, 500);
+      })
+    });
+  }
+
   putNewCitizenship(){
     this.newCitizenship.citizenship.label = this.citizenshipFormGroup.controls.citizenship.value;
     this.newCitizenship.employee = this.employee;
 
     const data = new FormData();
-    data.append("citizenshipCertificate", this.citizenshipDocument, this.citizenshipDocument.name);
+    data.append("citizenshipCertificate", this.citizenshipDocument ? this.citizenshipDocument: new Blob(), this.citizenshipDocument?.name);
     data.append('citizenship', new Blob([JSON.stringify(this.newCitizenship)], {
       type: "application/json"
     }));
 
     this.citizenshipService.putCitizenship(data).subscribe( (data: Citizenship) => {
+      this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost salvate cu succes.');
         this.citizenships.push(data);
+      this.createCitizenshipFormGroups();
+      setTimeout(() => {
+        $('.selectpicker').selectpicker();
+        for (let i = 0; i <  this.citizenships.length; i++) {
+          $('#' + i).selectpicker('val',  this.citizenships[i]?.citizenship.label);
+          $('#' + i).selectpicker('refresh');
+        }
+      }, 500);
     });
   }
 
@@ -222,6 +266,50 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
     return this.languageFormGroup;
   }
 
+  putLanguage(index: number){
+    this.languages[index].language.label = this.languageFormGroups[index].controls.language.value;
+    this.languages[index].reading.label = this.languageFormGroups[index].controls.reading.value;
+    this.languages[index].writing.label = this.languageFormGroups[index].controls.writing.value;
+    this.languages[index].speaking.label = this.languageFormGroups[index].controls.speaking.value;
+    this.languages[index].overallLevel.label = this.languageFormGroups[index].controls.overallLevel.value;
+
+    const data = new FormData();
+    data.append("languageCertification", this.languageCertification ? this.languageCertification: new Blob(), this.languageCertification?.name);
+    data.append('language', new Blob([JSON.stringify(this.languages[index])], {
+      type: "application/json"
+    }));
+
+    this.languageService.putLanguage(data).subscribe( (data: Language) => {
+      this.languageService.getLanguages(this.employee.id).subscribe( data => {
+        this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost salvate cu succes.');
+        this.languages = data;
+        this.createLanguageFormGroups();
+        setTimeout( () => {
+          for (let i = 0; i < this.languages.length; i++) {
+            $('#language-' +i).selectpicker('val', this.languages[i]?.language.label);
+            $('#language-' +i).selectpicker('refresh');
+            $('#reading-' +i).selectpicker('val', this.languages[i]?.reading.label);
+            $('#reading-' +i).selectpicker('refresh');
+            $('#writing-' +i).selectpicker('val', this.languages[i]?.writing.label);
+            $('#writing-' +i).selectpicker('refresh');
+            $('#speaking-' +i).selectpicker('val', this.languages[i]?.speaking.label);
+            $('#speaking-' +i).selectpicker('refresh');
+            $('#overallLevel-' +i).selectpicker('val', this.languages[i]?.overallLevel.label);
+            $('#overallLevel-' +i).selectpicker('refresh');
+
+            if ($('#language-' + i).val() === ''
+              || $('#reading-' + i).val() === ''
+              || $('#writing-' + i).val() === ''
+              || $('#speaking-' + i).val() === ''
+              || $('#overallLevel-' + i).val() === '') {
+              this.languageFormGroups[i].markAsPending();
+            }
+          }
+        }, 500);
+      })
+    });
+  }
+
   putNewLanguage(){
     this.newLanguage.language.label = this.languageFormGroup.controls.language.value;
     this.newLanguage.reading.label = this.languageFormGroup.controls.reading.value;
@@ -231,13 +319,38 @@ export class CitizenshipComponent implements OnInit, AfterViewInit {
     this.newLanguage.employee = this.employee;
 
     const data = new FormData();
-    data.append("languageCertification", this.languageCertification, this.languageCertification.name);
+    data.append("languageCertification", this.languageCertification ? this.languageCertification: new Blob(), this.languageCertification?.name);
     data.append('language', new Blob([JSON.stringify(this.newLanguage)], {
       type: "application/json"
     }));
 
     this.languageService.putLanguage(data).subscribe( (data: Language) => {
+      this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost salvate cu succes.');
       this.languages.push(data);
+      this.createLanguageFormGroups();
+      setTimeout( () => {
+        for (let i = 0; i < this.languages.length; i++) {
+          $('#language-' +i).selectpicker('val', this.languages[i]?.language.label);
+          $('#language-' +i).selectpicker('refresh');
+          $('#reading-' +i).selectpicker('val', this.languages[i]?.reading.label);
+          $('#reading-' +i).selectpicker('refresh');
+          $('#writing-' +i).selectpicker('val', this.languages[i]?.writing.label);
+          $('#writing-' +i).selectpicker('refresh');
+          $('#speaking-' +i).selectpicker('val', this.languages[i]?.speaking.label);
+          $('#speaking-' +i).selectpicker('refresh');
+          $('#overallLevel-' +i).selectpicker('val', this.languages[i]?.overallLevel.label);
+          $('#overallLevel-' +i).selectpicker('refresh');
+
+          if ($('#language-' + i).val() === ''
+            || $('#reading-' + i).val() === ''
+            || $('#writing-' + i).val() === ''
+            || $('#speaking-' + i).val() === ''
+            || $('#overallLevel-' + i).val() === '') {
+            this.languageFormGroups[i].markAsPending();
+          }
+        }
+      }, 500);
+
     });
   }
 
