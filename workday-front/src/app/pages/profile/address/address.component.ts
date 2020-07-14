@@ -198,6 +198,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
     this.addressService.putAddress(this.addresses[index]).subscribe(data => {
       this.addressService.getAddresses(this.employee.id).subscribe(data => {
+        this.addressFormGroups[index].markAsPristine();
         this.isDoesAnyAddressExist = true;
         this.notificationService.showNotification('top','center', 'success', 'Datele au fost modificate cu succes.');
         this.addresses = data;

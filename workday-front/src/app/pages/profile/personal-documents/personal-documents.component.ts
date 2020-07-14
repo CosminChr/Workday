@@ -117,6 +117,7 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
 
     this.identityDocumentService.putIdentityDocument(data).subscribe(data => {
       this.identityDocumentService.getIdentityDocuments(this.employee.id).subscribe( data => {
+        this.identityDocumentFormGroups[index].markAsPristine();
         this.isDoesAnyIdentityDocumentExist = true;
         this.identityDocuments = data;
         this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');

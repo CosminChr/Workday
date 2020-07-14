@@ -37,7 +37,6 @@ export class WorkdayValidators {
       return null;
     }
     if (personalIdentifier.value && !personalIdentifier.value.match(PersonalIdentifierEnum.WORKDAY_DEFAULT_PERSONAL_IDENTIFIER_FORMAT_REGEX.toString())) {
-      console.log("da");
       return {'invalidPersonalIdentifier': true}
     }
     return null;
@@ -78,7 +77,7 @@ export class WorkdayValidators {
       return null;
     }
     if (iban.value && !iban.value.match(NumbersEnum.WORKDAY_DEFAULT_IBAN_FORMAT_REGEX.toString())) {
-      return {'invalidPostalCode': true}
+      return {'invalidIBAN': true}
     }
     return null;
   }

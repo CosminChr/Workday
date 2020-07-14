@@ -45,7 +45,7 @@
                           <div class="form-group">
                             <label>Data emiterii</label>
                             <input formControlName="issueDate" type="text" class="form-control"
-                                   placeholder="Data emiterii">
+                                   placeholder="ZZ-LL-AAAA">
                           </div>
                           <small [hidden]="!identityDocumentFormGroups[i].get('issueDate').errors" class="text-danger">
                             Nu ați introdus data emiterii documentului sau formatul este invalid.
@@ -55,7 +55,7 @@
                           <div class="form-group">
                             <label>Data expirării</label>
                             <input formControlName="expirationDate" type="text" class="form-control"
-                                   placeholder="Data expirării">
+                                   placeholder="ZZ-LL-AAAA">
                           </div>
                           <small [hidden]="!identityDocumentFormGroups[i].get('expirationDate').errors" class="text-danger">
                             Nu ați introdus data expirării documentului sau formatul este invalid.
