@@ -8,7 +8,11 @@ import {formatDate, parseDate} from "../../../shared/utils/utils";
 import {DepartmentReferentialService} from "./department-referential.service";
 import {forkJoin} from "rxjs";
 import {Admin} from "../../../shared/models/admin.model";
-import {Router, RouterModule} from "@angular/router";
+import {Router} from "@angular/router";
+import {GenderReferentialService} from "../marital-status/gender-referential.service";
+import {JobPositionReferentialService} from "./job-position-referential.service";
+import {WorkdayValidators} from "../../../shared/validators/workday-validators";
+import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 declare var $: any;
 
@@ -27,11 +31,18 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
 
   departmentReferentials: Array<Referential>;
 
+  genderReferentials: Array<Referential>;
+
+  jobPositionReferentials: Array<Referential>;
+
   manager: Employee;
 
   constructor(private employeeService: EmployeeService,
               private tokenStorageService: TokenStorageService,
               private departmentReferentialService: DepartmentReferentialService,
+              private genderReferentialService: GenderReferentialService,
+              private jobPositionReferentialService: JobPositionReferentialService,
+              private notificationService: NotificationService,
               private formBuilder: FormBuilder,
               private router: Router) {
   }
@@ -42,12 +53,16 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
     if (this.tokenStorageService.getUser().roles.filter(role => role === 'Admin').length === 0) {
       forkJoin([
         this.employeeService.getEmployee(this.tokenStorageService.getUser().username),
-        this.departmentReferentialService.getDepartmentReferentials()
+        this.departmentReferentialService.getDepartmentReferentials(),
+        this.genderReferentialService.getGenderReferentials(),
+        this.jobPositionReferentialService.getJobPositionReferentials()
       ])
         .subscribe(data => {
           this.employee = data[0] as Employee;
           this.employeeService.setStoredEmployee(this.employee);
           this.departmentReferentials = data[1] as Array<Referential>;
+          this.genderReferentials = data[2] as Array<Referential>;
+          this.jobPositionReferentials = data[3] as Array<Referential>;
           this.personalDataForm = this.createPersonalDataForm();
 
           this.employeeService.getManager(this.employee.managerId)
@@ -67,10 +82,19 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.tokenStorageService.getUser().roles.filter(role => role === 'Admin').length === 0) {
       this.employeeService.getEmployee(this.tokenStorageService.getUser().username).subscribe(data => {
-        setTimeout(function () {
-          $('.selectpicker').selectpicker();
-          $('.selectpicker').selectpicker('val', data.department?.label);
-          $('.selectpicker').selectpicker('refresh');
+        setTimeout(() => {
+          $('#department').selectpicker();
+          $('#department').selectpicker('val', data.department?.label);
+          $('#department').selectpicker('refresh');
+          $('#gender').selectpicker();
+          $('#gender').selectpicker('val', data.gender?.label);
+          $('#gender').selectpicker('refresh');
+          if ($('#gender').val() === '') {
+            this.personalDataForm.markAsPending();
+          }
+          $('#jobPosition').selectpicker();
+          $('#jobPosition').selectpicker('val', data.jobPosition?.label);
+          $('#jobPosition').selectpicker('refresh');
         }, 100);
       });
     }
@@ -80,14 +104,14 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
     this.personalDataForm = this.formBuilder.group({
       'lastName': [this.employee.lastName, [Validators.required, Validators.maxLength(30)]],
       'firstName': [this.employee.firstName, [Validators.required, Validators.maxLength(30)]],
-      'gender': [this.employee.gender ? this.employee.gender.label : '', [Validators.required, Validators.maxLength(10)]],
+      'gender': [this.employee.gender ? this.employee.gender.label : '', [Validators.required]],
       'birthPlace': [this.employee.birthPlace, [Validators.required, Validators.maxLength(13)]],
-      'personIdentifier': [this.employee.personIdentifier, [Validators.required, Validators.minLength(13), Validators.maxLength(13)]],
-      'birthDate': [this.employee.birthDate ? formatDate(this.employee.birthDate) : '', [Validators.required]],
+      'personIdentifier': [this.employee.personIdentifier, [Validators.required, Validators.minLength(13), Validators.maxLength(13), WorkdayValidators.validPesonalIdentifier]],
+      'birthDate': [this.employee.birthDate ? formatDate(this.employee.birthDate) : '', [Validators.required, WorkdayValidators.validDate]],
       'birthName': [this.employee.birthName, [Validators.required, Validators.maxLength(40)]],
-      'email': [this.employee.email, [Validators.required, Validators.maxLength(40)]],
-      'homePhoneNumber': [this.employee.homePhoneNumber, [Validators.maxLength(10)]],
-      'mobilePhoneNumber': [this.employee.mobilePhoneNumber, [Validators.maxLength(10)]],
+      'email': [this.employee.email, [Validators.required, Validators.maxLength(40), WorkdayValidators.validEmail]],
+      'homePhoneNumber': [this.employee.homePhoneNumber, [Validators.required, Validators.maxLength(10), Validators.minLength(10), WorkdayValidators.validPhoneNumber]],
+      'mobilePhoneNumber': [this.employee.mobilePhoneNumber, [Validators.required, Validators.maxLength(10), Validators.minLength(10), WorkdayValidators.validPhoneNumber]],
     });
 
     return this.personalDataForm;
@@ -102,7 +126,7 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
       'ITDeduction': [this.employee.ITDeduction, [Validators.required]],
       'joiningDate': [this.employee.joiningDate ? formatDate(this.employee.joiningDate) : '', [Validators.required]],
       'currentPositionStartingDate': [this.employee.currentPositionStartingDate ? formatDate(this.employee.currentPositionStartingDate) : '', [Validators.required]],
-      'manager': [this.manager.lastName + ' '  + this.manager.firstName , [Validators.required]],
+      'manager': [this.manager.lastName + ' ' + this.manager.firstName, [Validators.required]],
     });
     return this.employeeDataForm;
   }
@@ -131,8 +155,9 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
     this.employee.homePhoneNumber = this.personalDataForm.controls.homePhoneNumber.value;
     this.employee.mobilePhoneNumber = this.personalDataForm.controls.mobilePhoneNumber.value;
 
-    this.employeeService.putEmployee(this.employee).subscribe( data => {
+    this.employeeService.putEmployee(this.employee).subscribe(data => {
       this.employeeService.setStoredEmployee(data);
+      this.notificationService.showNotification('top','center', 'success', 'Datele au fost salvate cu succes.');
     });
   }
 
@@ -151,7 +176,7 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
     this.employee.joiningDate = parseDate(this.employeeDataForm.controls.joiningDate.value);
     this.employee.currentPositionStartingDate = parseDate(this.employeeDataForm.controls.currentPositionStartingDate.value);
 
-    this.employeeService.putEmployee(this.employee).subscribe( data => {
+    this.employeeService.putEmployee(this.employee).subscribe(data => {
       this.employeeService.setStoredEmployee(data);
     });
   }
