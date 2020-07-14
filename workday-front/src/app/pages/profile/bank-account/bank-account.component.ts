@@ -62,7 +62,9 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-
+      if (!this.bankAccounts) {
+        this.bankAccounts = new Array<BankAccount>();
+      }
       for (let i = 0; i < this.bankAccounts.length; i++) {
         if (this.bankAccounts[i].currency?.label) {
           $('#currency-' + i).selectpicker();
@@ -146,6 +148,7 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
 
     this.bankAccountService.putBankAccount(data).subscribe(data => {
       this.bankAccountService.getBankAccounts(this.employee.id).subscribe(data => {
+        this.isDoesAnyBankAccountExist = true;
         this.bankAccounts = data;
         this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');
         this.createBankAccountForms();
@@ -183,6 +186,7 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
     }));
 
     this.bankAccountService.putBankAccount(data).subscribe(data => {
+      this.isDoesAnyBankAccountExist = true;
       this.bankAccounts.push(data as BankAccount);
       this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost salvate cu succes.');
       this.createBankAccountForms();

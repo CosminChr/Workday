@@ -20,12 +20,14 @@
                 <div class="card-body">
                   <form [formGroup]="identityDocumentFormGroups[i]" *ngIf="identityDocumentFormGroups">
                     <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label>Tip document</label>
-                          <input formControlName="identityDocumentType" type="text" class="form-control"
-                                 placeholder="Tip document">
-                        </div>
+                      <div class="col-lg-4 col-md-4 col-sm-6" >
+                        <select id = 'identityDocumentType-{{i}}' formControlName="identityDocumentType" class="selectpicker form-control mt-sm-3" data-size="7" required="required"
+                                data-style="btn btn-outline-success btn-round"
+                                title="Tip document">
+                          <option *ngFor="let referential of identityDocumentTypeReferentials">
+                            {{referential.label}}
+                          </option>
+                        </select>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
@@ -33,6 +35,9 @@
                           <input formControlName="seriesAndNumber" type="text" class="form-control"
                                  placeholder="Serie și număr">
                         </div>
+                        <small [hidden]="!identityDocumentFormGroups[i].get('seriesAndNumber').errors" class="text-danger">
+                          Nu ați introdus seria și numărul documentului.
+                        </small>
                       </div>
                     </div>
                       <div class="row">
@@ -42,6 +47,9 @@
                             <input formControlName="issueDate" type="text" class="form-control"
                                    placeholder="Data emiterii">
                           </div>
+                          <small [hidden]="!identityDocumentFormGroups[i].get('issueDate').errors" class="text-danger">
+                            Nu ați introdus data emiterii documentului sau formatul este invalid.
+                          </small>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
@@ -49,6 +57,9 @@
                             <input formControlName="expirationDate" type="text" class="form-control"
                                    placeholder="Data expirării">
                           </div>
+                          <small [hidden]="!identityDocumentFormGroups[i].get('expirationDate').errors" class="text-danger">
+                            Nu ați introdus data expirării documentului sau formatul este invalid.
+                          </small>
                         </div>
                       </div>
                       <div class="row">
@@ -58,13 +69,19 @@
                             <input formControlName="issuer" type="text" class="form-control"
                                    placeholder="Emis de">
                           </div>
+                          <small [hidden]="!identityDocumentFormGroups[i].get('issuer').errors" class="text-danger">
+                            Nu ați introdus emițătorul documentului.
+                          </small>
                         </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label>Țară</label>
-                            <input formControlName="country" type="text" class="form-control"
-                                   placeholder="Țară">
-                          </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-6" >
+                          <select id = 'country-{{i}}' formControlName="country" class="selectpicker form-control mt-sm-3" data-size="7" required="required"
+                                  data-style="btn btn-outline-success btn-round"
+                                  title="Țară">
+                            <option *ngFor="let referential of countryReferentials">
+                              {{referential.label}}
+                            </option>
+                          </select>
                         </div>
                       </div>
                     <div class="row">
@@ -76,7 +93,7 @@
                       </div>
                     </div>
                 <div class="card-footer text-right">
-                  <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                  <button (click)="putIdentityDocument(i)" [disabled]="identityDocumentFormGroups[i].pristine || identityDocumentFormGroups[i].pending || identityDocumentFormGroups[i].invalid" type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                 </div>
                 </form>
               </div>
@@ -166,7 +183,7 @@
         </form>
         <div class="modal-footer">
           <div class="left-side">
-            <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewIdentityDocument()">
+            <button [disabled]="identityDocumentFormGroup && (identityDocumentFormGroup.pristine || identityDocumentFormGroup.invalid)" type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewIdentityDocument()">
               Salvează documentul
             </button>
           </div>

@@ -119,6 +119,9 @@ export class AddressComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
 
     setTimeout(() => {
+      if (!this.addresses) {
+        this.addresses = new Array<Address>();
+      }
       for (let i = 0; i < this.addresses.length; i++) {
         if (this.addresses[i].addressType?.label) {
           $('#addressType-' + i).selectpicker();
@@ -128,12 +131,6 @@ export class AddressComponent implements OnInit, AfterViewInit {
             this.addressFormGroups[i].markAsPending();
           }
         }
-      }
-      $('#addressType').selectpicker();
-      $('#addressType').selectpicker('val', this.newAddress.addressType?.label);
-      $('#addressType').selectpicker('refresh');
-      if ($('#addressType').val() === '') {
-        this.newAddressForm.markAsPending();
       }
 
       $('#datatable').DataTable({
@@ -201,6 +198,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
     this.addressService.putAddress(this.addresses[index]).subscribe(data => {
       this.addressService.getAddresses(this.employee.id).subscribe(data => {
+        this.isDoesAnyAddressExist = true;
         this.notificationService.showNotification('top','center', 'success', 'Datele au fost modificate cu succes.');
         this.addresses = data;
         this.createAddressForms();
@@ -245,6 +243,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
     this.newAddress.employee = this.employee;
     this.addressService.putAddress(this.newAddress).subscribe(data => {
+      this.isDoesAnyAddressExist = true;
       this.notificationService.showNotification('top','center', 'success', 'Datele au fost salvate cu succes.');
       this.addresses.push(data as Address);
       this.createAddressForms();

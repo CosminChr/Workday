@@ -9,6 +9,8 @@ import {IdentityDocumentService} from "./identity-document.service";
 import {IdentityDocumentReferentialService} from "./identity-document-referential.service";
 import {CountryReferentialService} from "./country-referential.service";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
+import {WorkdayValidators} from "../../../shared/validators/workday-validators";
+import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 declare var $: any;
 
@@ -41,6 +43,7 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
               private identityDocumentReferentialService: IdentityDocumentReferentialService,
               private identityDocumentService: IdentityDocumentService,
               private countryReferentialService: CountryReferentialService,
+              private notificationService: NotificationService,
               private formBuilder: FormBuilder) {
   }
 
@@ -69,8 +72,8 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
         this.identityDocumentFormGroups[i] = this.formBuilder.group({
           'identityDocumentType': [this.identityDocuments[i]?.identityDocumentType.label, [Validators.required, Validators.maxLength(100)]],
           'seriesAndNumber': [this.identityDocuments[i].seriesAndNumber, [Validators.required, Validators.maxLength(100)]],
-          'issueDate': [this.identityDocuments[i].issueDate ? formatDate(this.identityDocuments[i].issueDate) : '', [Validators.required]],
-          'expirationDate': [this.identityDocuments[i].expirationDate ? formatDate(this.identityDocuments[i].expirationDate) : '', [Validators.required]],
+          'issueDate': [this.identityDocuments[i].issueDate ? formatDate(this.identityDocuments[i].issueDate) : '', [Validators.required, WorkdayValidators.validDate]],
+          'expirationDate': [this.identityDocuments[i].expirationDate ? formatDate(this.identityDocuments[i].expirationDate) : '', [Validators.required, WorkdayValidators.validDate]],
           'issuer': [this.identityDocuments[i].issuer, [Validators.required, Validators.maxLength(100)]],
           'country': [this.identityDocuments[i]?.country.label, [Validators.required, Validators.maxLength(100)]],
         });
@@ -97,6 +100,51 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
     return this.identityDocumentFormGroup;
   }
 
+  putIdentityDocument(index: number) {
+
+    this.identityDocuments[index].identityDocumentType.label = this.identityDocumentFormGroups[index].controls.identityDocumentType.value;
+    this.identityDocuments[index].seriesAndNumber = this.identityDocumentFormGroups[index].controls.seriesAndNumber.value;
+    this.identityDocuments[index].issueDate = parseDate(this.identityDocumentFormGroups[index].controls.issueDate.value);
+    this.identityDocuments[index].expirationDate = parseDate(this.identityDocumentFormGroups[index].controls.expirationDate.value);
+    this.identityDocuments[index].issuer = this.identityDocumentFormGroups[index].controls.issuer.value;
+    this.identityDocuments[index].country.label = this.identityDocumentFormGroups[index].controls.country.value;
+
+    const data = new FormData();
+    data.append("document", this.identityDocument ? this.identityDocument : new Blob(), this.identityDocument?.name);
+    data.append('identityDocument', new Blob([JSON.stringify(this.identityDocuments[index])], {
+      type: "application/json"
+    }));
+
+    this.identityDocumentService.putIdentityDocument(data).subscribe(data => {
+      this.identityDocumentService.getIdentityDocuments(this.employee.id).subscribe( data => {
+        this.isDoesAnyIdentityDocumentExist = true;
+        this.identityDocuments = data;
+        this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');
+        this.createIdentityDocumentForms();
+        setTimeout(() => {
+          for (let i = 0; i < this.identityDocuments.length; i++) {
+            if (this.identityDocuments[i].identityDocumentType?.label) {
+              $('#identityDocumentType-' + i).selectpicker();
+              $('#identityDocumentType-' + i).selectpicker('val', this.identityDocuments[i].identityDocumentType?.label);
+              $('#identityDocumentType-' + i).selectpicker('refresh');
+              if ($('#identityDocumentType-' + i).val() === '') {
+                this.identityDocumentFormGroups[i].markAsPending();
+              }
+            }
+            if (this.identityDocuments[i].country?.label) {
+              $('#country-' + i).selectpicker();
+              $('#country-' + i).selectpicker('val', this.identityDocuments[i].country?.label);
+              $('#country-' + i).selectpicker('refresh');
+              if ($('#country-' + i).val() === '') {
+                this.identityDocumentFormGroups[i].markAsPending();
+              }
+            }
+          }
+        }, 500);
+      });
+    });
+  }
+
   putNewIdentityDocument() {
 
     this.newIdentityDocument.identityDocumentType.label = this.identityDocumentFormGroup.controls.identityDocumentType.value;
@@ -108,20 +156,62 @@ export class PersonalDocumentsComponent implements OnInit, AfterViewInit {
     this.newIdentityDocument.employee = this.employee;
 
     const data = new FormData();
-    data.append("document", this.identityDocument, this.identityDocument.name);
+    data.append("document", this.identityDocument ? this.identityDocument : new Blob(), this.identityDocument?.name);
     data.append('identityDocument', new Blob([JSON.stringify(this.newIdentityDocument)], {
       type: "application/json"
     }));
 
     this.identityDocumentService.putIdentityDocument(data).subscribe(data => {
       this.identityDocuments.push(data as IdentityDocument);
+      this.isDoesAnyIdentityDocumentExist = true;
+      this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost salvate cu succes.');
+      this.createIdentityDocumentForms();
+      setTimeout(() => {
+        for (let i = 0; i < this.identityDocuments.length; i++) {
+          if (this.identityDocuments[i].identityDocumentType?.label) {
+            $('#identityDocumentType-' + i).selectpicker();
+            $('#identityDocumentType-' + i).selectpicker('val', this.identityDocuments[i].identityDocumentType?.label);
+            $('#identityDocumentType-' + i).selectpicker('refresh');
+            if ($('#identityDocumentType-' + i).val() === '') {
+              this.identityDocumentFormGroups[i].markAsPending();
+            }
+          }
+          if (this.identityDocuments[i].country?.label) {
+            $('#country-' + i).selectpicker();
+            $('#country-' + i).selectpicker('val', this.identityDocuments[i].country?.label);
+            $('#country-' + i).selectpicker('refresh');
+            if ($('#country-' + i).val() === '') {
+              this.identityDocumentFormGroups[i].markAsPending();
+            }
+          }
+        }
+      }, 500);
     });
-
   }
 
   ngAfterViewInit(): void {
-    setTimeout(function () {
-      $('.selectpicker').selectpicker();
+    setTimeout(() => {
+      if (!this.identityDocuments) {
+        this.identityDocuments = new Array<IdentityDocument>();
+      }
+      for (let i = 0; i < this.identityDocuments.length; i++) {
+        if (this.identityDocuments[i].identityDocumentType?.label) {
+          $('#identityDocumentType-' + i).selectpicker();
+          $('#identityDocumentType-' + i).selectpicker('val', this.identityDocuments[i].identityDocumentType?.label);
+          $('#identityDocumentType-' + i).selectpicker('refresh');
+          if ($('#identityDocumentType-' + i).val() === '') {
+            this.identityDocumentFormGroups[i].markAsPending();
+          }
+        }
+        if (this.identityDocuments[i].country?.label) {
+          $('#country-' + i).selectpicker();
+          $('#country-' + i).selectpicker('val', this.identityDocuments[i].country?.label);
+          $('#country-' + i).selectpicker('refresh');
+          if ($('#country-' + i).val() === '') {
+            this.identityDocumentFormGroups[i].markAsPending();
+          }
+        }
+      }
     }, 500);
   }
 
