@@ -4,6 +4,7 @@ import {DateEnum} from "../enums/date-enum";
 import {EmailEnum} from "../enums/email-enum";
 import {PersonalIdentifierEnum} from "../enums/personal-identifier-enum";
 import {PhoneNumberEnum} from "../enums/phone-number-enum";
+import {NumbersEnum} from "../enums/numbers-enum";
 
 
 @Injectable({
@@ -47,8 +48,27 @@ export class WorkdayValidators {
       return null;
     }
     if (phoneNumber.value && !phoneNumber.value.match(PhoneNumberEnum.WORKDAY_DEFAULT_PHONE_NUMBER_FORMAT_REGEX.toString())) {
-      console.log("da");
       return {'invalidPhoneNumber': true}
+    }
+    return null;
+  }
+
+  static validNumber(streetNumber: AbstractControl): ValidationErrors {
+    if (streetNumber.pristine) {
+      return null;
+    }
+    if (streetNumber.value && !streetNumber.value.match(NumbersEnum.WORKDAY_DEFAULT_STREET_NUMBER_FORMAT_REGEX.toString())) {
+      return {'invalidStreetNumber': true}
+    }
+    return null;
+  }
+
+  static validPostalCode(postalCode: AbstractControl): ValidationErrors {
+    if (postalCode.pristine) {
+      return null;
+    }
+    if (postalCode.value && !postalCode.value.match(NumbersEnum.WORKDAY_DEFAULT_POSTAL_CODE_FORMAT_REGEX.toString())) {
+      return {'invalidPostalCode': true}
     }
     return null;
   }

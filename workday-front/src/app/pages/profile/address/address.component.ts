@@ -9,6 +9,7 @@ import {LocalityReferentialService} from "./locality-referential.service";
 import {Employee} from "../../../shared/models/employee.model";
 import {EmployeeService} from "../../../shared/services/employee/employee.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {WorkdayValidators} from "../../../shared/validators/workday-validators";
 
 declare var $: any;
 
@@ -36,6 +37,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
   isDoesAnyAddressExist = true;
 
   selectedLocality = new Array<string>();
+
 
   constructor(private addressService: AddressService,
               private addressTypeReferentialService: AddressTypeReferentialService,
@@ -72,14 +74,14 @@ export class AddressComponent implements OnInit, AfterViewInit {
           'addressType': [this.addresses[i].addressType?.label, [Validators.required, Validators.maxLength(100)]],
           'street': [this.addresses[i].street, [Validators.required, Validators.maxLength(100)]],
           'number': [this.addresses[i].number, [Validators.required, Validators.maxLength(100)]],
-          'block': [this.addresses[i].block, [Validators.required, Validators.maxLength(100)]],
-          'stairwell': [this.addresses[i].stairwell, [Validators.required, Validators.maxLength(100)]],
-          'floor': [this.addresses[i].floor, [Validators.required, Validators.maxLength(100)]],
-          'apartmentNumber': [this.addresses[i].apartmentNumber, [Validators.required, Validators.maxLength(100)]],
+          'block': [this.addresses[i].block, [Validators.maxLength(100)]],
+          'stairwell': [this.addresses[i].stairwell, [Validators.maxLength(100), WorkdayValidators.validNumber]],
+          'floor': [this.addresses[i].floor, [Validators.maxLength(100), WorkdayValidators.validNumber]],
+          'apartmentNumber': [this.addresses[i].apartmentNumber, [Validators.maxLength(100), WorkdayValidators.validNumber]],
           'locality': [this.addresses[i].locality?.label, [Validators.required, Validators.maxLength(100)]],
           'county': [this.addresses[i].locality?.county?.label, [Validators.required, Validators.maxLength(100)]],
           'country': [this.addresses[i].locality?.country?.label, [Validators.required, Validators.maxLength(100)]],
-          'postalCode': [this.addresses[i].postalCode, [Validators.required, Validators.maxLength(100)]],
+          'postalCode': [this.addresses[i].postalCode, [Validators.required, Validators.maxLength(6), Validators.minLength(6), WorkdayValidators.validPostalCode]],
         });
       }
     } else {
@@ -99,25 +101,39 @@ export class AddressComponent implements OnInit, AfterViewInit {
       'addressType': [this.newAddress.addressType.label, [Validators.required, Validators.maxLength(100)]],
       'street': [this.newAddress.street, [Validators.required, Validators.maxLength(100)]],
       'number': [this.newAddress.number, [Validators.required, Validators.maxLength(100)]],
-      'block': [this.newAddress.block, [Validators.required, Validators.maxLength(100)]],
-      'stairwell': [this.newAddress.stairwell, [Validators.required, Validators.maxLength(100)]],
-      'floor': [this.newAddress.floor, [Validators.required, Validators.maxLength(100)]],
-      'apartmentNumber': [this.newAddress.apartmentNumber, [Validators.required, Validators.maxLength(100)]],
-      'locality': [this.newAddress.locality?.label, [Validators.required, Validators.maxLength(100)]],
-      'county': [this.newAddress.locality?.county?.label, [Validators.required, Validators.maxLength(100)]],
-      'country': [this.newAddress.locality?.country?.label, [Validators.required, Validators.maxLength(100)]],
-      'postalCode': [this.newAddress.postalCode, [Validators.required, Validators.maxLength(100)]],
+      'block': [this.newAddress.block, [Validators.maxLength(100)]],
+      'stairwell': [this.newAddress.stairwell, [Validators.maxLength(100), WorkdayValidators.validNumber]],
+      'floor': [this.newAddress.floor, [Validators.maxLength(100), WorkdayValidators.validNumber]],
+      'apartmentNumber': [this.newAddress.apartmentNumber, [Validators.maxLength(100), WorkdayValidators.validNumber]],
+      'locality': [this.newAddress.locality?.label, [Validators.maxLength(100)]],
+      'county': [this.newAddress.locality?.county?.label, [Validators.maxLength(100)]],
+      'country': [this.newAddress.locality?.country?.label, [Validators.maxLength(100)]],
+      'postalCode': [this.newAddress.postalCode, [Validators.required, Validators.maxLength(6), Validators.minLength(6), WorkdayValidators.validPostalCode]],
     });
     return this.newAddressForm;
   }
 
+
   ngAfterViewInit(): void {
 
+    setTimeout(() => {
+      for (let i = 0; i < this.addresses.length; i++) {
+        if (this.addresses[i].addressType?.label) {
+          $('#addressType-' + i).selectpicker();
+          $('#addressType-' + i).selectpicker('val', this.addresses[i].addressType?.label);
+          $('#addressType-' + i).selectpicker('refresh');
+          if ($('#addressType-' + i).val() === '') {
+            this.addressFormGroups[i].markAsPending();
+          }
+        }
+      }
+      $('#addressType').selectpicker();
+      $('#addressType').selectpicker('val', this.newAddress.addressType?.label);
+      $('#addressType').selectpicker('refresh');
+      if ($('#addressType').val() === '') {
+        this.newAddressForm.markAsPending();
+      }
 
-
-    $('.selectpicker').selectpicker();
-
-    setTimeout(function () {
       $('#datatable').DataTable({
         lengthChange: false,
         bInfo: false,
@@ -139,7 +155,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
         }
 
       });
-    }, 500);
+    }, 1000);
   }
 
   reinitializePicker() {
@@ -159,10 +175,46 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
   setLocality(): string {
     if (this.isALocalitySelected()) {
+      this.newAddressForm.controls.locality.setValue(this.selectedLocality[0]);
       return this.selectedLocality[0];
     } else {
       return "Oraș";
     }
+  }
+
+  putAddress(index: number) {
+
+    this.addresses[index].locality.label = this.addressFormGroups[index].controls.locality.value;
+    this.addresses[index].addressType.label = this.addressFormGroups[index].controls.addressType.value;
+    this.addresses[index].street = this.addressFormGroups[index].controls.street.value;
+    this.addresses[index].number = this.addressFormGroups[index].controls.number.value;
+    this.addresses[index].block = this.addressFormGroups[index].controls.block.value;
+    this.addresses[index].stairwell = this.addressFormGroups[index].controls.stairwell.value;
+    this.addresses[index].floor = this.addressFormGroups[index].controls.floor.value ? Number(this.newAddressForm.controls.floor.value) : null;
+    this.addresses[index].apartmentNumber = this.addressFormGroups[index].controls.apartmentNumber.value ? Number(this.newAddressForm.controls.apartmentNumber.value) : null;
+
+    this.addresses[index].locality.county.label = this.addressFormGroups[index].controls.county.value;
+    this.addresses[index].locality.country.label = this.addressFormGroups[index].controls.country.value;
+    this.addresses[index].postalCode = this.addressFormGroups[index].controls.postalCode.value;
+
+    this.addressService.putAddress(this.addresses[index]).subscribe(data => {
+      this.addressService.getAddresses(this.employee.id).subscribe(data => {
+        this.addresses = data;
+        this.createAddressForms();
+        setTimeout(() => {
+          for (let i = 0; i < this.addresses.length; i++) {
+            if (this.addresses[i].addressType?.label) {
+              $('#addressType-' + i).selectpicker();
+              $('#addressType-' + i).selectpicker('val', this.addresses[i].addressType?.label);
+              $('#addressType-' + i).selectpicker('refresh');
+              if ($('#addressType-' + i).val() === '') {
+                this.addressFormGroups[i].markAsPending();
+              }
+            }
+          }
+        }, 100);
+      });
+    });
   }
 
   putNewAddress() {
@@ -170,7 +222,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
       this.newAddress.addressType = new Referential();
     }
     if (!this.newAddress.locality) {
-      this.newAddress.locality = new LocalityReferential();
+      this.newAddress.locality.label = this.newAddressForm.controls.locality.value;
       this.newAddress.locality.county = new Referential();
       this.newAddress.locality.country = new Referential();
     }
@@ -180,16 +232,30 @@ export class AddressComponent implements OnInit, AfterViewInit {
     this.newAddress.number = this.newAddressForm.controls.number.value;
     this.newAddress.block = this.newAddressForm.controls.block.value;
     this.newAddress.stairwell = this.newAddressForm.controls.stairwell.value;
-    this.newAddress.floor = Number(this.newAddressForm.controls.floor.value);
-    this.newAddress.apartmentNumber = Number(this.newAddressForm.controls.apartmentNumber.value);
+    this.newAddress.floor = this.newAddressForm.controls.floor.value ? Number(this.newAddressForm.controls.floor.value) : null;
+    this.newAddress.apartmentNumber = this.newAddressForm.controls.apartmentNumber.value ? Number(this.newAddressForm.controls.apartmentNumber.value) : null;
+
     this.newAddress.locality.label = this.newAddressForm.controls.locality.value;
     this.newAddress.locality.county.label = this.selectedLocality[1];
     this.newAddress.locality.country.label = this.selectedLocality[2];
     this.newAddress.postalCode = this.newAddressForm.controls.postalCode.value;
 
     this.newAddress.employee = this.employee;
-    this.addressService.putAddress(this.newAddress).subscribe( data => {
-       this.addresses.push(data as Address);
+    this.addressService.putAddress(this.newAddress).subscribe(data => {
+      this.addresses.push(data as Address);
+      this.createAddressForms();
+      setTimeout(() => {
+        for (let i = 0; i < this.addresses.length; i++) {
+          if (this.addresses[i].addressType?.label) {
+            $('#addressType-' + i).selectpicker();
+            $('#addressType-' + i).selectpicker('val', this.addresses[i].addressType?.label);
+            $('#addressType-' + i).selectpicker('refresh');
+            if ($('#addressType-' + i).val() === '') {
+              this.addressFormGroups[i].markAsPending();
+            }
+          }
+        }
+      }, 100);
     });
   }
 }

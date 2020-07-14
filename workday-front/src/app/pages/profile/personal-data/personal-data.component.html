@@ -113,7 +113,7 @@
 
 
             <div class="card-footer text-right">
-              <button [disabled]="personalDataForm.invalid || personalDataForm.pending" type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putPersonalData()">Salvează</button>
+              <button [disabled]="personalDataForm.invalid || personalDataForm.pending || personalDataForm.pristine" type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putPersonalData()">Salvează</button>
             </div>
 
           </form>

@@ -158,6 +158,7 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
     this.employeeService.putEmployee(this.employee).subscribe(data => {
       this.employeeService.setStoredEmployee(data);
       this.notificationService.showNotification('top','center', 'success', 'Datele au fost salvate cu succes.');
+      this.personalDataForm.markAsPristine();
     });
   }
 
