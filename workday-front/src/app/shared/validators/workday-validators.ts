@@ -72,4 +72,14 @@ export class WorkdayValidators {
     }
     return null;
   }
+
+  static validIBAN(iban: AbstractControl): ValidationErrors {
+    if (iban.pristine) {
+      return null;
+    }
+    if (iban.value && !iban.value.match(NumbersEnum.WORKDAY_DEFAULT_IBAN_FORMAT_REGEX.toString())) {
+      return {'invalidPostalCode': true}
+    }
+    return null;
+  }
 }

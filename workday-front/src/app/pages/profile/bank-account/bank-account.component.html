@@ -30,12 +30,18 @@
                               <input formControlName="bank" type="text" class="form-control"
                                      placeholder="Bancă">
                             </div>
+                            <small [hidden]="!bankAccountsFormGroups[i].get('bank').errors" class="text-danger">
+                              Nu ați introdus banca.
+                            </small>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
                               <label>Filială</label>
                               <input formControlName="agency" type="text" class="form-control" placeholder="Filială">
                             </div>
+                            <small [hidden]="!bankAccountsFormGroups[i].get('agency').errors" class="text-danger">
+                              Nu ați introdus filiala.
+                            </small>
                           </div>
                         </div>
 
@@ -45,23 +51,31 @@
                               <label>IBAN</label>
                               <input formControlName="IBAN" type="text" class="form-control" placeholder="IBAN">
                             </div>
+                            <small [hidden]="!bankAccountsFormGroups[i].get('IBAN').errors" class="text-danger">
+                              Nu ați introdus codul IBAN.
+                            </small>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Data expirării cardului</label>
                               <input formControlName="expirationDate" type="text" class="form-control"
-                                     placeholder="Data expirării cardului">
+                                     placeholder="ZZ-LL-AAAA">
                             </div>
+                            <small [hidden]="!bankAccountsFormGroups[i].get('expirationDate').errors" class="text-danger">
+                              Nu ați introdus data expirării cadrului sau formatul este invalid.
+                            </small>
                           </div>
                         </div>
 
                         <div class="row">
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label>Moneda</label>
-                              <input formControlName="currency" type="text" class="form-control"
-                                     placeholder="Moneda">
-                            </div>
+                          <div class="col-lg-4 col-md-4 col-sm-6" >
+                            <select id = 'currency-{{i}}' formControlName="currency" class="selectpicker form-control mt-sm-3" data-size="7" required="required"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Monedă">
+                              <option *ngFor="let referential of currencyReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
@@ -87,9 +101,8 @@
                       </div>
                     </div>
                     <div class="card-footer text-right">
-                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                      <button (click)="putBankAccount(i)" [disabled]="bankAccountsFormGroups[i].pristine || bankAccountsFormGroups[i].invalid || bankAccountsFormGroups[i].pending" type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
-
                   </form>
                 </div>
               </div>
@@ -190,7 +203,7 @@
           </form>
           <div class="modal-footer">
             <div class="left-side">
-              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewBankAccount()">
+              <button [disabled]="bankAccountFormGroup && (bankAccountFormGroup.pristine || bankAccountFormGroup.invalid)" type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewBankAccount()">
                 Salvează contul bancar
               </button>
             </div>
