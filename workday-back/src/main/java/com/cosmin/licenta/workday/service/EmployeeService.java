@@ -51,7 +51,7 @@ public class EmployeeService {
             Employee employeeToUpdate = employeeRepository.findByUsername(employeeDTO.getUsername()).get();
             employeeToUpdate = employeeMapper.mergeEntity(employeeToUpdate, employeeDTO);
 
-            if (employeeToUpdate.getGender() != null && employeeToUpdate.getGender().getId() == null) {
+            if (employeeToUpdate.getGender() != null) {
                 Optional<GenderReferential> genderOptional = genderReferentialRepository
                         .findByLabel(employeeToUpdate.getGender().getLabel());
                 if (genderOptional.isPresent()) {
@@ -61,7 +61,7 @@ public class EmployeeService {
                 }
             }
 
-            if (employeeToUpdate.getJobPosition() != null && employeeToUpdate.getJobPosition().getId() == null) {
+            if (employeeToUpdate.getJobPosition() != null) {
                 Optional<JobPositionReferential> jobPositionOptional = jobPositionReferentialRepository
                         .findByLabel(employeeToUpdate.getJobPosition().getLabel());
                 if (jobPositionOptional.isPresent()) {
@@ -71,7 +71,7 @@ public class EmployeeService {
                 }
             }
 
-            if (employeeToUpdate.getDepartment() != null && employeeToUpdate.getDepartment().getId() == null) {
+            if (employeeToUpdate.getDepartment() != null) {
                 Optional<DepartmentReferential> departmentOptional = departmentReferentialRepository
                         .findByLabel(employeeToUpdate.getDepartment().getLabel());
                 if (departmentOptional.isPresent()) {

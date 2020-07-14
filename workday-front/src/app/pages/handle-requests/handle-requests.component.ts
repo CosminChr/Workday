@@ -57,13 +57,17 @@ export class HandleRequestsComponent implements OnInit {
       this.employeeService.getEmployeesByManagerId(this.employee.managerId),
       this.notificationService.getNotificationsByEmployeeId(this.employee.id),
       this.workFromHomeService.getWorkFromHomeForEmployeesOfManager(this.employee.managerId),
-      this.overtimeService.getOvertimeForEmployeesOfManager(this.employee.managerId)
+      this.overtimeService.getOvertimeForEmployeesOfManager(this.employee.managerId),
     ])
       .subscribe(data => {
         this.employeesOfManager = data[0] as Array<Employee>;
         this.notifications = data[1] as Array<Notification>;
         this.workFromHomeListOfManager = data[2] as Array<WorkFromHome>;
         this.overtimeListOfManager = data[3] as Array<Overtime>;
+        this.holidayService.getHolidaysForEmployees(this.employeesOfManager).subscribe( data => {
+          this.holidays = data;
+        });
+
 
         this.holidaysMessagingService.stompClient.connect({}, () => {
           this.holidaysMessagingService.stompClient.subscribe('/topic/manager/holiday', (data) => {

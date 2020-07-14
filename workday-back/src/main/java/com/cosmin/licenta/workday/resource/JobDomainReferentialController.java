@@ -22,7 +22,7 @@ public class JobDomainReferentialController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ReferentialDTO>> getLocalityRefs() {
+    public ResponseEntity<List<ReferentialDTO>> getJobDomainRefs() {
         return ResponseEntity.ok(jobDomainReferentialService.getJobDomainReferentials());
     }
 }

@@ -16,18 +16,27 @@
                       <label>Nume</label>
                       <input formControlName="lastName" type="text" class="form-control" placeholder="Nume">
                     </div>
+                    <small [hidden]="!personalDataForm.get('lastName').errors" class="text-danger">
+                      Nu ați introdus numele.
+                    </small>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Prenume</label>
                       <input formControlName="firstName" type="text" class="form-control" placeholder="Prenume">
                     </div>
+                    <small [hidden]="!personalDataForm.get('firstName').errors" class="text-danger">
+                      Nu ați introdus prenumele.
+                    </small>
                   </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Gen</label>
-                      <input formControlName="gender" type="text" class="form-control" placeholder="Gen">
-                    </div>
+                  <div class="col-lg-2" >
+                    <select id = 'gender' formControlName="gender" class="selectpicker mt-sm-3" data-size="7" required="required"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Gen">
+                      <option *ngFor="let referential of genderReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
                   </div>
                 </div>
 
@@ -37,24 +46,36 @@
                       <label>Locul nasterii</label>
                       <input formControlName="birthPlace" type="text" class="form-control" placeholder="Locul nașterii">
                     </div>
+                    <small [hidden]="!personalDataForm.get('birthPlace').errors" class="text-danger">
+                      Nu ați introdus locul nașterii.
+                    </small>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>CNP</label>
                       <input formControlName="personIdentifier" type="text" class="form-control" placeholder="CNP">
                     </div>
+                    <small [hidden]="!personalDataForm.get('personIdentifier').errors" class="text-danger">
+                      Nu ați introdus CNP-ul sau CNP-ul introdus nu este valid.
+                    </small>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Data nașterii</label>
-                      <input formControlName="birthDate" type="text" class="form-control" placeholder="Data nașterii">
+                      <input formControlName="birthDate" type="text" class="form-control" placeholder="ZZ-LL-AAAA">
                     </div>
+                    <small [hidden]="!personalDataForm.get('birthDate').errors" class="text-danger">
+                      Nu ați introdus data nașterii sau formatul introdus nu este valid.
+                    </small>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Nume anterior căsătoriei</label>
                       <input formControlName="birthName" type="text" class="form-control" placeholder="Nume anterior căsătoriei">
                     </div>
+                    <small [hidden]="!personalDataForm.get('birthName').errors" class="text-danger">
+                      Nu ați introdus numele anterior căsătoriei.
+                    </small>
                   </div>
                 </div>
 
@@ -64,18 +85,27 @@
                       <label>Email</label>
                       <input formControlName="email" type="text" class="form-control" placeholder="Email">
                     </div>
+                    <small [hidden]="!personalDataForm.get('email').errors" class="text-danger">
+                      Nu ați introdus emailul sau emailul introdus nu este valid.
+                    </small>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Telefon fix</label>
                       <input formControlName="homePhoneNumber" type="text" class="form-control" placeholder="Telefon fix">
                     </div>
+                    <small [hidden]="!personalDataForm.get('homePhoneNumber').errors" class="text-danger">
+                      Nu ați introdus telefonul fix sau formatul este invalid.
+                    </small>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Telefon mobil</label>
                       <input formControlName="mobilePhoneNumber" type="text" class="form-control" placeholder="Telefon mobil">
                     </div>
+                    <small [hidden]="!personalDataForm.get('mobilePhoneNumber').errors" class="text-danger">
+                      Nu ați introdus telefonul sau formatul este invalid.
+                    </small>
                   </div>
                 </div>
               </div>
@@ -83,7 +113,7 @@
 
 
             <div class="card-footer text-right">
-              <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putPersonalData()">Salvează</button>
+              <button [disabled]="personalDataForm.invalid || personalDataForm.pending" type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putPersonalData()">Salvează</button>
             </div>
 
           </form>
@@ -103,29 +133,32 @@
             <div class="row">
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label>Funcție</label>
-                      <input formControlName="jobPosition" type="text" class="form-control" placeholder="Funcție">
-                    </div>
+                  <div class="col-lg-4 col-md-4 col-sm-6">
+                    <select disabled id="jobPosition" formControlName="jobPosition" class="selectpicker form-control mt-sm-3" data-size="7"
+                            data-style="btn btn-outline-success btn-round"
+                            title="Funcție">
+                      <option *ngFor="let referential of jobPositionReferentials">
+                        {{referential.label}}
+                      </option>
+                    </select>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Entitate</label>
-                      <input formControlName="entity" type="text" class="form-control" placeholder="Entitate">
+                      <input  disabled formControlName="entity" type="text" class="form-control" placeholder="Entitate">
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>Locație</label>
-                      <input formControlName="location" type="text" class="form-control" placeholder="Locație">
+                      <input disabled formControlName="location" type="text" class="form-control" placeholder="Locație">
                     </div>
                   </div>
                 </div>
 
                 <div class="row">
-                  <div class="col-lg-2" >
-                    <select formControlName="department" class="selectpicker mt-sm-3" data-size="7"
+                  <div class="col-lg-2">
+                    <select disabled id="department" formControlName="department" class="selectpicker mt-sm-3" data-size="7"
                             data-style="btn btn-outline-success btn-round"
                             title="Departament">
                       <option *ngFor="let referential of departmentReferentials">
@@ -140,7 +173,7 @@
                       <div class="col-sm-10 checkbox-radios">
                         <div class="form-check">
                           <label class="form-check-label ">
-                            <input formControlName="ITDeduction" class="form-check-input" type="checkbox">
+                            <input disabled formControlName="ITDeduction" class="form-check-input" type="checkbox">
                             <span class="form-check-sign"></span>
                             Scutire impozit personal IT
                           </label>
@@ -154,27 +187,23 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Data angajării</label>
-                      <input formControlName="joiningDate" type="text" class="form-control" placeholder="Data angajării">
+                      <input disabled formControlName="joiningDate" type="text" class="form-control" placeholder="Data angajării">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Data ultimei modificări de poziție</label>
-                      <input formControlName="currentPositionStartingDate" type="text" class="form-control" placeholder="Data ultimei modificări de poziție">
+                      <input disabled formControlName="currentPositionStartingDate" type="text" class="form-control" placeholder="Data ultimei modificări de poziție">
                     </div>
                   </div>
-                  <div class="col-md-3"  *ngIf="employee.manager">
+                  <div class="col-md-3"  *ngIf="employee.managerId">
                     <div class="form-group">
                       <label>Manager</label>
-                      <input formControlName="manager" type="text" class="form-control" placeholder="Manager" disabled>
+                      <input disabled formControlName="manager" type="text" class="form-control" placeholder="Manager">
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="card-footer text-right">
-              <button type="submit" class="btn btn-outline-danger btn-round mb-3" (click)="putEmployeeData()">Salvează</button>
             </div>
 
           </form>

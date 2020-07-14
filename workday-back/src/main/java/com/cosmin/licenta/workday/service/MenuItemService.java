@@ -49,8 +49,13 @@ public class MenuItemService {
     public List<MenuItemDTO> getMenuItemsForAdmin(final Long userId) {
         Optional<Admin> adminOptional = adminRepository.findById(userId);
         if (adminOptional.isPresent()) {
-            final List<MenuItem> menuItems = menuItemRepository.findAll();
-            return menuItemMapper.entitiesToDomains(menuItems.subList(menuItems.size() - 2, menuItems.size()));
+            List<MenuItem> menuItems = menuItemRepository.findAll();
+            Optional<MenuItem> companyJobs = menuItemRepository.findByName("Joburile Companiei");
+            menuItems = menuItems.subList(menuItems.size() - 2, menuItems.size());
+            if (companyJobs.isPresent()) {
+                menuItems.add(companyJobs.get());
+            }
+            return menuItemMapper.entitiesToDomains(menuItems);
         }
         return null;
     }
