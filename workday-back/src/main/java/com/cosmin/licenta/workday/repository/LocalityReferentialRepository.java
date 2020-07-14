@@ -5,10 +5,12 @@ import com.cosmin.licenta.workday.entity.CountyReferential;
 import com.cosmin.licenta.workday.entity.LocalityReferential;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface LocalityReferentialRepository extends JpaRepository<LocalityReferential, Long> {
 
     Optional<LocalityReferential> findByLabelAndCountyAndCountry(String label, CountyReferential county, CountryReferential country);
 
+    Optional<List<LocalityReferential>> findBylabel(String label);
 }
