@@ -10,6 +10,10 @@ import {PreviousJobService} from "./prebious-job.service";
 import {forkJoin} from "rxjs";
 import {LocalityReferentialService} from "../address/locality-referential.service";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
+import {IdentityDocument} from "../../../shared/models/identity-document.model";
+import {JobPositionReferentialService} from "../personal-data/job-position-referential.service";
+import {WorkdayValidators} from "../../../shared/validators/workday-validators";
+import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 declare var $: any;
 
@@ -42,6 +46,8 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
               private jobDomainReferentialService: JobDomainReferentialService,
               private localityReferentialService: LocalityReferentialService,
               private previousJobService: PreviousJobService,
+              private jobPositionServiceL: JobPositionReferentialService,
+              private notificationService: NotificationService,
               private formBuilder: FormBuilder) {
   }
 
@@ -68,10 +74,30 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
+    setTimeout(() => {
 
-    $('.selectpicker').selectpicker();
+      if (!this.previousJobs) {
+        this.previousJobs = new Array<PreviousJob>();
+      }
+      for (let i = 0; i < this.previousJobs.length; i++) {
+        if (this.previousJobs[i].jobDomain?.label) {
+          $('#jobDomain-' + i).selectpicker();
+          $('#jobDomain-' + i).selectpicker('val', this.previousJobs[i].jobDomain?.label);
+          $('#jobDomain-' + i).selectpicker('refresh');
+          if ($('#jobDomain-' + i).val() === '') {
+            this.previousJobFormGroups[i].markAsPending();
+          }
+        }
+        if (this.previousJobs[i].locality?.label) {
+          $('#locality-' + i).selectpicker();
+          $('#locality-' + i).selectpicker('val', this.previousJobs[i].locality?.label);
+          $('#locality-' + i).selectpicker('refresh');
+          if ($('#locality-' + i).val() === '') {
+            this.previousJobFormGroups[i].markAsPending();
+          }
+        }
+      }
 
-    setTimeout(function () {
       $('#datatable').DataTable({
         lengthChange: false,
         bInfo: false,
@@ -93,7 +119,8 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
         }
 
       });
-    }, 500);
+    }, 700);
+
   }
 
   reinitializePicker() {
@@ -109,8 +136,8 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
           'jobDomain': [this.previousJobs[i]?.jobDomain.label, [Validators.required, Validators.maxLength(100)]],
           'position': [this.previousJobs[i].position, [Validators.required, Validators.maxLength(100)]],
           'locality': [this.previousJobs[i]?.locality.label, [Validators.required, Validators.maxLength(100)]],
-          'fromDate': [this.previousJobs[i].fromDate ? formatDate(this.previousJobs[i].fromDate) : '', [Validators.required, Validators.maxLength(100)]],
-          'toDate': [this.previousJobs[i].toDate ? formatDate(this.previousJobs[i].toDate) : '', [Validators.required, Validators.maxLength(100)]],
+          'fromDate': [this.previousJobs[i].fromDate ? formatDate(this.previousJobs[i].fromDate) : '', [Validators.required, WorkdayValidators.validDate]],
+          'toDate': [this.previousJobs[i].toDate ? formatDate(this.previousJobs[i].toDate) : '', [Validators.required, WorkdayValidators.validDate]],
         });
       }
     } else {
@@ -143,6 +170,7 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
 
   setLocality(): string {
     if (this.isALocalitySelected()) {
+      this.previousJobFormGroup.controls.locality.setValue(this.selectedLocality[0]);
       return this.selectedLocality[0];
     } else {
       return "Oraș";
@@ -153,6 +181,48 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
     this.selectedLocality[0] = event.target.parentNode.cells[0].textContent;
     this.selectedLocality[1] = event.target.parentNode.cells[1].textContent;
     this.selectedLocality[2] = event.target.parentNode.cells[2].textContent;
+  }
+
+  putPreviousJob(index: number) {
+
+    this.previousJobs[index].employer = this.previousJobFormGroups[index].controls.employer.value;
+    console.log(this.previousJobFormGroups[index].controls.jobDomain.value);
+    this.previousJobs[index].jobDomain.label = this.previousJobFormGroups[index].controls.jobDomain.value;
+    this.previousJobs[index].position = this.previousJobFormGroups[index].controls.position.value;
+    this.previousJobs[index].locality.label = this.previousJobFormGroups[index].controls.locality.value;
+
+    this.previousJobs[index].fromDate = parseDate(this.previousJobFormGroups[index].controls.fromDate.value);
+    this.previousJobs[index].toDate = parseDate(this.previousJobFormGroups[index].controls.toDate.value);
+
+    this.previousJobService.putPreviousJob(this.previousJobs[index]).subscribe(data => {
+      this.previousJobService.getPreviousJobs(this.employee.id).subscribe( data => {
+        this.isDoesAnyPreviousJobExist = true;
+        this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');
+        this.previousJobs = data;
+        this.createPreviousJobForms();
+        setTimeout(() => {
+
+          for (let i = 0; i < this.previousJobs.length; i++) {
+            if (this.previousJobs[i].jobDomain?.label) {
+              $('#jobDomain-' + i).selectpicker();
+              $('#jobDomain-' + i).selectpicker('val', this.previousJobs[i].jobDomain?.label);
+              $('#jobDomain-' + i).selectpicker('refresh');
+              if ($('#jobDomain-' + i).val() === '') {
+                this.previousJobFormGroups[i].markAsPending();
+              }
+            }
+            if (this.previousJobs[i].locality?.label) {
+              $('#locality-' + i).selectpicker();
+              $('#locality-' + i).selectpicker('val', this.previousJobs[i].locality?.label);
+              $('#locality-' + i).selectpicker('refresh');
+              if ($('#locality-' + i).val() === '') {
+                this.previousJobFormGroups[i].markAsPending();
+              }
+            }
+          }
+        }, 700);
+      })
+    });
   }
 
   putNewPreviousJob() {
@@ -181,8 +251,30 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
     this.newPreviousJob.employee = this.employee;
     this.previousJobService.putPreviousJob(this.newPreviousJob).subscribe(data => {
       this.previousJobs.push(data as PreviousJob);
+      this.isDoesAnyPreviousJobExist = true;
+      this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');
+      this.createPreviousJobForms();
+      setTimeout(() => {
+
+        for (let i = 0; i < this.previousJobs.length; i++) {
+          if (this.previousJobs[i].jobDomain?.label) {
+            $('#jobDomain-' + i).selectpicker();
+            $('#jobDomain-' + i).selectpicker('val', this.previousJobs[i].jobDomain?.label);
+            $('#jobDomain-' + i).selectpicker('refresh');
+            if ($('#jobDomain-' + i).val() === '') {
+              this.previousJobFormGroups[i].markAsPending();
+            }
+          }
+          if (this.previousJobs[i].locality?.label) {
+            $('#locality-' + i).selectpicker();
+            $('#locality-' + i).selectpicker('val', this.previousJobs[i].locality?.label);
+            $('#locality-' + i).selectpicker('refresh');
+            if ($('#locality-' + i).val() === '') {
+              this.previousJobFormGroups[i].markAsPending();
+            }
+          }
+        }
+      }, 700);
     });
   }
-
-
 }

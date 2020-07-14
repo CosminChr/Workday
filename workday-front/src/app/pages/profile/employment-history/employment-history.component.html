@@ -29,12 +29,18 @@
                               <input formControlName="employer" type="text" class="form-control"
                                      placeholder="Angajator">
                             </div>
+                            <small [hidden]="!previousJobFormGroups[i].get('employer').errors" class="text-danger">
+                              Nu ați introdus angajatorul.
+                            </small>
                           </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label>Domeniu</label>
-                              <input formControlName="jobDomain" type="text" class="form-control" placeholder="Domeniu">
-                            </div>
+                          <div class="col-lg-4 col-md-4 col-sm-6">
+                            <select id = 'jobDomain-{{i}}' formControlName="jobDomain" class="selectpicker form-control mt-sm-3" data-size="7"
+                                    data-style="btn btn-outline-success btn-round"
+                                    title="Tip document">
+                              <option *ngFor="let referential of jobDomainReferentials">
+                                {{referential.label}}
+                              </option>
+                            </select>
                           </div>
                         </div>
 
@@ -44,35 +50,44 @@
                               <label>Poziție</label>
                               <input formControlName="position" type="text" class="form-control" placeholder="Poziție">
                             </div>
+                            <small [hidden]="!previousJobFormGroups[i].get('position').errors" class="text-danger">
+                              Nu ați introdus poziția.
+                            </small>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Localitate</label>
                               <input formControlName="locality" type="text" class="form-control" placeholder="Localitate">
                             </div>
+                            <small [hidden]="!previousJobFormGroups[i].get('locality').errors" class="text-danger">
+                              Nu ați introdus localitatea.
+                            </small>
                           </div>
                         </div>
-
                         <div class="row">
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Data început</label>
                               <input formControlName="fromDate" type="text" class="form-control" placeholder="Data start">
                             </div>
+                            <small [hidden]="!previousJobFormGroups[i].get('fromDate').errors" class="text-danger">
+                              Nu ați introdus data de început.
+                            </small>
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
                               <label>Data sfârșit</label>
                               <input formControlName="toDate" type="text" class="form-control" placeholder="Data sfârșit">
                             </div>
+                            <small [hidden]="!previousJobFormGroups[i].get('toDate').errors" class="text-danger">
+                              Nu ați introdus data de sfârșit.
+                            </small>
                           </div>
                         </div>
                       </div>
                     </div>
-
-
                     <div class="card-footer text-right">
-                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                      <button (click)="putPreviousJob(i)" [disabled]="previousJobFormGroups[i].pristine || previousJobFormGroups[i].pending || previousJobFormGroups[i].invalid" type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
 
                   </form>
@@ -164,7 +179,7 @@
           </form>
           <div class="modal-footer">
             <div class="left-side">
-              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewPreviousJob()">Salvează jobul anterior
+              <button [disabled]="previousJobFormGroup && (previousJobFormGroup.pristine || previousJobFormGroup.invalid)" type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewPreviousJob()">Salvează jobul anterior
               </button>
             </div>
             <div class="divider"></div>

@@ -154,7 +154,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
         }
 
       });
-    }, 1000);
+    }, 700);
   }
 
   reinitializePicker() {

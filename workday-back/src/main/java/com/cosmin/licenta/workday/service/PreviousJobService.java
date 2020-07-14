@@ -62,7 +62,11 @@ public class PreviousJobService {
         Optional<CountryReferential> countryOptional = countryReferentialRepository.findByLabel(previousJobDTO.getLocality().getCountry().getLabel());
         Optional<LocalityReferential> localityReferentialOptional = localityReferentialRepository.findByLabelAndCountyAndCountry(previousJobDTO.getLocality().getLabel(), countyOptional.get(), countryOptional.get());
 
+        if (!localityReferentialOptional.isPresent()) {
+            localityReferentialOptional = localityReferentialRepository.findBylabel(previousJobDTO.getLocality().getLabel()).get().stream().findFirst();
+        }
         previousJobDTO.setLocality(localityReferentialMapper.entityToDomain(localityReferentialOptional.get()));
+
         previousJobRepository.save(previousJobMapper.domainToEntity(previousJobDTO));
         return previousJobDTO;
     }
