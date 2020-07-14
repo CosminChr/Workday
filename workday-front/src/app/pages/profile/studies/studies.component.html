@@ -26,6 +26,9 @@
                               <input formControlName="educationalInstitution" type="text" class="form-control"
                                      placeholder="Instituția">
                             </div>
+                            <small [hidden]="!academicStudyFormGroups[i].get('educationalInstitution').errors" class="text-danger">
+                              Nu ați introdus instituția.
+                            </small>
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-6">
                             <label>Domeniu de studiu</label>
@@ -43,6 +46,9 @@
                               <input formControlName="specialization" type="text" class="form-control"
                                      placeholder="Specializarea">
                             </div>
+                            <small [hidden]="!academicStudyFormGroups[i].get('specialization').errors" class="text-danger">
+                              Nu ați introdus specializarea.
+                            </small>
                           </div>
                         </div>
 
@@ -61,15 +67,21 @@
                             <div class="form-group">
                               <label>Data început</label>
                               <input formControlName="fromDate" type="text" class="form-control"
-                                     placeholder="Data început">
+                                     placeholder="ZZ-LL-AAAA">
                             </div>
+                            <small [hidden]="!academicStudyFormGroups[i].get('fromDate').errors" class="text-danger">
+                              Nu ați introdus data de început a studiilor sau formatul este invalid.
+                            </small>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
                               <label>Data sfârșit</label>
                               <input formControlName="toDate" type="text" class="form-control"
-                                     placeholder="Data sfârșit">
+                                     placeholder="ZZ-LL-AAAA">
                             </div>
+                            <small [hidden]="!academicStudyFormGroups[i].get('toDate').errors" class="text-danger">
+                              Nu ați introdus data de sfârșit a studiilor sau formatul este invalid.
+                            </small>
                           </div>
                         </div>
 
@@ -108,7 +120,7 @@
                       </div>
                     </div>
                     <div class="card-footer text-right">
-                      <button type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
+                      <button (click)="putStudy(i)"  [disabled]="academicStudyFormGroups && (academicStudyFormGroups[i].pristine || academicStudyFormGroups[i].pending || academicStudyFormGroups[i].invalid)" type="submit" class="btn btn-outline-danger btn-round mb-3">Salvează</button>
                     </div>
                   </form>
                 </div>
@@ -224,7 +236,7 @@
           </form>
           <div class="modal-footer">
             <div class="left-side">
-              <button type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewStudy()">Salvează studiul
+              <button [disabled]="academicStudyFormGroup && (academicStudyFormGroup.pristine || academicStudyFormGroup.pending || academicStudyFormGroup.invalid)" type="button" class="btn btn-default btn-link" data-dismiss="modal" (click)="putNewStudy()">Salvează studiul
               </button>
             </div>
             <div class="divider"></div>

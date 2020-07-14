@@ -4,16 +4,14 @@ import {Referential} from "../../../shared/models/referential.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AcademicStudy} from "../../../shared/models/academic-study.model";
 import {EmployeeService} from "../../../shared/services/employee/employee.service";
-import {BankAccountService} from "../bank-account/bank-account.service";
-import {CurrencyReferentialService} from "../bank-account/currency-referential.service";
 import {CountryReferentialService} from "../personal-documents/country-referential.service";
 import {StudyLevelReferentialService} from "./study-level-referential.service";
 import {AcademicStudyService} from "./academic-study.service";
 import {forkJoin} from "rxjs";
 import {formatDate, parseDate} from "../../../shared/utils/utils";
 import {StudyFieldReferentialService} from "./study-field-referential.service";
-import {Citizenship} from "../../../shared/models/citizenship.model";
-import {Language} from "../../../shared/models/language.model";
+import {WorkdayValidators} from "../../../shared/validators/workday-validators";
+import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 declare var $: any;
 
@@ -49,7 +47,9 @@ export class StudiesComponent implements OnInit, AfterViewInit {
               private countryReferentialService: CountryReferentialService,
               private employeeService: EmployeeService,
               private studyFieldReferentialService: StudyFieldReferentialService,
-              private formBuilder: FormBuilder) { }
+              private notificationService: NotificationService,
+              private formBuilder: FormBuilder) {
+  }
 
 
   ngOnInit() {
@@ -63,21 +63,21 @@ export class StudiesComponent implements OnInit, AfterViewInit {
       this.studyFieldReferentialService.getStudyFieldReferentials()
     ])
       .subscribe(data => {
-      this.countryReferentials = data[0];
-      this.academicStudies = data[1];
-      this.studyLevelReferentials = data[2];
-      this.studyFieldReferentials = data[3];
-      this.creatAcademicStudyForms();
-      this.createNewStudyForm();
+        this.countryReferentials = data[0];
+        this.academicStudies = data[1];
+        this.studyLevelReferentials = data[2];
+        this.studyFieldReferentials = data[3];
+        this.creatAcademicStudyForms();
+        this.createNewStudyForm();
 
-    });
+      });
   }
 
   ngAfterViewInit(): void {
 
     this.academicStudyService.getStudies(this.employee.id)
-      .subscribe( (data: Array<AcademicStudy>) => {
-        setTimeout(function () {
+      .subscribe((data: Array<AcademicStudy>) => {
+        setTimeout( () => {
           $('.selectpicker').selectpicker();
           for (let i = 0; i < data.length; i++) {
             $('#studyLevel-' + i).selectpicker('val', data[i].studyLevel.label);
@@ -88,6 +88,10 @@ export class StudiesComponent implements OnInit, AfterViewInit {
 
             $('#country-' + i).selectpicker('val', data[i].country.label);
             $('#country-' + i).selectpicker('refresh');
+
+            if ($('#studyLevel-' + i).val() === '' || $('#studyField-' + i).val() === '' || $('#country-' + i).val() === '') {
+              this.academicStudyFormGroups[i].markAsPending();
+            }
           }
 
         }, 500);
@@ -100,14 +104,14 @@ export class StudiesComponent implements OnInit, AfterViewInit {
       this.academicStudyFormGroups = new Array<FormGroup>(this.academicStudies.length);
       for (let i = 0; i < this.academicStudies.length; i++) {
         this.academicStudyFormGroups[i] = this.formBuilder.group({
-          'studyLevel': [this.academicStudies[i].studyLevel, [Validators.required, Validators.maxLength(100)]],
+          'studyLevel': [this.academicStudies[i].studyLevel.label, [Validators.required, Validators.maxLength(100)]],
           'educationalInstitution': [this.academicStudies[i].educationalInstitution, [Validators.required, Validators.maxLength(100)]],
-          'studyField': [this.academicStudies[i].studyField, [Validators.required, Validators.maxLength(100)]],
+          'studyField': [this.academicStudies[i].studyField.label, [Validators.required, Validators.maxLength(100)]],
           'specialization': [this.academicStudies[i].specialization, [Validators.required, Validators.maxLength(100)]],
-          'country': [this.academicStudies[i].country, [Validators.required, Validators.maxLength(100)]],
-          'fromDate': [this.academicStudies[i].fromDate ? formatDate(this.academicStudies[i].fromDate) : '', [Validators.required]],
-          'toDate': [this.academicStudies[i].toDate ? formatDate(this.academicStudies[i].toDate) : '', [Validators.required]],
-          'finalized': [this.academicStudies[i].finalized, [Validators.required, Validators.maxLength(100)]]
+          'country': [this.academicStudies[i].country.label, [Validators.required, Validators.maxLength(100)]],
+          'fromDate': [this.academicStudies[i].fromDate ? formatDate(this.academicStudies[i].fromDate) : '', [Validators.required, WorkdayValidators.validDate]],
+          'toDate': [this.academicStudies[i].toDate ? formatDate(this.academicStudies[i].toDate) : '', [Validators.required, WorkdayValidators.validDate]],
+          'finalized': [this.academicStudies[i].finalized]
         });
       }
     }
@@ -130,33 +134,96 @@ export class StudiesComponent implements OnInit, AfterViewInit {
       'studyField': [this.newAcademicStudy.studyField.label, [Validators.required, Validators.maxLength(100)]],
       'specialization': [this.newAcademicStudy.specialization, [Validators.required, Validators.maxLength(100)]],
       'country': [this.newAcademicStudy.country.label, [Validators.required, Validators.maxLength(100)]],
-      'fromDate': [this.newAcademicStudy.fromDate ? formatDate(this.newAcademicStudy.fromDate) : '', [Validators.required]],
-      'toDate': [this.newAcademicStudy.toDate ? formatDate(this.newAcademicStudy.toDate) : '', [Validators.required]],
-      'finalized': [this.newAcademicStudy.finalized, [Validators.required, Validators.maxLength(100)]]
+      'fromDate': [this.newAcademicStudy.fromDate ? formatDate(this.newAcademicStudy.fromDate) : '', [Validators.required, WorkdayValidators.validDate]],
+      'toDate': [this.newAcademicStudy.toDate ? formatDate(this.newAcademicStudy.toDate) : '', [Validators.required, WorkdayValidators.validDate]],
+      'finalized': [this.newAcademicStudy.finalized]
     });
 
     return this.academicStudyFormGroup;
   }
 
-  putNewStudy(){
+  putStudy(index: number) {
+
+    this.academicStudies[index].studyLevel.label = this.academicStudyFormGroups[index].controls.studyLevel.value;
+    this.academicStudies[index].educationalInstitution = this.academicStudyFormGroups[index].controls.educationalInstitution.value;
+    this.academicStudies[index].studyField.label = this.academicStudyFormGroups[index].controls.studyField.value;
+    this.academicStudies[index].specialization = this.academicStudyFormGroups[index].controls.specialization.value;
+    this.academicStudies[index].country.label = this.academicStudyFormGroups[index].controls.country.value;
+    this.academicStudies[index].fromDate = parseDate(this.academicStudyFormGroups[index].controls.fromDate.value);
+    this.academicStudies[index].toDate = parseDate(this.academicStudyFormGroups[index].controls.toDate.value);
+    this.academicStudies[index].finalized = this.academicStudyFormGroups[index].controls.finalized.value;
+
+    const data = new FormData();
+    data.append("diploma", this.diploma ? this.diploma: new Blob(), this.diploma?.name);
+    data.append('academicStudy', new Blob([JSON.stringify(this.academicStudies[index])], {
+      type: "application/json"
+    }));
+
+    this.academicStudyService.putStudy(data).subscribe((data: AcademicStudy) => {
+      this.academicStudyService.getStudies(this.employee.id).subscribe( data => {
+        this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');
+        this.academicStudyFormGroups[index].markAsPristine();
+        this.academicStudies = data;
+        this.creatAcademicStudyForms();
+        setTimeout( () => {
+          $('.selectpicker').selectpicker();
+          for (let i = 0; i <  this.academicStudies.length; i++) {
+            $('#studyLevel-' + i).selectpicker('val',  this.academicStudies[i].studyLevel.label);
+            $('#studyLevel-' + i).selectpicker('refresh');
+
+            $('#studyField-' + i).selectpicker('val',  this.academicStudies[i].studyField.label);
+            $('#studyField-' + i).selectpicker('refresh');
+
+            $('#country-' + i).selectpicker('val',  this.academicStudies[i].country.label);
+            $('#country-' + i).selectpicker('refresh');
+
+            if ($('#studyLevel-' + i).val() === '' || $('#studyField-' + i).val() === '' || $('#country-' + i).val() === '') {
+              this.academicStudyFormGroups[i].markAsPending();
+            }
+          }
+        }, 500);
+      });
+    });
+  }
+
+  putNewStudy() {
     this.newAcademicStudy.studyLevel.label = this.academicStudyFormGroup.controls.studyLevel.value;
-    this.newAcademicStudy.educationalInstitution= this.academicStudyFormGroup.controls.educationalInstitution.value;
+    this.newAcademicStudy.educationalInstitution = this.academicStudyFormGroup.controls.educationalInstitution.value;
     this.newAcademicStudy.studyField.label = this.academicStudyFormGroup.controls.studyField.value;
     this.newAcademicStudy.specialization = this.academicStudyFormGroup.controls.specialization.value;
     this.newAcademicStudy.country.label = this.academicStudyFormGroup.controls.country.value;
     this.newAcademicStudy.fromDate = parseDate(this.academicStudyFormGroup.controls.fromDate.value);
     this.newAcademicStudy.toDate = parseDate(this.academicStudyFormGroup.controls.toDate.value);
     this.newAcademicStudy.finalized = this.academicStudyFormGroup.controls.finalized.value;
-    this.newAcademicStudy.employee=this.employee;
+    this.newAcademicStudy.employee = this.employee;
 
     const data = new FormData();
-    data.append("diploma", this.diploma, this.diploma.name);
+    data.append("diploma", this.diploma ? this.diploma: new Blob(), this.diploma?.name);
     data.append('academicStudy', new Blob([JSON.stringify(this.newAcademicStudy)], {
       type: "application/json"
     }));
 
-    this.academicStudyService.putStudy(data).subscribe( (data: AcademicStudy) => {
+    this.academicStudyService.putStudy(data).subscribe((data: AcademicStudy) => {
+      this.notificationService.showNotification('top', 'center', 'success', 'Datele au fost modificate cu succes.');
       this.academicStudies.push(data);
+      this.creatAcademicStudyForms();
+      setTimeout( () => {
+        $('.selectpicker').selectpicker();
+        for (let i = 0; i <  this.academicStudies.length; i++) {
+          $('#studyLevel-' + i).selectpicker('val',  this.academicStudies[i].studyLevel.label);
+          $('#studyLevel-' + i).selectpicker('refresh');
+
+          $('#studyField-' + i).selectpicker('val',  this.academicStudies[i].studyField.label);
+          $('#studyField-' + i).selectpicker('refresh');
+
+          $('#country-' + i).selectpicker('val',  this.academicStudies[i].country.label);
+          $('#country-' + i).selectpicker('refresh');
+
+          if ($('#studyLevel-' + i).val() === '' || $('#studyField-' + i).val() === '' || $('#country-' + i).val() === '') {
+            this.academicStudyFormGroups[i].markAsPending();
+          }
+        }
+      }, 500);
     });
   }
 

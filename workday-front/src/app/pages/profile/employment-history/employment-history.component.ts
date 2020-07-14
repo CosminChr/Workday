@@ -186,7 +186,6 @@ export class EmploymentHistoryComponent implements OnInit, AfterViewInit {
   putPreviousJob(index: number) {
 
     this.previousJobs[index].employer = this.previousJobFormGroups[index].controls.employer.value;
-    console.log(this.previousJobFormGroups[index].controls.jobDomain.value);
     this.previousJobs[index].jobDomain.label = this.previousJobFormGroups[index].controls.jobDomain.value;
     this.previousJobs[index].position = this.previousJobFormGroups[index].controls.position.value;
     this.previousJobs[index].locality.label = this.previousJobFormGroups[index].controls.locality.value;
