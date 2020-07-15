@@ -64,7 +64,6 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
           this.workFromHomeMessagingService.stompClient.subscribe('/topic/employee/workFromHome', (data) => {
             const workFromHome: WorkFromHome = JSON.parse(data.body).body;
             this.workFromHome = workFromHome;
-
             this.workFromHomeFormGroup.controls.startDateDay1
               .setValue(this.workFromHome.startDateDay1 ? formatDate(this.workFromHome.startDateDay1) : '');
             this.workFromHomeFormGroup.controls.startDateDay1.updateValueAndValidity();
@@ -116,6 +115,9 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
               }, 200);
             }
 
+            this.currentDayOfWeekDay1 = null;
+            this.currentDayOfWeekDay2 = null;
+
             const notification = new Notification();
             if (this.notifications && this.navbarService.getStoredEmployeeNotifications().value.length === 0) {
               const lastId = Math.max.apply(null, this.notifications.map(item => item.id));
@@ -132,6 +134,7 @@ export class WorkFromHomeComponent implements OnInit, AfterViewInit {
               .subscribe(data => {
                 this.navbarService.getStoredEmployeeNotifications().value.push(notification);
                 this.navbarService.setEmployeeNotifications(this.navbarService.getStoredEmployeeNotifications().value);
+
               });
           });
         });

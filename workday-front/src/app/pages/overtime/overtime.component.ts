@@ -11,6 +11,7 @@ import {OvertimeMessagingService} from "../../shared/services/websocket/overtime
 import {Notification} from "../../shared/models/notification.model";
 import {NavbarService} from "../../shared/components/navbar/navbar.service";
 import {NotificationService} from "../../shared/services/notification/notification.service";
+import {WorkdayValidators} from "../../shared/validators/workday-validators";
 
 @Component({
   selector: 'workday-overtime',
@@ -77,8 +78,8 @@ export class OvertimeComponent implements OnInit {
         (new Date().getMonth() + 1)) + '-' + new Date().getFullYear();
 
     this.overtimeFormGroup = this.formBuilder.group({
-      'numberOfHours': [this.newOvertime.numberOfHours, [Validators.required]],
-      'effectuationDate': ['', [Validators.required]],
+      'numberOfHours': [this.newOvertime.numberOfHours, [Validators.required, WorkdayValidators.validNumber]],
+      'effectuationDate': ['', [Validators.required, WorkdayValidators.validDate]],
       'initiationDate': [initiationDateAsString]
     });
     return this.overtimeFormGroup;

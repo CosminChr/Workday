@@ -141,6 +141,7 @@ export class CompanyJobsComponent implements OnInit {
         this.cv = null;
         this.newCVRowIsSelected = false;
         $('.companyJob').removeClass("selected");
+        this.notificationService.showNotification('top','center', 'success', 'CV-ul a fost trimis cu succes.');
       });
     } else {
       this.notificationService.showNotification('top','center', 'warning', 'Acest CV a fost încărcat deja.');
