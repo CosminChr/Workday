@@ -8,6 +8,7 @@ import {Employee} from "../../shared/models/employee.model";
 import {Referential} from "../../shared/models/referential.model";
 import {MedicalServiceProviderReferentialService} from "./medical-service-provider-referential.service";
 import {formatDate, parseDate} from "../../shared/utils/utils";
+import {NotificationService} from "../../shared/services/notification/notification.service";
 
 declare var $: any;
 
@@ -34,6 +35,7 @@ export class MedicalServicesComponent implements OnInit, AfterViewInit {
   constructor(private medicalServiceService: MedicalServiceService,
               private medicalServiceProviderReferentialService: MedicalServiceProviderReferentialService,
               private employeeService: EmployeeService,
+              private notificationService: NotificationService,
               private formBuilder: FormBuilder) {
   }
 
@@ -56,7 +58,7 @@ export class MedicalServicesComponent implements OnInit, AfterViewInit {
 
     this.medicalServiceService.getMedicalService(this.employee.id)
       .subscribe((data: MedicalService) => {
-        setTimeout(function () {
+        setTimeout( () => {
           $('.selectpicker').selectpicker();
           if (data?.medicalServiceProvider.label) {
             $("#medicalServiceProvider").prop("disabled", true);
@@ -113,7 +115,18 @@ export class MedicalServicesComponent implements OnInit, AfterViewInit {
    this.medicalService.employee = this.employee;
 
     this.medicalServiceService.putMedicalService(this.medicalService).subscribe( data => {
+      this.notificationService.showNotification('top','center', 'success', 'Datele au fost modificate cu succes.');
       this.medicalService = data as MedicalService;
+      console.log(this.medicalService);
+      this.createMedicalServiceForm();
+      setTimeout( () => {
+        $('.selectpicker').selectpicker();
+        if (data?.medicalServiceProvider.label) {
+          $("#medicalServiceProvider").prop("disabled", true);
+          $('#medicalServiceProvider').selectpicker('val', data?.medicalServiceProvider.label);
+        }
+        $('#medicalServiceProvider').selectpicker('refresh');
+      }, 200);
     });
   }
 

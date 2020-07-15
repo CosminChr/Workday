@@ -110,18 +110,21 @@ export class CertificatesComponent implements OnInit, AfterViewInit {
     doc.setFont('NotoSans-Regular');
     doc.setFontSize(10);
     const resident = this.employee.gender?.id === 1 ? 'domiciliat' : 'domiciliată';
-    const permanentAddress : Address = this.addresses.filter(address => address.addressType.id === 1)[0];
+    let permanentAddress : Address = this.addresses.filter(address => address.addressType.id === 1)[0];
+    if  (!permanentAddress) {
+      permanentAddress = this.addresses[0];
+    }
     doc.text('Prin prezenta adeverim ca ' + title.toString() + ' ' + this.employee.lastName + ' ' + this.employee.firstName + ' '
       + resident + ' în localitatea ' + 'str. ' + permanentAddress.street + ', nr. ', 25, 116);
     const owner = this.employee.gender?.id === 1 ? 'posesor' : 'posesoare';
     const identityCard: IdentityDocument = this.identityDocuments.filter(document => document.identityDocumentType.id === 1)[0];
-    doc.text(permanentAddress.number + ' bl. ' + permanentAddress.block + ', scara ' +
-      + permanentAddress.stairwell + ', etajul ' + permanentAddress.floor + ', județ ' + permanentAddress.locality.county.label + ', '
+    doc.text(permanentAddress.number + ' bl. ' + (permanentAddress.block ? permanentAddress.block:'-') + ', scara ' +
+      (Number(permanentAddress.stairwell) != 0 ? permanentAddress.stairwell: '-') + ', etajul ' + (permanentAddress.floor ? permanentAddress.floor: '-') + ', județ ' + permanentAddress.locality.county.label + ', '
       + owner + ' a cărții de identitate seria ' + identityCard.seriesAndNumber.substring(0,2) + ' nr. '
-      + identityCard.seriesAndNumber.substring(2,identityCard.seriesAndNumber.length ) + ', eliberată', 25, 122);
+      + identityCard.seriesAndNumber.substring(2,identityCard.seriesAndNumber.length ), 25, 122);
     const employed = this.employee.gender?.id === 1 ? 'angajat' : 'angajată';
     const entity = this.employee.entity.split(' ');
-    doc.text('de ' + identityCard.issuer + ', la data de ' + new Date(identityCard.issueDate).toLocaleString('en-GB').split(',')[0] +
+    doc.text('elibrată de ' + identityCard.issuer + ', la data de ' + new Date(identityCard.issueDate).toLocaleString('en-GB').split(',')[0] +
       ' CNP ' + this.employee.personIdentifier + ', este ' + employed + ' ' + (entity[0] ? entity[0]: '') + ' ' + (entity[1] ? entity[1]: '') , 25, 128);
     doc.text((entity[2] ? entity[2]: '') + ' ' + (entity[3] ? entity[3]: '') + ' ' + (entity[4] ? entity[4]: '') + ' ' + (entity[5] ? entity[5]: '')
       + ' din data de ' + new Date(this.employee.joiningDate).toLocaleString('en-GB').split(',')[0] + ' cu contract de muncă pe durată ', 25, 134);

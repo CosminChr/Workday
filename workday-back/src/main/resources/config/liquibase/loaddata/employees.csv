@@ -1,3 +1,3 @@
-username;email;password;nationality_id;manager_id
-ilonacojoaca;ilona.cojoaca@gmail.com;$2a$10$QMRMLULk4rmGsEPQMGBpZuZe3J.DNpo2hW0Z9fortR3mNmHdh1xpC;180;2
-cosminchiriac;cosmin.chiriac@gmail.com;$2a$10$QMRMLULk4rmGsEPQMGBpZuZe3J.DNpo2hW0Z9fortR3mNmHdh1xpC;180;2
+username;email;password;last_name;first_name;gender_id;birth_place;person_identifier;birth_date;birth_name;mobile_phone_number;nationality_id;manager_id;job_position_id;entity;location;department_id;it_deduction;joining_date;current_position_starting_date
+ilonacojoaca;ilona.cojoaca@gmail.com;$2a$10$QMRMLULk4rmGsEPQMGBpZuZe3J.DNpo2hW0Z9fortR3mNmHdh1xpC;Cojoacă;Ilona;2;Craiova;2970131160034;1997-01-31;Cojoacă;0762292985;180;2;1;Societe Generale European Business Service S.A.;Bd. Dumitru Pompeiu Nr. 21;4;true;2019-06-18;2019-06-18
+cosminchiriac;cosmin.chiriac@gmail.com;$2a$10$QMRMLULk4rmGsEPQMGBpZuZe3J.DNpo2hW0Z9fortR3mNmHdh1xpC;Chiriac;Cosmin;1;București;1920514410014;1992-05-14;Chiriac;0726368294;180;2;1;Societe Generale European Business Service S.A.;Bd. Dumitru Pompeiu Nr. 21;4;true;2019-06-18;2019-06-18
