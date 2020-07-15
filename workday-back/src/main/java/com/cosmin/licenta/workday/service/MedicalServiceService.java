@@ -55,6 +55,10 @@ public class MedicalServiceService {
         medicalServiceDTO.getMedicalServiceProvider().setId(medicalServiceProviderOptional.get().getId());
 
         medicalServiceRepository.save(medicalServiceMapper.domainToEntity(medicalServiceDTO));
+        final Optional<MedicalService> medicalService = medicalServiceRepository.findByEmployee(employeeMapper.domainToEntity(medicalServiceDTO.getEmployee()));
+        if (medicalService.isPresent()) {
+            medicalServiceDTO.setId(medicalService.get().getId());
+        }
         return medicalServiceDTO;
     }
 }

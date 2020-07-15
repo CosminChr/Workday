@@ -14,6 +14,7 @@ import {HolidaysMessagingService} from "../../shared/services/websocket/holidays
 import {Notification} from "../../shared/models/notification.model";
 import {NotificationService} from "../../shared/services/notification/notification.service";
 import {NavbarService} from "../../shared/components/navbar/navbar.service";
+import {WorkdayValidators} from "../../shared/validators/workday-validators";
 
 declare var $: any;
 
@@ -94,6 +95,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
                   .subscribe( data => {
                     this.navbarService.getStoredEmployeeNotifications().value.push(notification);
                     this.navbarService.setEmployeeNotifications(this.navbarService.getStoredEmployeeNotifications().value);
+                    this.populateHolidayMapsByMonth();
                   });
               });
             });
@@ -106,6 +108,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     $('.selectpicker').selectpicker();
+
   }
 
   reinitializePicker() {
@@ -195,8 +198,8 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   createHolidayForm(): FormGroup {
     this.holidayForm = this.formBuilder.group({
       'holidayType': [this.plannedHoliday.holidayType, [Validators.required, Validators.maxLength(100)]],
-      'fromDate': [this.plannedHoliday.fromDate ? formatDate(this.plannedHoliday.fromDate) : '', [Validators.required]],
-      'toDate': [this.plannedHoliday.toDate ? formatDate(this.plannedHoliday.toDate) : '', [Validators.required]]
+      'fromDate': [this.plannedHoliday.fromDate ? formatDate(this.plannedHoliday.fromDate) : '', [Validators.required, WorkdayValidators.validDate]],
+      'toDate': [this.plannedHoliday.toDate ? formatDate(this.plannedHoliday.toDate) : '', [Validators.required, WorkdayValidators.validDate]]
     });
     return this.holidayForm;
   }

@@ -15,11 +15,11 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="users" author="cosminchiriac">
-        <loadData  encoding="UTF-8"
-                   file="config/liquibase/loaddata/medicalServices.csv"
-                   separator=";"
-                   tableName="workday_medical_service">
-        </loadData>
-    </changeSet>
+<!--    <changeSet id="users" author="cosminchiriac">-->
+<!--        <loadData  encoding="UTF-8"-->
+<!--                   file="config/liquibase/loaddata/medicalServices.csv"-->
+<!--                   separator=";"-->
+<!--                   tableName="workday_medical_service">-->
+<!--        </loadData>-->
+<!--    </changeSet>-->
 </databaseChangeLog>

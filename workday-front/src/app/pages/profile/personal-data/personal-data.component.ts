@@ -110,7 +110,7 @@ export class PersonalDataComponent implements OnInit, AfterViewInit {
       'birthDate': [this.employee.birthDate ? formatDate(this.employee.birthDate) : '', [Validators.required, WorkdayValidators.validDate]],
       'birthName': [this.employee.birthName, [Validators.required, Validators.maxLength(40)]],
       'email': [this.employee.email, [Validators.required, Validators.maxLength(40), WorkdayValidators.validEmail]],
-      'homePhoneNumber': [this.employee.homePhoneNumber, [Validators.required, Validators.maxLength(10), Validators.minLength(10), WorkdayValidators.validPhoneNumber]],
+      'homePhoneNumber': [this.employee.homePhoneNumber, [WorkdayValidators.validPhoneNumber]],
       'mobilePhoneNumber': [this.employee.mobilePhoneNumber, [Validators.required, Validators.maxLength(10), Validators.minLength(10), WorkdayValidators.validPhoneNumber]],
     });
 
