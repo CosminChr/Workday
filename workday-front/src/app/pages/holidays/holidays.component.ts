@@ -85,7 +85,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
                   const lastId = Math.max.apply(null, this.navbarService.getStoredEmployeeNotifications().value.map(item => item.id));
                   notification.id = lastId + 1;
                 }
-
+                this.populateHolidayMapsByMonth();
                 notification.message = 'Cererea ta de concediu pentru ' +
                   (new Date(holiday.fromDate).getTime() === new Date(holiday.toDate).getTime() ? formatDate(holiday.toDate) : 'perioada '
                     + holiday.fromDate + ' - ' + holiday.toDate) + ' a fost ' + (holiday.approved ? 'aprobată' : 'respinsă') + '.';
@@ -95,12 +95,9 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
                   .subscribe( data => {
                     this.navbarService.getStoredEmployeeNotifications().value.push(notification);
                     this.navbarService.setEmployeeNotifications(this.navbarService.getStoredEmployeeNotifications().value);
-                    this.populateHolidayMapsByMonth();
                   });
               });
             });
-        }, complete: () => {
-          this.populateHolidayMapsByMonth();
         }
       });
   }
