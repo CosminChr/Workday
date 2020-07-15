@@ -5,6 +5,9 @@ import {Employee} from "../../models/employee.model";
 import {EmployeeService} from "../../services/employee/employee.service";
 import {TokenStorageService} from "../../../core/services/security/token-storage.service";
 import {Admin} from "../../models/admin.model";
+import {EmployeeRoleEnum} from "../../enums/employee-role.enum";
+import {RoleReferentialService} from "../../services/role/role-referential.service";
+import {Referential} from "../../models/referential.model";
 
 @Component({
   selector: 'workday-sidebar',
@@ -19,9 +22,12 @@ export class SidebarComponent implements OnInit {
 
   menuItems: Array<MenuItem>;
 
+  roleReferentials: Array<Referential>;
+
   constructor(private sidebarService: SidebarService,
               private employeeService: EmployeeService,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private roleReferentialService: RoleReferentialService) {
   }
 
   ngOnInit() {
@@ -34,8 +40,15 @@ export class SidebarComponent implements OnInit {
       this.employee = this.tokenStorageService.getUser();
       this.sidebarService.getMenuItemsForEmployee(this.employee.id).subscribe(menuItems => {
         this.menuItems = menuItems as Array<MenuItem>;
+        this.roleReferentialService.getRoleReferentialsForEmployee(this.employee.id).subscribe( data => {
+          this.roleReferentials = data as Array<Referential>;
+        })
       });
     }
+  }
+
+  isManager(): boolean {
+    return this.roleReferentials && this.roleReferentials.filter(role => role.label === EmployeeRoleEnum.MANAGER).length > 0;
   }
 
 }
